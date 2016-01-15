@@ -279,7 +279,8 @@ void StarMatrix::clearMatrixOneByOne(){
 	//能够执行到这一句说明Matrix全为空，不在需要清空
 	needClear = false;
 	//转到下一关或者弹出结束游戏的窗口
-	if(GAMEDATA::getInstance()->getCurScore() >= GAMEDATA::getInstance()->getNextScore()){
+	if(GAMEDATA::getInstance()->getCurScore() >= GAMEDATA::getInstance()->getNextScore())
+    {
 		GAMEDATA::getInstance()->setCurLevel(GAMEDATA::getInstance()->getCurLevel() + 1);
 		m_layer->gotoNextLevel();
 	}else{

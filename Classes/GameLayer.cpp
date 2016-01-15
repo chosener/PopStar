@@ -31,8 +31,10 @@ bool GameLayer::init(){
 	return true;
 }
 
-void GameLayer::floatLevelWord(){
+void GameLayer::floatLevelWord()
+{
 	Size visibleSize = Director::getInstance()->getVisibleSize();
+    
 	_levelMsg = FloatWord::create(
 		ChineseWord("guanqia") + cocos2d::String::createWithFormat(": %d",GAMEDATA::getInstance()->getNextLevel())->_string,
 		50, Point(visibleSize.width,visibleSize.height/3*2)
@@ -118,7 +120,8 @@ void GameLayer::floatLeftStarMsg(int leftNum){
 	leftStarMsg2->floatInOut(0.5f,1.0f,nullptr);
 }
 
-void GameLayer::gotoNextLevel(){
+void GameLayer::gotoNextLevel()
+{
 	refreshMenu();
 	floatLevelWord();
 }
