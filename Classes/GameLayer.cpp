@@ -27,21 +27,35 @@ bool GameLayer::init(){
 	linkNum->setPosition(visibleSize.width/2,visibleSize.height-210);
 	linkNum->setVisible(false);
 	this->addChild(linkNum,1);
+    
+    // 帧缓存
+    auto spriteFrameCache = SpriteFrameCache::getInstance();
+    
+    // 纹理缓存
+    //auto textureCache = Director::getInstance()->getTextureCache();
+    //textureCache->addImage(s_backgound);
+    
+    spriteFrameCache->addSpriteFramesWithFile("mainStar.plist");
 
 	this->floatLevelWord();
+    
 	return true;
 }
 
+///开始新的一局
 void GameLayer::floatLevelWord()
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
     
-	_levelMsg = FloatWord::create(
-		ChineseWord("guanqia") + cocos2d::String::createWithFormat(": %d",GAMEDATA::getInstance()->getNextLevel())->_string,
-		50, Point(visibleSize.width,visibleSize.height/3*2)
-		);
+    string strGuanqia = ChineseWord("guanqia") + cocos2d::String::createWithFormat(": %d",GAMEDATA::getInstance()->getNextLevel())->_string;
+    
+	_levelMsg = FloatWord::create(strGuanqia,50,Point(visibleSize.width,visibleSize.height/3*2));
+    
 	this->addChild(_levelMsg,1);
+    
+    ///开始新局
 	_levelMsg->floatIn(0.5f,CC_CALLBACK_0(GameLayer::floatTargetScoreWord,this));
+    
 	Audio::getInstance()->playReadyGo();
 }
 
@@ -128,9 +142,9 @@ void GameLayer::gotoNextLevel()
 }
 
 void GameLayer::gotoGameOver(){
-	//������߷�?
+	//ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩﬂ∑Ôø?
 	GAMEDATA::getInstance()->saveHighestScore();
-	//Ʈ�֣��л�scene
+	//∆ÆÔøΩ÷£ÔøΩÔøΩ–ªÔøΩscene
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	FloatWord* gameOver = FloatWord::create(
 		"GAME OVER",80,Point(visibleSize.width,visibleSize.height/2));

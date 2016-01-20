@@ -67,6 +67,8 @@
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B0611A1803AB670077942B /* CoreMotion.framework */; };
+		FD76BC771C4F57D200E9BBEB /* mainStar.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD76BC751C4F57D200E9BBEB /* mainStar.plist */; };
+		FD76BC781C4F57D200E9BBEB /* mainStar.png in Resources */ = {isa = PBXBuildFile; fileRef = FD76BC761C4F57D200E9BBEB /* mainStar.png */; };
 		FD78A1C21C48A1F900002027 /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD78A1A31C48A1F900002027 /* Audio.cpp */; };
 		FD78A1C31C48A1F900002027 /* Chinese.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD78A1A51C48A1F900002027 /* Chinese.cpp */; };
 		FD78A1C41C48A1F900002027 /* ComboEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD78A1A71C48A1F900002027 /* ComboEffect.cpp */; };
@@ -252,6 +254,8 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		FD76BC751C4F57D200E9BBEB /* mainStar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = mainStar.plist; sourceTree = "<group>"; };
+		FD76BC761C4F57D200E9BBEB /* mainStar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainStar.png; sourceTree = "<group>"; };
 		FD78A1A31C48A1F900002027 /* Audio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Audio.cpp; sourceTree = "<group>"; };
 		FD78A1A41C48A1F900002027 /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
 		FD78A1A51C48A1F900002027 /* Chinese.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Chinese.cpp; sourceTree = "<group>"; };
@@ -477,6 +481,8 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FD76BC751C4F57D200E9BBEB /* mainStar.plist */,
+				FD76BC761C4F57D200E9BBEB /* mainStar.png */,
 				FD78A1D21C48A21400002027 /* bg_mainscene.jpg */,
 				FD78A1D31C48A21400002027 /* bg_menuscene_yj.png */,
 				FD78A1D41C48A21400002027 /* bg_menuscene_zx.png */,
@@ -789,6 +795,7 @@
 				FD78A24F1C48A21500002027 /* MrDu.png in Resources */,
 				FD78A25D1C48A21500002027 /* red_heart.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
+				FD76BC771C4F57D200E9BBEB /* mainStar.plist in Resources */,
 				FD78A23F1C48A21500002027 /* menu_continue.png in Resources */,
 				FD78A2251C48A21500002027 /* blue.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
@@ -837,6 +844,7 @@
 				FD78A25C1C48A21500002027 /* purple.png in Resources */,
 				FD78A2511C48A21500002027 /* new.png in Resources */,
 				FD78A2371C48A21500002027 /* GameOver.png in Resources */,
+				FD76BC781C4F57D200E9BBEB /* mainStar.png in Resources */,
 				FD78A2591C48A21500002027 /* Props_Paint.png in Resources */,
 				FD78A22C1C48A21500002027 /* combo_2.png in Resources */,
 				FD78A2561C48A21500002027 /* paint_bg.png in Resources */,

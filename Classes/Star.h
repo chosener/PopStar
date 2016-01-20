@@ -24,7 +24,7 @@ public:
 	inline void setIndex_ij(int i,int j){index_i = i;index_j = j;}
 private:
 	char* getImage(int color);
-
+    char* getImageFrame(int color);
 public:
 	const static int MOVE_SPEED = 12;
 	static const int COLOR_MAX_NUM = 5;

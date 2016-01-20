@@ -61,18 +61,21 @@ void StarMatrix::onTouch(const Point& p)
 void StarMatrix::setNeedClear(bool b){
 	needClear = b;
 }
-void StarMatrix::initMatrix(){
+void StarMatrix::initMatrix()
+{
 	srand(time(0));
 	for(int i=0;i<ROW_NUM;i++){
-		for(int j=0;j<COL_NUM;j++){
+		for(int j=0;j<COL_NUM;j++)
+        {
 			int color = abs(rand()%Star::COLOR_MAX_NUM);
 			if(color < 0)
-				CCLOG("color i=%d,j=%d");
+				CCLOG("color i=%d,j=%d",i,j);
 			Star* star = Star::create(color);
 			stars[i][j] = star;
 			star->setPosition(getPositionByIndex(i,j) + Point(0,100));
 			star->setDesPosition(getPositionByIndex(i,j));
 			star->setIndex_ij(i,j);
+            star->setScale(0.65f);
 			this->addChild(star);
 		}
 	}
@@ -90,7 +93,8 @@ Star* StarMatrix::getStarByTouch(const Point& p){
 	int j = p.x/Star::STAR_WIDTH;
 	if(i >= 0 && i < ROW_NUM && 
 	   j >= 0 && j < COL_NUM &&
-	   stars[i][j] != nullptr){
+	   stars[i][j] != nullptr)
+    {
 		CCLOG("i=%d,j=%d",i,j);
 		return stars[i][j];
 	}else{
