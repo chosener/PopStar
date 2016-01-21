@@ -48,7 +48,7 @@ void StarMatrix::updateStar(float delta){
 
 void StarMatrix::onTouch(const Point& p)
 {
-    Vec2 pos = p - Vec2(0.0f, 80.0f);
+    Vec2 pos = p - Vec2(0.0f, 100.0f);
 	Star* s = getStarByTouch(pos);
 	if(s)
     {
@@ -93,7 +93,7 @@ Point StarMatrix::getPositionByIndex(int i,int j)
 {
 	float x = j * Star::STAR_WIDTH + Star::STAR_WIDTH/2;
 	float y = (StarMatrix::COL_NUM - i)*Star::STAR_HEIGHT - Star::STAR_HEIGHT/2;
-	return Point(x,y) + Vec2(0.0f, 80.0f);
+	return Point(x,y) + Vec2(0.0f, 100.0f);
 }
 
 Star* StarMatrix::getStarByTouch(const Point& p)

@@ -1,8 +1,12 @@
 #ifndef _TOPMENU_H_
 #define _TOPMENU_H_
+
 #include "cocos2d.h"
+#include "PauseLayer.h"
+
 using namespace cocos2d;
-class TopMenu : public Node{
+class TopMenu : public Node
+{
 public:
 	virtual bool init();
 	CREATE_FUNC(TopMenu);

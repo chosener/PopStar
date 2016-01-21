@@ -111,4 +111,7 @@ void TopMenu::pauseGame()
 {
     CCLOG("PAUSE!");
     //Director::getInstance()->replaceScene(GameScene::create());
+    Layer* gameLayer = (Layer*)this->getParent();
+    Scene* scene = (Scene*)gameLayer->getParent();
+    scene->addChild(PauseLayer::create());
 }

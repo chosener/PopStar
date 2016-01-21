@@ -5,8 +5,10 @@
 #include "StarMatrix.h"
 #include "MenuScene.h"
 #include "Audio.h"
-bool GameLayer::init(){
-	if(!Layer::init()){
+bool GameLayer::init()
+{
+	if(!Layer::init())
+    {
 		return false;
 	}
 
@@ -24,7 +26,7 @@ bool GameLayer::init(){
 	this->addChild(menu);
     
 	linkNum = Label::create("","Arial",40);
-	linkNum->setPosition(visibleSize.width/2,visibleSize.height-210);
+	linkNum->setPosition(visibleSize.width/2,visibleSize.height-320);
 	linkNum->setVisible(false);
 	this->addChild(linkNum,1);
     
@@ -38,6 +40,11 @@ bool GameLayer::init(){
     spriteFrameCache->addSpriteFramesWithFile("mainStar.plist");
 
 	this->floatLevelWord();
+    
+    //底下的一条线
+    Sprite* spLine = Sprite::create("images/img_bars.png");
+    spLine->setPosition(Vec2(visibleSize.width/2, 95.0f));
+    this->addChild(spLine);
     
 	return true;
 }
@@ -59,7 +66,8 @@ void GameLayer::floatLevelWord()
 	Audio::getInstance()->playReadyGo();
 }
 
-void GameLayer::floatTargetScoreWord(){
+void GameLayer::floatTargetScoreWord()
+{
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	_targetScore = FloatWord::create(
 		ChineseWord("mubiao") + cocos2d::String::createWithFormat(": %d",GAMEDATA::getInstance()->getNextScore())->_string + ChineseWord("fen"),
@@ -69,12 +77,14 @@ void GameLayer::floatTargetScoreWord(){
 	_targetScore->floatIn(0.5f,CC_CALLBACK_0(GameLayer::removeFloatWord,this));
 }
 
-void GameLayer::removeFloatWord(){
+void GameLayer::removeFloatWord()
+{
 	_levelMsg->floatOut(0.5f,nullptr);
 	_targetScore->floatOut(0.5f,CC_CALLBACK_0(GameLayer::showStarMatrix,this));
 }
 
-void GameLayer::showStarMatrix(){
+void GameLayer::showStarMatrix()
+{
 	matrix = StarMatrix::create(this);
 	this->addChild(matrix);
 }
