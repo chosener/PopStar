@@ -16,7 +16,9 @@ bool GameLayer::init()
 	this->scheduleUpdate();
 	EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan,this);
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener,this);
+    
+    
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Sprite* background = Sprite::create("bg_mainscene.jpg");

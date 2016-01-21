@@ -142,9 +142,6 @@
 		FD78A2551C48A21500002027 /* paint_back.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A2081C48A21500002027 /* paint_back.png */; };
 		FD78A2561C48A21500002027 /* paint_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A2091C48A21500002027 /* paint_bg.png */; };
 		FD78A2571C48A21500002027 /* Pause.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A20A1C48A21500002027 /* Pause.png */; };
-		FD78A2581C48A21500002027 /* Props_Bomb.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A20B1C48A21500002027 /* Props_Bomb.png */; };
-		FD78A2591C48A21500002027 /* Props_Paint.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A20C1C48A21500002027 /* Props_Paint.png */; };
-		FD78A25A1C48A21500002027 /* Props_Rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A20D1C48A21500002027 /* Props_Rainbow.png */; };
 		FD78A25B1C48A21500002027 /* purple_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A20E1C48A21500002027 /* purple_heart.png */; };
 		FD78A25C1C48A21500002027 /* purple.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A20F1C48A21500002027 /* purple.png */; };
 		FD78A25D1C48A21500002027 /* red_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A2101C48A21500002027 /* red_heart.png */; };
@@ -345,9 +342,6 @@
 		FD78A2081C48A21500002027 /* paint_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paint_back.png; sourceTree = "<group>"; };
 		FD78A2091C48A21500002027 /* paint_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paint_bg.png; sourceTree = "<group>"; };
 		FD78A20A1C48A21500002027 /* Pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pause.png; sourceTree = "<group>"; };
-		FD78A20B1C48A21500002027 /* Props_Bomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Props_Bomb.png; sourceTree = "<group>"; };
-		FD78A20C1C48A21500002027 /* Props_Paint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Props_Paint.png; sourceTree = "<group>"; };
-		FD78A20D1C48A21500002027 /* Props_Rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Props_Rainbow.png; sourceTree = "<group>"; };
 		FD78A20E1C48A21500002027 /* purple_heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple_heart.png; sourceTree = "<group>"; };
 		FD78A20F1C48A21500002027 /* purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple.png; sourceTree = "<group>"; };
 		FD78A2101C48A21500002027 /* red_heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_heart.png; sourceTree = "<group>"; };
@@ -540,9 +534,6 @@
 				FD78A2081C48A21500002027 /* paint_back.png */,
 				FD78A2091C48A21500002027 /* paint_bg.png */,
 				FD78A20A1C48A21500002027 /* Pause.png */,
-				FD78A20B1C48A21500002027 /* Props_Bomb.png */,
-				FD78A20C1C48A21500002027 /* Props_Paint.png */,
-				FD78A20D1C48A21500002027 /* Props_Rainbow.png */,
 				FD78A20E1C48A21500002027 /* purple_heart.png */,
 				FD78A20F1C48A21500002027 /* purple.png */,
 				FD78A2101C48A21500002027 /* red_heart.png */,
@@ -782,7 +773,6 @@
 				FD78A2451C48A21500002027 /* menu_money.png in Resources */,
 				FD78A22A1C48A21500002027 /* coin_add.png in Resources */,
 				FD76BC7F1C50A4D600E9BBEB /* images in Resources */,
-				FD78A25A1C48A21500002027 /* Props_Rainbow.png in Resources */,
 				FD78A24D1C48A21500002027 /* MrDu_choujiang1.png in Resources */,
 				FD78A2211C48A21500002027 /* bg_menuscene_zx.png in Resources */,
 				FD78A2331C48A21500002027 /* diamond.png in Resources */,
@@ -802,7 +792,6 @@
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				FD78A26A1C48A21500002027 /* music.ogg in Resources */,
 				FD78A2551C48A21500002027 /* paint_back.png in Resources */,
-				FD78A2581C48A21500002027 /* Props_Bomb.png in Resources */,
 				FD78A2281C48A21500002027 /* click_1.png in Resources */,
 				FD78A2411C48A21500002027 /* menu_continuegame.png in Resources */,
 				FD78A2661C48A21500002027 /* Title_Pause.png in Resources */,
@@ -846,7 +835,6 @@
 				FD78A2511C48A21500002027 /* new.png in Resources */,
 				FD78A2371C48A21500002027 /* GameOver.png in Resources */,
 				FD76BC781C4F57D200E9BBEB /* mainStar.png in Resources */,
-				FD78A2591C48A21500002027 /* Props_Paint.png in Resources */,
 				FD78A2561C48A21500002027 /* paint_bg.png in Resources */,
 				FD78A2241C48A21500002027 /* blue_heart.png in Resources */,
 				FD78A25F1C48A21500002027 /* Shop_Onece.png in Resources */,
