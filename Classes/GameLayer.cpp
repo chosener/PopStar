@@ -5,6 +5,16 @@
 #include "StarMatrix.h"
 #include "MenuScene.h"
 #include "Audio.h"
+
+GameLayer::GameLayer()
+{
+    
+}
+GameLayer::~GameLayer()
+{
+
+}
+
 bool GameLayer::init()
 {
 	if(!Layer::init())
@@ -15,7 +25,8 @@ bool GameLayer::init()
 	matrix = nullptr;
 	this->scheduleUpdate();
     
-	EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
+    EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
+    
 	listener->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan,this);
     
     
