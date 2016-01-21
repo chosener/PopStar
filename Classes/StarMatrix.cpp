@@ -58,13 +58,15 @@ void StarMatrix::onTouch(const Point& p)
 	}
 }
 
-void StarMatrix::setNeedClear(bool b){
+void StarMatrix::setNeedClear(bool b)
+{
 	needClear = b;
 }
 void StarMatrix::initMatrix()
 {
 	srand(time(0));
-	for(int i=0;i<ROW_NUM;i++){
+	for(int i=0;i<ROW_NUM;i++)
+    {
 		for(int j=0;j<COL_NUM;j++)
         {
 			int color = abs(rand()%Star::COLOR_MAX_NUM);
@@ -75,19 +77,27 @@ void StarMatrix::initMatrix()
 			star->setPosition(getPositionByIndex(i,j) + Point(0,100));
 			star->setDesPosition(getPositionByIndex(i,j));
 			star->setIndex_ij(i,j);
-            star->setScale(0.65f);
+            //star->setScale(0.65f);
 			this->addChild(star);
+            
+#if 0
+            Sprite* spBoard = Sprite::create("images/ico_cell_bg.png");
+            spBoard->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+            star->addChild(spBoard);
+#endif
 		}
 	}
 }
 
-Point StarMatrix::getPositionByIndex(int i,int j){
+Point StarMatrix::getPositionByIndex(int i,int j)
+{
 	float x = j * Star::STAR_WIDTH + Star::STAR_WIDTH/2;
 	float y = (StarMatrix::COL_NUM - i)*Star::STAR_HEIGHT - Star::STAR_HEIGHT/2;
 	return Point(x,y) + Vec2(0.0f, 80.0f);
 }
 
-Star* StarMatrix::getStarByTouch(const Point& p){
+Star* StarMatrix::getStarByTouch(const Point& p)
+{
 	int k = p.y/Star::STAR_HEIGHT;//这里要用K转一下int 不然得不到正确结果
 	int i = ROW_NUM - 1 - k;
 	int j = p.x/Star::STAR_WIDTH;
@@ -102,7 +112,8 @@ Star* StarMatrix::getStarByTouch(const Point& p){
 	}
 }
 
-void StarMatrix::genSelectedList(Star* s){
+void StarMatrix::genSelectedList(Star* s)
+{
 	selectedList.clear();
 	deque<Star*> travelList;
 	travelList.push_back(s);
@@ -149,29 +160,50 @@ void StarMatrix::deleteSelectedList()
 		selectedList.at(0)->setSelected(false);
 		return;
 	}
+    
+    int size = (int)selectedList.size();
+    
+    int total = 0;
 
-	for(auto it = selectedList.begin();it != selectedList.end();it++)
+    for(int i = 0; i< size;i++)
+	//for(auto it = selectedList.begin();it != selectedList.end();it++)
     {
-		Star* star = *it;
+		//Star* star = *it;
+        Star* star = selectedList.at(i);
+        
         Vec2 pos = star->getPosition();
         //pos = Vec2(0, 0);
 		//粒子效果
 		showStarParticleEffect(star->getColor(),pos,this);
+        showStarParticleStar(star->getColor(),pos,this);
+        
+        //生成一个分数数字飞到分数上去
+        int temp = 5 + (i *10);
+        
+        m_layer->flyNumScore(temp , pos);
+
+        
 		stars[star->getIndexI()][star->getIndexJ()] = nullptr;
+        
 		star->removeFromParentAndCleanup(true);
 		//播放音效
 		Audio::getInstance()->playPop();
 	}
+    
     int sizeSelected = (int)selectedList.size();
 	//COMBO效果
 	showComboEffect(sizeSelected,this);
     
+    //combo声音
 	Audio::getInstance()->playCombo(sizeSelected);
 
+    ///更新分数
 	refreshScore();
     
+    //显示连击多少分
 	m_layer->showLinkNum(sizeSelected);
     
+    //调整星星
 	adjustMatrix();
     
 	if(isEnded())
@@ -238,8 +270,13 @@ void StarMatrix::adjustMatrix(){
 void StarMatrix::refreshScore()
 {
 	GAMEDATA* data = GAMEDATA::getInstance();
-	data->setCurScore(data->getCurScore() + selectedList.size()*selectedList.size()*5);
-	if(data->getCurScore() > data->getHistoryScore()){
+    
+    int sizeSelected = (int)selectedList.size();
+    
+	data->setCurScore(data->getCurScore() + sizeSelected * sizeSelected * 5);
+    
+	if(data->getCurScore() > data->getHistoryScore())
+    {
 		data->setHistoryScore(data->getCurScore());
 	}
 	m_layer->refreshMenu();
@@ -276,6 +313,7 @@ void StarMatrix::clearMatrixOneByOne(){
 			if(stars[i][j] == nullptr)
 				continue;
 			showStarParticleEffect(stars[i][j]->getColor(),stars[i][j]->getPosition(),this);
+            showStarParticleStar(stars[i][j]->getColor(),stars[i][j]->getPosition(),this);
 			stars[i][j]->removeFromParentAndCleanup(true);
 			stars[i][j] = nullptr;
 			return;

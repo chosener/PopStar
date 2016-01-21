@@ -7,10 +7,19 @@ public:
 	virtual bool init();
 	CREATE_FUNC(TopMenu);
 	void refresh();
+    
+public:
+    Vec2 getPosCurScore();
+    
 private:
-	Label* highestScore;
-	Label* level;
-	Label* targetScore;
-	Label* curScore;
+    void initView();
+    void initScore();
+    void pauseGame();
+    
+private:
+	LabelAtlas* highestScore;
+	LabelAtlas* level;
+	LabelAtlas* targetScore;
+	LabelAtlas* curScore;
 };
 #endif

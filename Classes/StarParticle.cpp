@@ -4,7 +4,7 @@ void showStarParticleEffect(int color,Point position,Node* node)
 {
 #if 1
 	ParticleExplosion* effect = ParticleExplosion::create();
-	effect->setTexture(Director::getInstance()->getTextureCache()->addImage("star.png"));
+	effect->setTexture(Director::getInstance()->getTextureCache()->addImage("particles/diamond.png"));
 	effect->setTotalParticles(1000);
 	effect->setStartColor(getColor4F(color));
 	effect->setStartColorVar(Color4F(0,0,0,1));
@@ -23,6 +23,22 @@ void showStarParticleEffect(int color,Point position,Node* node)
     spTest->setPosition(position);
     node->addChild(spTest);
 #endif
+}
+void showStarParticleStar(int color,Point position,Node* node)
+{
+#if 1
+    ParticleExplosion* effect = ParticleExplosion::create();
+    effect->setTexture(Director::getInstance()->getTextureCache()->addImage("particles/fire.png"));
+    effect->setTotalParticles(500);
+    effect->setStartSize(25.0f);
+    effect->setGravity(Point(0,-1000));
+    effect->setLife(0.1f);
+    effect->setSpeed(500);
+    effect->setSpeedVar(10);
+    effect->setPosition(position);
+    node->addChild(effect);
+#endif
+
 }
 
 Color4F getColor4F(int color)

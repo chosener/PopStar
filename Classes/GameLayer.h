@@ -18,6 +18,8 @@ public:
 	virtual bool onTouchBegan(Touch* touch,Event* event);
 	void refreshMenu();
 	void showLinkNum(int size);
+    ///飞一个分数数字到分数上去
+    void flyNumScore(int num,Vec2 _position);
 	void hideLinkNum();
 	void floatLeftStarMsg(int leftNum);
 	void gotoNextLevel();

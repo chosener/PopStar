@@ -95,16 +95,37 @@ bool GameLayer::onTouchBegan(Touch* touch,Event* event){
 	return true;
 }
 
-void GameLayer::refreshMenu(){
+void GameLayer::refreshMenu()
+{
 	menu->refresh();
 }
 
-void GameLayer::showLinkNum(int size){
+void GameLayer::showLinkNum(int size)
+{
 	
 	string s = String::createWithFormat("%d",size)->_string + ChineseWord("lianji") + 
 		String::createWithFormat("%d",size*size*5)->_string + ChineseWord("fen");
 	linkNum->setString(s);
 	linkNum->setVisible(true);
+}
+
+
+///飞一个分数数字到分数上去
+void GameLayer::flyNumScore(int num,Vec2 _position)
+{
+    LabelAtlas* curScore = LabelAtlas::create(StringUtils::format("%d",num), "images/numbers/number_curent_score.png",28,41,'0');
+    curScore->setPosition(_position - Vec2(0.0f, 10.0f));
+    this->addChild(curScore);
+    
+    //MoveTo* moveTo = MoveTo::create(0.8f, this->menu->getPosCurScore());
+    JumpTo* jumpTo = JumpTo::create(0.8, this->menu->getPosCurScore(), 50.0f, 1);
+    CallFunc* callBack = CallFunc::create([=]
+                                          {
+                                              curScore->removeFromParent();
+                                          });
+
+    Sequence* seq = Sequence::create(jumpTo,callBack, NULL);
+    curScore->runAction(seq);
 }
 
 void GameLayer::hideLinkNum(){
