@@ -7,6 +7,7 @@ class PauseLayer : public Layer
 public:
 	virtual bool init();
 	CREATE_FUNC(PauseLayer);
+    virtual bool onTouchBegan(Touch* touch,Event* event);
 	void startGame();
 };
 #endif
