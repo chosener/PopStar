@@ -28,7 +28,7 @@ bool GameLayer::init()
     EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
     
 	listener->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan,this);
-    
+
     
     //Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 5);

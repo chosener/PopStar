@@ -23,7 +23,7 @@ bool PauseLayer::init()
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
     
-#if 0
+#if 1
     
     listener = EventListenerTouchOneByOne::create();
     
@@ -75,7 +75,7 @@ void PauseLayer::startGame(Ref* node)
     {
         case 10:
         {
-            //Director::getInstance()->getEventDispatcher()->removeEventListener(listener);
+            Director::getInstance()->getEventDispatcher()->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
             //Ö÷²Ëµ¥
             Director::getInstance()->replaceScene(MenuScene::create());
             
