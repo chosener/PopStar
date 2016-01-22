@@ -12,7 +12,7 @@ GameLayer::GameLayer()
 }
 GameLayer::~GameLayer()
 {
-
+    
 }
 
 bool GameLayer::init()
@@ -23,9 +23,12 @@ bool GameLayer::init()
 	}
 
 	matrix = nullptr;
+    
+    //this->setiGameState(0);
+    
 	this->scheduleUpdate();
     
-    EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
+    listener = EventListenerTouchOneByOne::create();
     
 	listener->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan,this);
 
@@ -54,14 +57,86 @@ bool GameLayer::init()
     
     spriteFrameCache->addSpriteFramesWithFile("mainStar.plist");
 
-	this->floatLevelWord();
-    
     //底下的一条线
     Sprite* spLine = Sprite::create("images/img_bars.png");
     spLine->setPosition(Vec2(visibleSize.width/2, 95.0f));
     this->addChild(spLine);
     
+    
+    this->floatLevelWord();
+    
 	return true;
+}
+
+void GameLayer::onEnter()
+{
+    Layer::onEnter();
+    log("GameScene onEnter");
+    
+}
+
+void GameLayer::onEnterTransitionDidFinish()
+{
+    Layer::onEnterTransitionDidFinish();
+    log("GameScene onEnterTransitionDidFinish");
+    
+    this->initEventCustom();
+}
+
+void GameLayer::onExit()
+{
+    Layer::onExit();
+    log("GameScene onExit");
+    
+#if 1
+    //获取事件分发器
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    dispatcher->removeCustomEventListeners("Game_Reset");
+#endif
+}
+
+void GameLayer::onExitTransitionDidStart()
+{
+    Layer::onExitTransitionDidStart();
+    log("GameScene onExitTransitionDidStart");
+
+}
+
+
+/**初始化事件*/
+void GameLayer::initEventCustom()
+{
+    //------------------------------------
+    //重置技能按钮的事件
+    EventListenerCustom* eventListenerGameReset = EventListenerCustom::create("Game_Reset", CC_CALLBACK_1(GameLayer::onCustomEventReset, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(eventListenerGameReset, 1);
+}
+void GameLayer::onCustomEventReset(EventCustom* event)
+{
+    string strName = event->getEventName();
+    
+    if(strName == "Game_Reset")
+    {
+        this->reset();
+    }
+}
+
+void GameLayer::reset()
+{
+    //this->setiGameState(1);
+#if 0
+    GAMEDATA::getInstance()->init();
+    matrix->reset();
+    refreshMenu();
+    floatLevelWord();
+#endif
+#if 1
+    GAMEDATA::getInstance()->init();
+    refreshMenu();
+    Director::getInstance()->getEventDispatcher()->removeEventListener(listener);
+    Director::getInstance()->replaceScene(GameScene::create());
+#endif
+
 }
 
 ///开始新的一局
@@ -85,10 +160,9 @@ void GameLayer::floatTargetScoreWord()
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	_targetScore = FloatWord::create(
-		ChineseWord("mubiao") + StringUtils::format(": %d",GAMEDATA::getInstance()->getNextScore()) + ChineseWord("fen"),
-		50, Point(visibleSize.width,visibleSize.height/3)
-		);
+		ChineseWord("mubiao") + StringUtils::format(": %d",GAMEDATA::getInstance()->getNextScore()) + ChineseWord("fen"),50, Point(visibleSize.width,visibleSize.height/3));
 	this->addChild(_targetScore,1);
+    
 	_targetScore->floatIn(0.5f,CC_CALLBACK_0(GameLayer::removeFloatWord,this));
 }
 
@@ -100,14 +174,26 @@ void GameLayer::removeFloatWord()
 
 void GameLayer::showStarMatrix()
 {
-	matrix = StarMatrix::create(this);
-	this->addChild(matrix);
+    //if(matrix == nullptr)
+    {
+        matrix = StarMatrix::create(this);
+        
+        this->addChild(matrix);
+    }
+    
+    //this->setiGameState(1);
 }
 
-void GameLayer::update(float delta){
-	if(matrix){
-		matrix->updateStar(delta);
-	}
+void GameLayer::update(float delta)
+{
+    //if(this->m_iGameState == 1)
+    {
+        if(matrix)
+        {
+            matrix->updateStar(delta);
+        }
+    }
+
 }
 
 bool GameLayer::onTouchBegan(Touch* touch,Event* event)
@@ -160,7 +246,8 @@ void GameLayer::hideLinkNum()
 	linkNum->setVisible(false);
 }
 
-void GameLayer::floatLeftStarMsg(int leftNum){
+void GameLayer::floatLeftStarMsg(int leftNum)
+{
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	FloatWord* leftStarMsg1 = FloatWord::create(ChineseWord("shengyu") + String::createWithFormat("%d",leftNum)->_string +ChineseWord("ge"), 
 		50,Point(visibleSize.width,visibleSize.height/2));
@@ -190,7 +277,8 @@ void GameLayer::gotoNextLevel()
 	floatLevelWord();
 }
 
-void GameLayer::gotoGameOver(){
+void GameLayer::gotoGameOver()
+{
 	//ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩﬂ∑Ôø?
 	GAMEDATA::getInstance()->saveHighestScore();
 	//∆ÆÔøΩ÷£ÔøΩÔøΩ–ªÔøΩscene

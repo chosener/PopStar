@@ -40,6 +40,13 @@ bool PauseLayer::init()
 	Sprite* background = Sprite::create("bg/bg_pause.png");
 	background->setPosition(visibleSize.width/2,visibleSize.height/2);
 	this->addChild(background,-1);
+    
+    //暂停字
+    
+    Sprite* spTxtPause = Sprite::create("images/ico_pause.png");
+    spTxtPause->setPosition(visibleSize.width/2 - 200.0f,visibleSize.height/2 + 130.0f);
+    this->addChild(spTxtPause);
+    
 	
 	/*初始化菜单*/
     
@@ -75,7 +82,8 @@ void PauseLayer::startGame(Ref* node)
     {
         case 10:
         {
-            Director::getInstance()->getEventDispatcher()->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
+            this->removeSelfListener();
+
             //主菜单
             Director::getInstance()->replaceScene(MenuScene::create());
             
@@ -84,9 +92,10 @@ void PauseLayer::startGame(Ref* node)
             break;
         case 11:
         {
-            Director::getInstance()->getEventDispatcher()->removeEventListenersForTarget(this);
+            Director::getInstance()->getEventDispatcher()->removeEventListener(listener);
             //重新开始
-            
+            EventCustom eventReset = EventCustom("Game_Reset");
+            Director::getInstance()->getEventDispatcher()->dispatchEvent(&eventReset);
             //从头来
             
             this->removeFromParent();
@@ -94,7 +103,7 @@ void PauseLayer::startGame(Ref* node)
             break;
         case 12:
         {
-            Director::getInstance()->getEventDispatcher()->removeEventListenersForTarget(this);
+            Director::getInstance()->getEventDispatcher()->removeEventListener(listener);
             //继续游戏
             this->removeFromParent();
         }
@@ -113,4 +122,8 @@ bool PauseLayer::onTouchBegan(Touch* touch,Event* event)
     CCLOG("x=%f y=%f",p.x,p.y);
 
     return true;
+}
+void PauseLayer::removeSelfListener()
+{
+    Director::getInstance()->getEventDispatcher()->removeEventListenersForType(EventListener::Type::TOUCH_ONE_BY_ONE);
 }

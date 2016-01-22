@@ -53,18 +53,23 @@ int Star::getColor(){
 	return color;
 }
 
-void Star::setDesPosition(const Point& p){
+void Star::setDesPosition(const Point& p)
+{
 	desPosition = p;
 }
 
-void Star::updatePosition(){
-	if(desPosition.y != getPositionY()){
+void Star::updatePosition()
+{
+	if(desPosition.y != getPositionY())
+    {
 		setPositionY(getPositionY() - MOVE_SPEED);
-		if(getPositionY() < desPosition.y){
+		if(getPositionY() < desPosition.y)
+        {
 			setPositionY(desPosition.y);
 		}
 	}
-	if(desPosition.x != getPositionX()){
+	if(desPosition.x != getPositionX())
+    {
 		setPositionX(getPositionX() - MOVE_SPEED);
 		if(getPositionX() < desPosition.x){
 			setPositionX(desPosition.x);

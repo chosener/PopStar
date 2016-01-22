@@ -1,6 +1,7 @@
 #include "TopMenu.h"
 #include "Chinese.h"
 #include "GameData.h"
+#include "GameLayer.h"
 bool TopMenu::init()
 {
 	if(!Node::init())
@@ -128,7 +129,9 @@ void TopMenu::pauseGame()
 {
     CCLOG("PAUSE!");
     //Director::getInstance()->replaceScene(GameScene::create());
-    Layer* gameLayer = (Layer*)this->getParent();
+    GameLayer* gameLayer = (GameLayer*)this->getParent();
+    //gameLayer->setiGameState(2);
+    
     Scene* scene = (Scene*)gameLayer->getParent();
     scene->addChild(PauseLayer::create());
 }

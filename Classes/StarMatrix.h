@@ -14,7 +14,12 @@ public:
 	void updateStar(float delta);
 	void onTouch(const Point& p);
 	void setNeedClear(bool b);
-	 void initMatrix();
+    
+    void initMatrix();
+    
+public:
+    void reset();
+    void clearMatrix();
 	
 private:
    
@@ -30,6 +35,7 @@ private:
 public:
 	const static int ROW_NUM = 10;
 	const static int COL_NUM = 10;
+    
 private:
 	Star* stars[ROW_NUM][COL_NUM];
 	deque<Star*> selectedList;

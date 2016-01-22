@@ -5,7 +5,8 @@
 #include "Audio.h"
 #include <ctime>
 float StarMatrix::ONE_CLEAR_TIME = 0.05f;
-StarMatrix* StarMatrix::create(GameLayer* layer){
+StarMatrix* StarMatrix::create(GameLayer* layer)
+{
 	StarMatrix* ret = new StarMatrix();
 	if(ret && ret->init(layer)){
 		ret->autorelease();
@@ -15,8 +16,10 @@ StarMatrix* StarMatrix::create(GameLayer* layer){
 	return nullptr;
 }
 
-bool StarMatrix::init(GameLayer* layer){
-	if(!Node::init()){
+bool StarMatrix::init(GameLayer* layer)
+{
+	if(!Node::init())
+    {
 		return false;
 	}
 	m_layer = layer;
@@ -27,18 +30,24 @@ bool StarMatrix::init(GameLayer* layer){
 	return true;
 }
 
-void StarMatrix::updateStar(float delta){
+void StarMatrix::updateStar(float delta)
+{
 	
-	for(int i = 0;i < ROW_NUM;i++){
-		for(int j = 0;j< COL_NUM;j++){
-			if(stars[i][j]!=nullptr){
+	for(int i = 0;i < ROW_NUM;i++)
+    {
+		for(int j = 0;j< COL_NUM;j++)
+        {
+			if(stars[i][j]!=nullptr)
+            {
 				stars[i][j]->updatePosition();
 			}
 		}
 	}
-	if(needClear){
+	if(needClear)
+    {
 		clearSumTime += delta;
-		if(clearSumTime > ONE_CLEAR_TIME){
+		if(clearSumTime > ONE_CLEAR_TIME)
+        {
 			clearMatrixOneByOne();
 			clearSumTime = 0;
 		}
@@ -214,7 +223,8 @@ void StarMatrix::deleteSelectedList()
 
 }
 
-void StarMatrix::adjustMatrix(){
+void StarMatrix::adjustMatrix()
+{
 	//垂直方向调整
 	for(int i = ROW_NUM-1;i>=0;i--){
 		for(int j = COL_NUM-1;j>=0;j--){
@@ -283,7 +293,8 @@ void StarMatrix::refreshScore()
 }
 
 
-bool StarMatrix::isEnded(){
+bool StarMatrix::isEnded()
+{
 	bool bRet = true;
 	for(int i=0;i<ROW_NUM;i++){
 		for(int j=0;j<COL_NUM;j++){
@@ -307,9 +318,12 @@ bool StarMatrix::isEnded(){
 	return bRet;
 }
 
-void StarMatrix::clearMatrixOneByOne(){
-	for(int i=0;i<ROW_NUM;i++){
-		for(int j=0;j<COL_NUM;j++){
+void StarMatrix::clearMatrixOneByOne()
+{
+	for(int i=0;i<ROW_NUM;i++)
+    {
+		for(int j=0;j<COL_NUM;j++)
+        {
 			if(stars[i][j] == nullptr)
 				continue;
 			showStarParticleEffect(stars[i][j]->getColor(),stars[i][j]->getPosition(),this);
@@ -326,13 +340,42 @@ void StarMatrix::clearMatrixOneByOne(){
     {
 		GAMEDATA::getInstance()->setCurLevel(GAMEDATA::getInstance()->getCurLevel() + 1);
 		m_layer->gotoNextLevel();
-	}else{
+	}
+    else
+    {
 		m_layer->gotoGameOver();
 		CCLOG("GAME OVER");
 	}
 }
+void StarMatrix::clearMatrix()
+{
+    for(int i=0;i<ROW_NUM;i++)
+    {
+        for(int j=0;j<COL_NUM;j++)
+        {
+            if(stars[i][j] == nullptr)
+                continue;
+            stars[i][j]->removeFromParentAndCleanup(true);
+            stars[i][j] = nullptr;
+            return;
+        }
+    }
+    
+    this->removeAllChildren();
 
-int StarMatrix::getLeftStarNum(){
+    //能够执行到这一句说明Matrix全为空，不在需要清空
+    needClear = false;
+}
+
+void StarMatrix::reset()
+{
+    this->clearMatrix();
+    
+    //initMatrix();
+}
+
+int StarMatrix::getLeftStarNum()
+{
 	int ret = 0;
 	for(int i=0;i<ROW_NUM;i++){
 		for(int j=0;j<COL_NUM;j++){

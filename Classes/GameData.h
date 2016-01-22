@@ -23,9 +23,12 @@ public:
 	int getJiangli(int size);
 
 	void saveHighestScore();
+    
+public:
+    void init();
 private:
 	GAMEDATA();
-	void init();
+
 private:
 	static GAMEDATA* _instance;
 	int cur_level;

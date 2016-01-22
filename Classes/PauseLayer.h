@@ -19,5 +19,7 @@ public:
     
 private:
     EventListenerTouchOneByOne* listener;
+    
+    void removeSelfListener();
 };
 #endif
