@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2015 Chukong Technologies
+ Copyright (c) 2013-2014 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+
 #ifndef COCOS2DX_PLATFORM_THIRDPARTY_S3TC_
 #define COCOS2DX_PLATFORM_THIRDPARTY_S3TC_
-/// @cond DO_NOT_SHOW
 
-#include "platform/CCStdC.h"
+#include "CCStdC.h"
 
 enum class S3TCDecodeFlag
 {
@@ -43,5 +43,6 @@ enum class S3TCDecodeFlag
                  S3TCDecodeFlag decodeFlag
                  );
 
- /// @endcond
+
 #endif /* defined(COCOS2DX_PLATFORM_THIRDPARTY_S3TC_) */
+

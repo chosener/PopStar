@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDatas.h"
-#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -51,7 +50,7 @@ enum AnimationType
  *  @js NA
  *  @lua NA
  */
-class  CC_STUDIO_DLL ProcessBase : public cocos2d::Ref
+class  ProcessBase : public cocos2d::Ref
 {
 public:
     ProcessBase(void);

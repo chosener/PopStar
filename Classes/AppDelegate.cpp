@@ -19,7 +19,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview)
     {
-        glview = GLViewImpl::create("POPSTAR");
+        glview = GLView::create("POPSTAR");
         director->setOpenGLView(glview);
     }
 	//glview->setDesignResolutionSize(480,800,ResolutionPolicy::SHOW_ALL);

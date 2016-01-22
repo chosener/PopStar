@@ -125,13 +125,13 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
 
     if (0 == _asyncRefCount)
     {
-        Director::getInstance()->getScheduler()->schedule(CC_SCHEDULE_SELECTOR(TextureCache::addImageAsyncCallBack), this, 0, false);
+        Director::getInstance()->getScheduler()->schedule(schedule_selector(TextureCache::addImageAsyncCallBack), this, 0, false);
     }
 
     ++_asyncRefCount;
 
     // generate async struct
-    AsyncStruct *data = new (std::nothrow) AsyncStruct(fullpath, callback);
+    AsyncStruct *data = new AsyncStruct(fullpath, callback);
 
     // add async struct into queue
     _asyncStructQueueMutex.lock();
@@ -218,7 +218,7 @@ void TextureCache::loadImage()
         {
             const std::string& filename = asyncStruct->filename;
             // generate image      
-            image = new (std::nothrow) Image();
+            image = new Image();
             if (image && !image->initWithImageFileThreadSafe(filename))
             {
                 CC_SAFE_RELEASE(image);
@@ -228,7 +228,7 @@ void TextureCache::loadImage()
         }    
 
         // generate image info
-        ImageInfo *imageInfo = new (std::nothrow) ImageInfo();
+        ImageInfo *imageInfo = new ImageInfo();
         imageInfo->asyncStruct = asyncStruct;
         imageInfo->image = image;
 
@@ -272,7 +272,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
         if (image)
         {
             // generate texture in render thread
-            texture = new (std::nothrow) Texture2D();
+            texture = new Texture2D();
 
             texture->initWithImage(image);
 
@@ -308,7 +308,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
         --_asyncRefCount;
         if (0 == _asyncRefCount)
         {
-            Director::getInstance()->getScheduler()->unschedule(CC_SCHEDULE_SELECTOR(TextureCache::addImageAsyncCallBack), this);
+            Director::getInstance()->getScheduler()->unschedule(schedule_selector(TextureCache::addImageAsyncCallBack), this);
         }
     }
 }
@@ -335,13 +335,13 @@ Texture2D * TextureCache::addImage(const std::string &path)
         // all images are handled by UIImage except PVR extension that is handled by our own handler
         do 
         {
-            image = new (std::nothrow) Image();
+            image = new Image();
             CC_BREAK_IF(nullptr == image);
 
             bool bRet = image->initWithImageFile(fullpath);
             CC_BREAK_IF(!bRet);
 
-            texture = new (std::nothrow) Texture2D();
+            texture = new Texture2D();
 
             if( texture && texture->initWithImage(image) )
             {
@@ -379,7 +379,7 @@ Texture2D* TextureCache::addImage(Image *image, const std::string &key)
         }
 
         // prevents overloading the autorelease pool
-        texture = new (std::nothrow) Texture2D();
+        texture = new Texture2D();
         texture->initWithImage(image);
 
         if(texture)
@@ -406,7 +406,6 @@ Texture2D* TextureCache::addImage(Image *image, const std::string &key)
 bool TextureCache::reloadTexture(const std::string& fileName)
 {
     Texture2D * texture = nullptr;
-    Image * image = nullptr;
 
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(fileName);
     if (fullpath.size() == 0)
@@ -427,7 +426,7 @@ bool TextureCache::reloadTexture(const std::string& fileName)
     else
     {
         do {
-            image = new (std::nothrow) Image();
+            Image* image = new Image();
             CC_BREAK_IF(nullptr == image);
 
             bool bRet = image->initWithImageFile(fullpath);
@@ -436,8 +435,6 @@ bool TextureCache::reloadTexture(const std::string& fileName)
             ret = texture->initWithImage(image);
         } while (0);
     }
-    
-    CC_SAFE_RELEASE(image);
 
     return ret;
 }
@@ -633,7 +630,7 @@ VolatileTexture* VolatileTextureMgr::findVolotileTexture(Texture2D *tt)
     
     if (! vt)
     {
-        vt = new (std::nothrow) VolatileTexture(tt);
+        vt = new VolatileTexture(tt);
         _textures.push_back(vt);
     }
     
@@ -726,7 +723,7 @@ void VolatileTextureMgr::reloadAllTextures()
         {
         case VolatileTexture::kImageFile:
             {
-                Image* image = new (std::nothrow) Image();
+                Image* image = new Image();
                 
                 Data data = FileUtils::getInstance()->getDataFromFile(vt->_fileName);
                 

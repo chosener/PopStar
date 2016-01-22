@@ -36,20 +36,13 @@ NS_CC_BEGIN
  */
 
 /**
-@brief Progress to percentage.
-@details This action show the target node from current percentage to the specified percentage.
-        You should specify the destination percentage when creating the action.
+@brief Progress to percentage
 @since v0.99.1
 */
 class CC_DLL ProgressTo : public ActionInterval
 {
 public:
-    /** 
-     * @brief Create and initializes with a duration and a destination percentage.
-     * @param duration Specify the duration of the ProgressTo action. It's a value in seconds.
-     * @param percent Specify the destination percentage.
-     * @return If the creation sucess, return a pointer of ProgressTo action; otherwise, return nil.
-     */
+    /** Creates and initializes with a duration and a percent */
     static ProgressTo* create(float duration, float percent);
 
     //
@@ -64,12 +57,7 @@ CC_CONSTRUCTOR_ACCESS:
     ProgressTo() {}
     virtual ~ProgressTo() {}
 
-    /** 
-     * @brief Initializes with a duration and destination percentage. 
-     * @param duration Specify the duration of the ProgressTo action. It's a value in seconds.
-     * @param percent Specify the destination percentage.
-     * @return If the creation sucess, return true; otherwise, return false.
-     */
+    /** Initializes with a duration and a percent */
     bool initWithDuration(float duration, float percent);
 
 protected:
@@ -81,19 +69,13 @@ private:
 };
 
 /**
-@brief Progress from a percentage to another percentage.
+@brief Progress from a percentage to another percentage
 @since v0.99.1
 */
 class CC_DLL ProgressFromTo : public ActionInterval
 {
 public:
-    /** 
-     * @brief Create and initializes the action with a duration, a "from" percentage and a "to" percentage.
-     * @param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.
-     * @param fromPercentage Specify the source percentage.
-     * @param toPercentage Specify the destination percentage.
-     * @return If the creation sucess, return a pointer of ProgressFromTo action; otherwise, return nil.
-     */
+    /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
     static ProgressFromTo* create(float duration, float fromPercentage, float toPercentage);
 
     //
@@ -108,13 +90,7 @@ CC_CONSTRUCTOR_ACCESS:
     ProgressFromTo() {}
     virtual ~ProgressFromTo() {}
 
-    /**
-     * @brief Initializes the action with a duration, a "from" percentage and a "to" percentage.
-     * @param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.
-     * @param fromPercentage Specify the source percentage.
-     * @param toPercentage Specify the destination percentage.
-     * @return If the creation sucess, return true; otherwise, return false.
-     */
+    /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
     bool initWithDuration(float duration, float fromPercentage, float toPercentage);
 
 protected:

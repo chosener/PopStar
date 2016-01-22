@@ -26,211 +26,147 @@ THE SOFTWARE.
 #define __UIPAGEVIEW_H__
 
 #include "ui/UILayout.h"
-#include "ui/GUIExport.h"
 
-/**
- * @addtogroup ui
- * @{
- */
 NS_CC_BEGIN
 
 namespace ui {
 
-/**
- *PageView page turn event type.
- *@deprecated Use `PageView::EventType` instead.
- */
 typedef enum
 {
     PAGEVIEW_EVENT_TURNING,
 }PageViewEventType;
 
-/**
- *A callback which would be called when a PageView turning event is happening.
- *@deprecated Use `PageView::ccPageViewCallback` instead.
- */
 typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
-/**
- *@brief Layout manager that allows the user to flip left and right through pages of data.
- *
- */
-class CC_GUI_DLL PageView : public Layout
+class PageView : public Layout
 {
     
     DECLARE_CLASS_GUI_INFO
     
 public:
-    /**
-     * Page turn event tpye.
-     */
     enum class EventType
     {
         TURNING
     };
     
-    /**
-     * Touch direction type.
-     */
     enum class TouchDirection
     {
         LEFT,
         RIGHT
     };
     
-    /**
-     *PageView page turn event callback.
-     */
     typedef std::function<void(Ref*,EventType)> ccPageViewCallback;
-
     /**
      * Default constructor
-     * @js ctor
-     * @lua new
      */
     PageView();
     
     /**
      * Default destructor
-     * @js NA
-     * @lua NA
      */
     virtual ~PageView();
     
     /**
-     * Create an empty PageView.
-     *@return A PageView instance.
+     * Allocates and initializes.
      */
     static PageView* create();
     
     /**
-     * Add a widget as a page of PageView in a given index.
+     * Add a widget to a page of pageview.
      *
-     * @param widget    Widget to be added to pageview.
-     * @param pageIdx   A given index.
-     * @param forceCreate   If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it.
+     * @param widget    widget to be added to pageview.
+     *
+     * @param pageIdx   index of page.
+     *
+     * @param forceCreate   if force create and there is no page exsit, pageview would create a default page for adding widget.
      */
     void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
     
     /**
-     * Insert a page into the end of PageView.
+     * Push back a page to pageview.
      *
-     * @param page Page to be inserted.
+     * @param page    page to be added to pageview.
      */
     void addPage(Layout* page);
     
     /**
-     * Insert a page into PageView at a given index.
+     * Insert a page to pageview.
      *
-     * @param page  Page to be inserted.
-     * @param idx   A given index.
+     * @param page    page to be added to pageview.
      */
     void insertPage(Layout* page, int idx);
     
     /**
-     * Remove a page of PageView.
+     * Remove a page of pageview.
      *
-     * @param page  Page to be removed.
+     * @param page    page which will be removed.
      */
     void removePage(Layout* page);
 
     /**
-     * Remove a page at a given index of PageView.
+     * Remove a page at index of pageview.
      *
-     * @param index  A given index.
+     * @param index    index of page.
      */
     void removePageAtIndex(ssize_t index);
     
-    
-    /**
-     * @brief Remove all pages of the PageView.
-     */
     void removeAllPages();
     
     /**
-     * Scroll to a page with a given index.
+     * scroll pageview to index.
      *
-     * @param idx   A given index in the PageView.
+     * @param idx    index of page.
      */
     void scrollToPage(ssize_t idx);
     
     /**
-     * Gets current displayed page index.
+     * Gets current page index.
+     *
      * @return current page index.
      */
     ssize_t getCurPageIndex() const;
     
-     
-    /**
-     * @brief Get all the pages in the PageView.
-     * @return A vector of Layout pionters.
-     */
+    
     Vector<Layout*>& getPages();
     
-    
-    /**
-     * @brief Get a page at a given index
-     *
-     * @param index A given index.
-     * @return A layout pointer in PageView container.
-     */
     Layout* getPage(ssize_t index);
     
-    /**
-     * Add a page turn callback to PageView, then when one page is turning, the callback will be called.
-     *@deprecated Use `PageView::addEventListener` instead.
-     *@param target A pointer of `Ref*` type.
-     *@param selector A member function pointer with signature of `SEL_PageViewEvent`.
-     */
+    // event
     CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
-
-    
-    /**
-     * @brief Add a page turn callback to PageView, then when one page is turning, the callback will be called.
-     *
-     * @param callback A page turning callback.
-     */
     void addEventListener(const ccPageViewCallback& callback);
     
-    //override methods
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
+    
+    //override "update" method of widget.
     virtual void update(float dt) override;
+    /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param type LayoutType
+     */
     virtual void setLayoutType(Type type) override{};
+    
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
     virtual Type getLayoutType() const override{return Type::ABSOLUTE;};
+    
+    /**
+     * Returns the "class name" of widget.
+     */
     virtual std::string getDescription() const override;
-    /**
-     * @lua NA
-     */
+
     virtual void onEnter() override;
-
-    /**   
-     *@brief If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.
-     *@param threshold  A threshold in float.
-     */
-    void setCustomScrollThreshold(float threshold);
-
-    /**
-     *@brief Query the custom scroll threshold of the PageView.
-     *@return Custom scroll threshold in float.
-     */
-    float getCustomScrollThreshold()const;
-
-    /**
-     *@brief Set using user defined scroll page threshold or not.
-     * If you set it to false, then the default scroll threshold is pageView.width / 2
-     *@param flag True if using custom scroll threshold, false otherwise.
-     */
-    void setUsingCustomScrollThreshold(bool flag);
-
-    /**
-     *@brief Query whether use user defined scroll page threshold or not.
-     *@return True if using custom scroll threshold, false otherwise.
-     */
-    bool isUsingCustomScrollThreshold()const;
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -251,7 +187,7 @@ protected:
 
     virtual void handleMoveLogic(Touch *touch) ;
     virtual void handleReleaseLogic(Touch *touch) ;
-    virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) override;
+    virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) ;
     
     
     virtual void onSizeChanged() override;
@@ -282,9 +218,7 @@ protected:
     
     float _leftBoundary;
     float _rightBoundary;
-    float _customScrollThreshold;
-    bool _usingCustomScrollThreshold;
-
+   
     float _childFocusCancelOffset;
 
     Ref* _pageViewEventListener;
@@ -305,7 +239,5 @@ protected:
 
 }
 NS_CC_END
-// end of ui group
-/// @}
 
 #endif /* defined(__PageView__) */

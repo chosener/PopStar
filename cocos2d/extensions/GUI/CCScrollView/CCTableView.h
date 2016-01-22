@@ -28,15 +28,10 @@
 
 #include "CCScrollView.h"
 #include "CCTableViewCell.h"
-#include "extensions/ExtensionExport.h"
 
 #include <set>
 #include <vector>
 
-/**
- * @addtogroup ui
- * @{
- */
 NS_CC_EXT_BEGIN
 
 class TableView;
@@ -44,7 +39,7 @@ class TableView;
 /**
  * Sole purpose of this delegate is to single touch event in this version.
  */
-class CC_EX_DLL TableViewDelegate : public ScrollViewDelegate
+class TableViewDelegate : public ScrollViewDelegate
 {
 public:
     /**
@@ -95,7 +90,7 @@ public:
 /**
  * Data source that governs table backend data.
  */
-class CC_EX_DLL TableViewDataSource
+class TableViewDataSource
 {
 public:
     /**
@@ -144,7 +139,7 @@ public:
  *
  * This is a very basic, minimal implementation to bring UITableView-like component into cocos2d world.
  */
-class CC_EX_DLL TableView : public ScrollView, public ScrollViewDelegate
+class TableView : public ScrollView, public ScrollViewDelegate
 {
 public:
     
@@ -188,7 +183,6 @@ public:
     static TableView* create(TableViewDataSource* dataSource, Size size, Node *container);
     /**
      * @js ctor
-     * @lua new
      */
     TableView();
     /**
@@ -333,8 +327,7 @@ public:
 
 };
 
+
 NS_CC_EXT_END
-// end of ui group
-/// @}
 
 #endif /* __CCTABLEVIEW_H__ */

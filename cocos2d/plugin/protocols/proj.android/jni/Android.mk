@@ -18,13 +18,11 @@ $(addprefix ../../platform/android/, \
     ProtocolShare.cpp \
     ProtocolUser.cpp \
     ProtocolSocial.cpp \
-    AgentManager.cpp \
-    FacebookAgent.cpp \
 ) \
 ../../PluginManager.cpp \
 ../../PluginParam.cpp
 
-LOCAL_CFLAGS := -std=c++11 -Wno-psabi
+LOCAL_CFLAGS := -Wno-psabi
 LOCAL_EXPORT_CFLAGS := -Wno-psabi
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../include $(LOCAL_PATH)/../../platform/android

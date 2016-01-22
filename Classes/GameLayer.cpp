@@ -1,7 +1,7 @@
 #include "GameLayer.h"
 #include "FloatWord.h"
 #include "GameData.h"
-#include "Chinese.h"
+
 #include "StarMatrix.h"
 #include "MenuScene.h"
 #include "Audio.h"
@@ -149,7 +149,7 @@ void GameLayer::floatLevelWord()
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
     
-    string strGuanqia = ChineseWord("guanqia") + StringUtils::format(": %d",GAMEDATA::getInstance()->getNextLevel());
+    string strGuanqia = StringUtils::format("关卡: %d",GAMEDATA::getInstance()->getNextLevel());
     
 	_levelMsg = FloatWord::create(strGuanqia,50,Point(visibleSize.width,visibleSize.height/3*2));
     
@@ -164,8 +164,7 @@ void GameLayer::floatLevelWord()
 void GameLayer::floatTargetScoreWord()
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	_targetScore = FloatWord::create(
-		ChineseWord("mubiao") + StringUtils::format(": %d",GAMEDATA::getInstance()->getNextScore()) + ChineseWord("fen"),50, Point(visibleSize.width,visibleSize.height/3));
+	_targetScore = FloatWord::create(StringUtils::format("目标: %d分",GAMEDATA::getInstance()->getNextScore()),50, Point(visibleSize.width,visibleSize.height/3));
 	this->addChild(_targetScore,1);
     
 	_targetScore->floatIn(0.5f,CC_CALLBACK_0(GameLayer::removeFloatWord,this));
@@ -239,7 +238,7 @@ void GameLayer::flyNumScore(int num,Vec2 _position)
 
 void GameLayer::showLinkNum(int size)
 {
-	string s = StringUtils::format("%d",size) + ChineseWord("lianji") + StringUtils::format("%d",size*size*5) + ChineseWord("fen");
+	string s = StringUtils::format("%d",size) + StringUtils::format("连击增加%d分",size*size*5);
 	linkNum->setString(s);
 	linkNum->setVisible(true);
 }
@@ -254,11 +253,11 @@ void GameLayer::hideLinkNum()
 void GameLayer::floatLeftStarMsg(int leftNum)
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	FloatWord* leftStarMsg1 = FloatWord::create(ChineseWord("shengyu") + String::createWithFormat("%d",leftNum)->_string +ChineseWord("ge"), 
+	FloatWord* leftStarMsg1 = FloatWord::create(String::createWithFormat("剩余%d个",leftNum)->_string,
 		50,Point(visibleSize.width,visibleSize.height/2));
 	this->addChild(leftStarMsg1);
     int jiangLiScore = GAMEDATA::getInstance()->getJiangli(leftNum);
-	FloatWord* leftStarMsg2 = FloatWord::create(ChineseWord("jiangli") + String::createWithFormat("%d",jiangLiScore)->_string + ChineseWord("fen"),
+	FloatWord* leftStarMsg2 = FloatWord::create(String::createWithFormat("奖励%d分",jiangLiScore)->_string,
 		50,Point(visibleSize.width,visibleSize.height/2 - 50));
 	this->addChild(leftStarMsg2);
 

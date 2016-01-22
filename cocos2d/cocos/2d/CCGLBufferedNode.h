@@ -25,11 +25,8 @@ THE SOFTWARE.
 #ifndef __CC_GL_BUFFERED_NODE__
 #define __CC_GL_BUFFERED_NODE__
 
-#include "platform/CCGL.h"
+#include "CCGL.h"
 
-/**
-* @js NA
-*/
 class GLBufferedNode
 {
 public:
@@ -43,21 +40,18 @@ public:
      */
     virtual ~GLBufferedNode();
 
-    /**@{
+    /**
      * Load the given data into this Node's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
      */
     void setGLBufferData(void *buf, GLuint bufSize, int slot);
     void setGLIndexData(void *buf, GLuint bufSize, int slot);
-    /**@}*/
-    /** Allocate 4 buffer objs per node, and index into them as slots.*/
-    #define BUFFER_SLOTS 4
-    /**Handle for vertex buffers.*/
+
+    // We allocate 4 buffer objs per node, and index into them as slots.
+#define BUFFER_SLOTS 4
     GLuint _bufferObject[BUFFER_SLOTS];
-    /**Size in bytes for vertex buffers.*/
     GLuint _bufferSize[BUFFER_SLOTS];
-    /**Handle for index buffers.*/
+
     GLuint _indexBufferObject[BUFFER_SLOTS];
-    /**Size in bytes for index buffers.*/
     GLuint _indexBufferSize[BUFFER_SLOTS];
 };
 #endif // __CC_GL_BUFFERED_NODE__

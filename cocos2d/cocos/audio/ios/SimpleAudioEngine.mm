@@ -157,7 +157,7 @@ SimpleAudioEngine* SimpleAudioEngine::getInstance()
 {
     if (! s_pEngine)
     {
-        s_pEngine = new (std::nothrow) SimpleAudioEngine();
+        s_pEngine = new SimpleAudioEngine();
     }
     
     return s_pEngine;

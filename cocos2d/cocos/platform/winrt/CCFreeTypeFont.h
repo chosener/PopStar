@@ -35,10 +35,10 @@ THE SOFTWARE.
 #define generic GenericFromFreeTypeLibrary
 #define internal InternalFromFreeTypeLibrary
 #include <ft2build.h>
-#include <freetype.h>
-#include <ftglyph.h>
-#include <ftoutln.h>
-#include <fttrigon.h>
+#include <freetype/freetype.h>
+#include <freetype/ftglyph.h>
+#include <freetype/ftoutln.h>
+#include <freetype/fttrigon.h>
 #undef generic
 #undef internal
 
@@ -81,7 +81,7 @@ public:
 
     unsigned char* initWithString(const char * text, const FontDefinition& textDefinition, Device::TextAlign align, int &width, int &height, ssize_t& dataLength);
 
-    static const std::string DEFAULT_FONT;
+
 
 private:
 
@@ -132,7 +132,6 @@ private:
     int             m_fontFillColorR;
     int             m_fontFillColorG;
     int             m_fontFillColorB;
-    int             m_fontFillColorA;
 };
 
 NS_CC_END

@@ -24,16 +24,10 @@ THE SOFTWARE.
 #ifndef __CCSPRITEFRAMECACHEHELPER_H__
 #define __CCSPRITEFRAMECACHEHELPER_H__
 
-#include "platform/CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 #include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CocosStudioExport.h"
+#include <stack>
 #include <string>
-#include <map>
-#include <vector>
-
-namespace cocos2d {
-    class SpriteFrame;
-}
 
 namespace cocostudio {
 
@@ -41,7 +35,7 @@ namespace cocostudio {
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL SpriteFrameCacheHelper
+class  SpriteFrameCacheHelper
 {
 public:
 	/** @deprecated Use getInstance() instead */
@@ -56,16 +50,11 @@ public:
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath);
-    void removeSpriteFrameFromFile(const std::string& plistPath);
 
 private:
-    void retainSpriteFrames(const std::string& plistPath);
-    void releaseSpriteFrames(const std::string& plistPath);
-
     SpriteFrameCacheHelper();
     ~SpriteFrameCacheHelper();
 
-    std::map<std::string, std::vector<cocos2d::SpriteFrame*> > _usingSpriteFrames;
     static SpriteFrameCacheHelper *_spriteFrameCacheHelper;
 };
 

@@ -1,6 +1,4 @@
-/*!
-@cond GEN_REFERENCE_BOOK
-
+/*! 
 @mainpage cocos2d-x
 
 @image html cocos2dx_portrait.png
@@ -55,5 +53,4 @@ THE SOFTWARE. \n
 - Fork our repository on github, commit your changes, and send a "pull request" to us. We will merge your contribution to master
 - Suggestion, bug fixes, and improvements are highly appreciated.
 
-@endcond
 */

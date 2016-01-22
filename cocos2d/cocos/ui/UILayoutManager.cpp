@@ -31,7 +31,7 @@ namespace ui {
 
 LinearHorizontalLayoutManager* LinearHorizontalLayoutManager::create()
 {
-    LinearHorizontalLayoutManager* exe = new (std::nothrow) LinearHorizontalLayoutManager();
+    LinearHorizontalLayoutManager* exe = new LinearHorizontalLayoutManager();
     if (exe)
     {
         exe->autorelease();
@@ -88,7 +88,7 @@ void LinearHorizontalLayoutManager::doLayout(LayoutProtocol* layout)
 //LinearVerticalLayoutManager
 LinearVerticalLayoutManager* LinearVerticalLayoutManager::create()
 {
-    LinearVerticalLayoutManager* exe = new (std::nothrow) LinearVerticalLayoutManager();
+    LinearVerticalLayoutManager* exe = new LinearVerticalLayoutManager();
     if (exe)
     {
         exe->autorelease();
@@ -135,7 +135,7 @@ void LinearVerticalLayoutManager::doLayout(LayoutProtocol* layout)
                 Margin mg = layoutParameter->getMargin();
                 finalPosX += mg.left;
                 finalPosY -= mg.top;
-                subWidget->setPosition(finalPosX, finalPosY);
+                subWidget->setPosition(Vec2(finalPosX, finalPosY));
                 topBoundary = subWidget->getPosition().y - subWidget->getAnchorPoint().y * subWidget->getContentSize().height - mg.bottom;
             }
         }
@@ -146,7 +146,7 @@ void LinearVerticalLayoutManager::doLayout(LayoutProtocol* layout)
 
 RelativeLayoutManager* RelativeLayoutManager::create()
 {
-    RelativeLayoutManager* exe = new (std::nothrow) RelativeLayoutManager();
+    RelativeLayoutManager* exe = new RelativeLayoutManager();
     if (exe)
     {
         exe->autorelease();

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014 cocos2d-x.org
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,7 +26,7 @@
 #ifndef __cocos2d_libs__CCController__
 #define __cocos2d_libs__CCController__
 
-#include "platform/CCPlatformMacros.h"
+#include "CCPlatformMacros.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -37,21 +38,10 @@ class EventListenerController;
 class EventController;
 class EventDispatcher;
 
-/**
- * @addtogroup base
- * @{
- */
-
-/**
- * @class Controller
- * @brief A Controller object represents a connected physical game controller.
- * @js NA
- */
 class Controller
 {
 public:
-    /** 
-     * Controllers' standard  key
+    /** Controllers' standard  key
      * Controller receives only standard key which contained within enum Key by default.
      */
     enum Key
@@ -90,89 +80,49 @@ public:
         KEY_MAX
     };
 
-    /**
-     * @struct KeyStatus
-     * 
-     */
     typedef struct _keyStatus
     {
-        /** A Boolean value that indicates whether the key is considered pressed. */
         bool isPressed;
-        /** The value of key.This value is used in conjunction with the isPressed parameter. */
         float value;
-        /** A Boolean value that indicates whether the value of key is analog.
-         * If isAnalog is true, the key value might be a float from -1 to 1. 
-         * If isAnalog is false, the key value would be contain one number: 0 or 1.
-         */
         bool isAnalog;
     }KeyStatus;
     
     static const int TAG_UNSET = -1;
 
-    /**
-     * Gets all Controller objects.
-     */
     static const std::vector<Controller*>& getAllController(){ return s_allController;}
-
-    /** 
-     * Gets a Controller object with tag.
-     *
+    /** Gets a controller with its tag
      * @param tag   An identifier to find the controller.
-     * @return A Controller object.
      */
     static Controller* getControllerByTag(int tag);
-
-    /**
-     * Start discovering new controllers.
-     *
-     * @warning The API only work on the IOS platform. Empty implementation on other platform.
+    /** To start discovering new controllers
+     * @warning The API only work on the IOS platform.Empty implementation on Android
      */
     static void startDiscoveryController();
-
-    /** 
-     * Stop the discovery process.
-     *
-     * @warning The API only work on the IOS platform.Empty implementation on other platform.
+    /** End the discovery process
+     * @warning The API only work on the IOS platform.Empty implementation on Android
      */
     static void stopDiscoveryController();
 
-    /**
-     * Gets the name of this Controller object.
-     */
     const std::string& getDeviceName() const { return _deviceName;}
-
-    /**
-     * Gets the Controller id.
-     */
     int getDeviceId() const { return _deviceId;}
 
-    /**
-     * Indicates whether the Controller is connected.
-     */
     bool isConnected() const;
 
-    /**
-     * 
-     */
     const KeyStatus& getKeyStatus(int keyCode);
     
-    /** 
-     * Activate receives key event from external key. e.g. back,menu.
+    /** Activate receives key event from external key. e.g. back,menu.
      * Controller receives only standard key which contained within enum Key by default.
-     *
      * @warning The API only work on the android platform for support diversified game controller.
      *
-     * @param externalKeyCode   External key code.
-     * @param receive   True if external key event on this controller should be receive, false otherwise.
+     * @param externalKeyCode  external key code
+     * @param receive  true if external key event on this controller should be receive, false otherwise.
      */
     void receiveExternalKeyEvent(int externalKeyCode,bool receive);
 
-    /** 
-     * Changes the tag that is used to identify the controller easily.
+    /** Changes the tag that is used to identify the controller easily.
      * @param tag   A integer that identifies the controller.
      */
     void setTag(int tag) { _controllerTag = tag;}
-
     /**
      * Returns a tag that is used to identify the controller easily.
      *
@@ -213,8 +163,6 @@ private:
     friend class EventListenerController;
 };
 
-// end group
-/// @}
 
 NS_CC_END
 

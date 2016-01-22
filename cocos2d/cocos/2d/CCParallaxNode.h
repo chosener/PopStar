@@ -35,12 +35,11 @@ NS_CC_BEGIN
 struct _ccArray;
 
 /**
- * @addtogroup _2d
+ * @addtogroup tilemap_parallax_nodes
  * @{
  */
 
-/** @class ParallaxNode
- * @brief ParallaxNode: A node that simulates a parallax scroller
+/** @brief ParallaxNode: A node that simulates a parallax scroller
 
 The children will be moved faster / slower than the parent according the the parallax ratio.
 
@@ -48,33 +47,17 @@ The children will be moved faster / slower than the parent according the the par
 class CC_DLL ParallaxNode : public Node
 {
 public:
-    /** Create a Parallax node. 
-     *
-     * @return An autoreleased ParallaxNode object.
-     */
+    // Create a Parallax node
     static ParallaxNode * create();
 
     // prevents compiler warning: "Included function hides overloaded virtual functions"
     using Node::addChild;
 
-    /** Adds a child to the container with a local z-order, parallax ratio and position offset.
-     *
-     * @param child A child node.
-     * @param z Z order for drawing priority.
-     * @param parallaxRatio A given parallax ratio.
-     * @param positionOffset A given position offset.
-     */
     void addChild(Node * child, int z, const Vec2& parallaxRatio, const Vec2& positionOffset);
 
-    /** Sets an array of layers for the Parallax node.
-     *
-     * @param parallaxArray An array of layers for the Parallax node.
-     */
+    /** Sets an array of layers for the Parallax node */
     void setParallaxArray( struct _ccArray *parallaxArray) { _parallaxArray = parallaxArray; }
-    /** Returns the array of layers of the Parallax node.
-     *
-     * @return An array of layers for the Parallax node.
-     */
+    /** Returns the array of layers of the Parallax node */
     struct _ccArray* getParallaxArray() { return _parallaxArray; }
     const struct _ccArray* getParallaxArray() const { return _parallaxArray; }
 
@@ -87,7 +70,7 @@ public:
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
-CC_CONSTRUCTOR_ACCESS:
+protected:
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset
      It returns self, so you can chain several addChilds.
      @since v0.8
@@ -100,7 +83,6 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~ParallaxNode();
 
-protected:
     Vec2 absolutePosition();
 
     Vec2    _lastPosition;
@@ -110,7 +92,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParallaxNode);
 };
 
-// end of _2d group
+// end of tilemap_parallax_nodes group
 /// @}
 
 NS_CC_END

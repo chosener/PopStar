@@ -32,27 +32,15 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup _2d
+ * @addtogroup particle_nodes
  * @{
  */
 
-/** @class ParticleFire
- * @brief A fire particle system.
- */
+//! @brief A fire particle system
 class CC_DLL ParticleFire : public ParticleSystemQuad
 {
 public:
-    /** Create a fire particle system.
-     *
-     * @return An autoreleased ParticleFire object.
-     */
     static ParticleFire* create();
-    /** Create a fire particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleFire object.
-     * @js NA
-     */
     static ParticleFire* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -66,30 +54,18 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~ParticleFire(){}
 
-    bool init() override { return initWithTotalParticles(250); }
+    bool init(){ return initWithTotalParticles(250); }
     virtual bool initWithTotalParticles(int numberOfParticles) override;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleFire);
 };
 
-/** @class ParticleFireworks
- * @brief A fireworks particle system.
- */
+//! @brief A fireworks particle system
 class CC_DLL ParticleFireworks : public ParticleSystemQuad
 {
 public:
-    /** Create a fireworks particle system.
-     *
-     * @return An autoreleased ParticleFireworks object.
-     */
     static ParticleFireworks* create();
-    /** Create a fireworks particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleFireworks object.
-     * @js NA
-     */
     static ParticleFireworks* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -111,23 +87,11 @@ private:
 
 };
 
-/** @class ParticleSun
- * @brief A sun particle system.
- */
+//! @brief A sun particle system
 class CC_DLL ParticleSun : public ParticleSystemQuad
 {
 public:
-    /** Create a sun particle system.
-     *
-     * @return An autoreleased ParticleSun object.
-     */
     static ParticleSun* create();
-    /** Create a sun particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleSun object.
-     * @js NA
-     */
     static ParticleSun* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -149,23 +113,11 @@ private:
 
 };
 
-/** @class ParticleGalaxy
- * @brief A galaxy particle system.
- */
+//! @brief A galaxy particle system
 class CC_DLL ParticleGalaxy : public ParticleSystemQuad
 {
 public:
-    /** Create a galaxy particle system.
-     *
-     * @return An autoreleased ParticleGalaxy object.
-     */
     static ParticleGalaxy* create();
-    /** Create a galaxy particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleGalaxy object.
-     * @js NA
-     */
     static ParticleGalaxy* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -187,23 +139,11 @@ private:
 
 };
 
-/** @class ParticleFlower
- * @brief A flower particle system.
- */
+//! @brief A flower particle system
 class CC_DLL ParticleFlower : public ParticleSystemQuad
 {
 public:
-    /** Create a flower particle system.
-     *
-     * @return An autoreleased ParticleFlower object.
-     */
     static ParticleFlower* create();
-    /** Create a flower particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleFlower object.
-     * @js NA
-     */
     static ParticleFlower* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -224,23 +164,11 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleFlower);
 };
 
-/** @class ParticleMeteor
- * @brief A meteor particle system.
- */
+//! @brief A meteor particle system
 class CC_DLL ParticleMeteor : public ParticleSystemQuad
 {
 public:
-    /** Create a meteor particle system.
-     *
-     * @return An autoreleased ParticleMeteor object.
-     */
     static ParticleMeteor * create();
-    /** Create a meteor particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleMeteor object.
-     * @js NA
-     */
     static ParticleMeteor* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -261,23 +189,11 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleMeteor);
 };
 
-/** @class ParticleSpiral
- * @brief An spiral particle system.
- */
+//! @brief An spiral particle system
 class CC_DLL ParticleSpiral : public ParticleSystemQuad
 {
 public:
-    /** Create a spiral particle system.
-     *
-     * @return An autoreleased ParticleSpiral object.
-     */
     static ParticleSpiral* create();
-    /** Create a spiral particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleSpiral object.
-     * @js NA
-     */
     static ParticleSpiral* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -299,23 +215,11 @@ private:
 
 };
 
-/** @class ParticleExplosion
- * @brief An explosion particle system.
- */
+//! @brief An explosion particle system
 class CC_DLL ParticleExplosion : public ParticleSystemQuad
 {
 public:
-    /** Create a explosion particle system.
-     *
-     * @return An autoreleased ParticleExplosion object.
-     */
     static ParticleExplosion* create();
-    /** Create a explosion particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleExplosion object.
-     * @js NA
-     */
     static ParticleExplosion* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -336,23 +240,11 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleExplosion);
 };
 
-/** @class ParticleSmoke
- * @brief An smoke particle system.
- */
+//! @brief An smoke particle system
 class CC_DLL ParticleSmoke : public ParticleSystemQuad
 {
 public:
-    /** Create a smoke particle system.
-     *
-     * @return An autoreleased ParticleSmoke object.
-     */
     static ParticleSmoke* create();
-    /** Create a smoke particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleSmoke object.
-     * @js NA
-     */
     static ParticleSmoke* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -373,23 +265,11 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSmoke);
 };
 
-/** @class ParticleSnow
- * @brief An snow particle system.
- */
+//! @brief An snow particle system
 class CC_DLL ParticleSnow : public ParticleSystemQuad
 {
 public:
-    /** Create a snow particle system.
-     *
-     * @return An autoreleased ParticleSnow object.
-     */
     static ParticleSnow* create();
-    /** Create a snow particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleSnow object.
-     * @js NA
-     */
     static ParticleSnow* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -410,23 +290,11 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSnow);
 };
 
-/** @class ParticleRain
- * @brief A rain particle system.
- */
+//! @brief A rain particle system
 class CC_DLL ParticleRain : public ParticleSystemQuad
 {
 public:
-    /** Create a rain particle system.
-     *
-     * @return An autoreleased ParticleRain object.
-     */
     static ParticleRain* create();
-    /** Create a rain particle system withe a fixed number of particles.
-     *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleRain object.
-     * @js NA
-     */
     static ParticleRain* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -447,7 +315,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleRain);
 };
 
-// end of _2d group
+// end of particle_nodes group
 /// @}
 
 NS_CC_END

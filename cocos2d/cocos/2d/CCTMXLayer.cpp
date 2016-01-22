@@ -26,11 +26,16 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCTMXLayer.h"
+
+#include "2d/CCTMXXMLParser.h"
 #include "2d/CCTMXTiledMap.h"
 #include "2d/CCSprite.h"
+#include "base/ccCArray.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
+#include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
+
 #include "deprecated/CCString.h" // For StringUtils::format
 
 NS_CC_BEGIN
@@ -40,7 +45,7 @@ NS_CC_BEGIN
 
 TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
-    TMXLayer *ret = new (std::nothrow) TMXLayer();
+    TMXLayer *ret = new TMXLayer();
     if (ret->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
     {
         ret->autorelease();
@@ -50,7 +55,7 @@ TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo
 }
 bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {    
-    // FIXME:: is 35% a good estimate ?
+    // XXX: is 35% a good estimate ?
     Size size = layerInfo->_layerSize;
     float totalNumberOfTiles = size.width * size.height;
     float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
@@ -170,7 +175,7 @@ void TMXLayer::setupTiles()
             //    gid = CFSwapInt32( gid );
             /* We support little endian.*/
 
-            // FIXME:: gid == 0 --> empty tile
+            // XXX: gid == 0 --> empty tile
             if (gid != 0) 
             {
                 this->appendTileForGID(gid, Vec2(x, y));
@@ -238,8 +243,8 @@ void TMXLayer::setupTileSprite(Sprite* sprite, Vec2 pos, int gid)
     {
         // put the anchor in the middle for ease of rotation.
         sprite->setAnchorPoint(Vec2(0.5f,0.5f));
-        sprite->setPosition(getPositionAt(pos).x + sprite->getContentSize().height/2,
-           getPositionAt(pos).y + sprite->getContentSize().width/2 );
+        sprite->setPosition(Vec2(getPositionAt(pos).x + sprite->getContentSize().height/2,
+           getPositionAt(pos).y + sprite->getContentSize().width/2 ) );
 
         int flag = gid & (kTMXTileHorizontalFlag | kTMXTileVerticalFlag );
 
@@ -287,14 +292,14 @@ Sprite* TMXLayer::reusedTileWithRect(Rect rect)
     }
     else
     {
-        // FIXME: HACK: Needed because if "batch node" is nil,
-        // then the Sprite'squad will be reset
+        // XXX HACK: Needed because if "batch node" is nil,
+		// then the Sprite'squad will be reset
         _reusedTile->setBatchNode(nullptr);
         
-        // Re-init the sprite
+		// Re-init the sprite
         _reusedTile->setTextureRect(rect, false, rect.size);
         
-        // restore the batch node
+		// restore the batch node
         _reusedTile->setBatchNode(this);
     }
 
@@ -467,7 +472,7 @@ ssize_t TMXLayer::atlasIndexForExistantZ(int z)
 
 ssize_t TMXLayer::atlasIndexForNewZ(int z)
 {
-    // FIXME:: This can be improved with a sort of binary search
+    // XXX: This can be improved with a sort of binary search
     ssize_t i=0;
     for (i=0; i< _atlasIndexArray->num ; i++) 
     {
@@ -605,29 +610,18 @@ void TMXLayer::removeTileAt(const Vec2& pos)
 //CCTMXLayer - obtaining positions, offset
 Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 {
-    Vec2 ret;
+    Vec2 ret = Vec2::ZERO;
     switch (_layerOrientation) 
     {
     case TMXOrientationOrtho:
-        ret.set( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
+        ret = Vec2( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
     case TMXOrientationIso:
-        ret.set((_mapTileSize.width /2) * (pos.x - pos.y),
+        ret = Vec2((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case TMXOrientationHex:
-        CCASSERT(pos.isZero(), "offset for hexagonal map not implemented yet");
-        break;
-    case TMXOrientationStaggered:
-        {
-            float diffX = 0;
-            if ((int)std::abs(pos.y) % 2 == 1)
-            {
-                diffX = _mapTileSize.width/2;
-            }
-            ret.set(pos.x * _mapTileSize.width + diffX,
-                         (-pos.y) * _mapTileSize.height/2);
-        }
+        CCASSERT(pos.equals(Vec2::ZERO), "offset for hexagonal map not implemented yet");
         break;
     }
     return ret;    
@@ -635,7 +629,7 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 
 Vec2 TMXLayer::getPositionAt(const Vec2& pos)
 {
-    Vec2 ret;
+    Vec2 ret = Vec2::ZERO;
     switch (_layerOrientation)
     {
     case TMXOrientationOrtho:
@@ -646,9 +640,6 @@ Vec2 TMXLayer::getPositionAt(const Vec2& pos)
         break;
     case TMXOrientationHex:
         ret = getPositionForHexAt(pos);
-        break;
-    case TMXOrientationStaggered:
-        ret = getPositionForStaggeredAt(pos);
         break;
     }
     ret = CC_POINT_PIXELS_TO_POINTS( ret );
@@ -675,21 +666,9 @@ Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
         diffY = -_mapTileSize.height/2 ;
     }
 
-    Vec2 xy(
-        pos.x * _mapTileSize.width*3/4,
+    Vec2 xy = Vec2(pos.x * _mapTileSize.width*3/4,
                             (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY);
     return xy;
-}
-
-Vec2 TMXLayer::getPositionForStaggeredAt(const Vec2 &pos)
-{
-    float diffX = 0;
-    if ((int)pos.y % 2 == 1)
-    {
-        diffX = _mapTileSize.width/2;
-    }
-    return Vec2(pos.x * _mapTileSize.width + diffX,
-                (_layerSize.height - pos.y - 1) * _mapTileSize.height/2);
 }
 
 int TMXLayer::getVertexZForPos(const Vec2& pos)
@@ -705,9 +684,6 @@ int TMXLayer::getVertexZForPos(const Vec2& pos)
             ret = static_cast<int>(-(maxVal - (pos.x + pos.y)));
             break;
         case TMXOrientationOrtho:
-            ret = static_cast<int>(-(_layerSize.height-pos.y));
-            break;
-        case TMXOrientationStaggered:
             ret = static_cast<int>(-(_layerSize.height-pos.y));
             break;
         case TMXOrientationHex:
@@ -733,3 +709,4 @@ std::string TMXLayer::getDescription() const
 
 
 NS_CC_END
+

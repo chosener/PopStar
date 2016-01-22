@@ -23,7 +23,7 @@ namespace cocosbuilder {
         return true; \
     }
 
-class CC_DLL CCBMemberVariableAssigner {
+class CCBMemberVariableAssigner {
     public:
         /**
          * @js NA

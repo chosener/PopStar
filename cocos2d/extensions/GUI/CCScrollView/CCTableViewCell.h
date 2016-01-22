@@ -28,19 +28,13 @@
 
 #include "extensions/ExtensionMacros.h"
 #include "2d/CCNode.h"
-#include "extensions/ExtensionExport.h"
 
-/**
- * @addtogroup ui
- * @{
- */
 NS_CC_EXT_BEGIN
-
 
 /**
  * Abstract class for SWTableView cell node
  */
-class CC_EX_DLL TableViewCell: public Node
+class TableViewCell: public Node
 {
 public:
     CREATE_FUNC(TableViewCell);
@@ -61,7 +55,5 @@ private:
 };
 
 NS_CC_EXT_END
-// end of ui group
-/// @}
 
 #endif /* __CCTABLEVIEWCELL_H__ */

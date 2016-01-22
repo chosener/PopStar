@@ -23,8 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "base/CCDirector.h"
 #include "base/CCEventKeyboard.h"
-#include "base/CCEventDispatcher.h"
-#include "platform/android/CCGLViewImpl-android.h"
+#include "CCGLView.h"
 
 #include <android/log.h>
 #include <jni.h>
@@ -33,13 +32,11 @@ using namespace cocos2d;
 
 extern "C" {
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y) {
-        intptr_t idlong = id;
-        cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &idlong, &x, &y);
+        cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &id, &x, &y);
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd(JNIEnv * env, jobject thiz, jint id, jfloat x, jfloat y) {
-        intptr_t idlong = id;
-        cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &idlong, &x, &y);
+        cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
@@ -52,11 +49,7 @@ extern "C" {
         env->GetFloatArrayRegion(xs, 0, size, x);
         env->GetFloatArrayRegion(ys, 0, size, y);
 
-        intptr_t idlong[size];
-        for(int i = 0; i < size; i++)
-            idlong[i] = id[i];
-
-        cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(size, idlong, x, y);
+        cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(size, id, x, y);
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel(JNIEnv * env, jobject thiz, jintArray ids, jfloatArray xs, jfloatArray ys) {
@@ -69,11 +62,7 @@ extern "C" {
         env->GetFloatArrayRegion(xs, 0, size, x);
         env->GetFloatArrayRegion(ys, 0, size, y);
 
-        intptr_t idlong[size];
-        for(int i = 0; i < size; i++)
-            idlong[i] = id[i];
-
-        cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesCancel(size, idlong, x, y);
+        cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesCancel(size, id, x, y);
     }
 
 #define KEYCODE_BACK 0x04

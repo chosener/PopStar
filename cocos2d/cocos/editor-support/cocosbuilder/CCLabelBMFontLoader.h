@@ -11,7 +11,7 @@ namespace cocosbuilder {
 /* Forward declaration. */
 class CCBReader;
 
-class CC_DLL LabelBMFontLoader : public NodeLoader {
+class LabelBMFontLoader : public NodeLoader {
 public:
     /**
      * @js NA

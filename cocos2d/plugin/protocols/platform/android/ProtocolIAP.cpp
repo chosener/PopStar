@@ -44,15 +44,8 @@ extern "C" {
 			{
 				pIAP->onPayResult((PayResultCode) ret, strMsg.c_str());
 			}
-			else
-			{
-				ProtocolIAP::ProtocolIAPCallback callback = pIAP->getCallback();
-				if(callback)
-					callback(ret, strMsg);
-			}
 		}
 	}
-
 }
 
 bool ProtocolIAP::_paying = false;
@@ -131,12 +124,6 @@ void ProtocolIAP::payForProduct(TProductInfo info)
 			t.env->DeleteLocalRef(t.classID);
 		}
     }
-}
-
-void ProtocolIAP::payForProduct(TProductInfo info, ProtocolIAPCallback cb)
-{
-	_callback = cb;
-	payForProduct(info);
 }
 
 void ProtocolIAP::setResultListener(PayResultListener* pListener)

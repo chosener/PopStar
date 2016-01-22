@@ -27,14 +27,17 @@ THE SOFTWARE.
 #ifndef __CCTILE_MAP_ATLAS__
 #define __CCTILE_MAP_ATLAS__
 
-#include "2d/CCAtlasNode.h"
+#include "CCAtlasNode.h"
 #include "base/CCValue.h"
 
 NS_CC_BEGIN
 
-/// @cond DO_NOT_SHOW
-
 struct sImageTGA;
+
+/**
+ * @addtogroup tilemap_parallax_nodes
+ * @{
+ */
 
 /** @brief TileMapAtlas is a subclass of AtlasNode.
 
@@ -50,7 +53,6 @@ IMPORTANT:
 This class is deprecated. It is maintained for compatibility reasons only.
 You SHOULD not use this class.
 Instead, use the newer TMX file format: TMXTiledMap
-@js NA
 */
 class CC_DLL TileMapAtlas : public AtlasNode 
 {
@@ -73,15 +75,10 @@ public:
     The file will be loaded using the TextureMgr.
     */
     bool initWithTileFile(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight);
-    /**
-     * Returns a tile from position x,y.
-     *For the moment only channel R is used
-     */
+    /** returns a tile from position x,y.
+    For the moment only channel R is used
+    */
     Color3B getTileAt(const Vec2& position) const;
-    /**
-     * Returns a tile from position x,y.
-     *For the moment only channel R is used
-     */
     CC_DEPRECATED_ATTRIBUTE Color3B tileAt(const Vec2& position) const { return getTileAt(position); };
     /** sets a tile at position x,y.
     For the moment only channel R is used
@@ -90,16 +87,7 @@ public:
     /** dealloc the map from memory */
     void releaseMap();
     
-    /**
-     * Query TGA image info.
-     *@return The TGA image info.
-     */
     inline struct sImageTGA* getTGAInfo() const { return _TGAInfo; };
-
-    /**
-     * Set the TGA image info for TileMapAtlas
-     *@param TGAInfo The TGA info in sImageTGA.
-     */
     inline void setTGAInfo(struct sImageTGA* TGAInfo) { _TGAInfo = TGAInfo; };
 
 protected:
@@ -117,7 +105,8 @@ protected:
     struct sImageTGA* _TGAInfo;
 };
 
-/// @endcond
+// end of tilemap_parallax_nodes group
+/// @}
 
 NS_CC_END
 

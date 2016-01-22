@@ -27,88 +27,41 @@
 
 #include <string>
 #include "base/CCRef.h"
-#include "ui/GUIExport.h"
 
-/**
- * @addtogroup ui
- * @{
- */
+
 NS_CC_BEGIN
 
 namespace ui {
 
 /**
- *@brief Margin of widget's in point. Margin value should be positive.
- *@lua NA
+ *   @js NA
+ *   @lua NA
  */
-class CC_GUI_DLL Margin
+class Margin
 {
 public:
-    /**
-     * Left margin.
-     */
     float left;
-    /**
-     * Top margin.
-     */
     float top;
-    /**
-     * Right margin.
-     */
     float right;
-    /**
-     * Bottom margin.
-     */
     float bottom;
     
 public:
-    /**
-     * Default constructor.
-     */
     Margin();
-
-    /**
-     * Construct a Margin instance with left, top, right and bottom margins.
-     *@param l Left margin in float.
-     *@param t Top margin in float.
-     *@param r Right margin in float.
-     *@param b Bottom margin in float.
-     */
     Margin(float l, float t, float r, float b);
-
-    /**
-     * Copy constructor.
-     */
     Margin(const Margin& other);
-
-    /**
-     * Copy assignment operator.
-     */
     Margin& operator= (const Margin& other);
-
-    /**
-     * Change margin with left, top, right and bottom margin.
-     *@param l Left margin in float.
-     *@param t Top margin in float.
-     *@param r Right margin in float.
-     *@param b Bottom margin in float.
-     */
     void setMargin(float l, float t, float r, float b);
-
-    /**
-     * Test equality of two margins.
-     *@param target A Margin instance.
-     *@return True if two margins are equal, false otherwise.
-     */
     bool equals(const Margin& target) const;
     
-    /**
-     * A margin constant with all margins equal zero.
-     */
     static const Margin ZERO;
 
 };
 
+
+/**
+*   @js NA
+*   @lua NA
+*/
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #ifdef RELATIVE
@@ -116,18 +69,9 @@ public:
 #endif
 #endif
 
-/**
- *@brief Base class for various LayoutParameter.
- */
-class CC_GUI_DLL LayoutParameter : public Ref
+class LayoutParameter : public Ref
 {
 public:
-    /**
-     *Layout parameter type.
-     * There are mainly two types:
-     * - Linear: Elements will  be arranged by margin.
-     * - Relative: Elements will be arranged by margin and relative widget name.
-     */
     enum class Type
     {
         NONE = 0,
@@ -135,9 +79,7 @@ public:
         RELATIVE
     };
     /**
-     * Default constructor.
-     *
-     * @lua new
+     * Default constructor
      */
     LayoutParameter() : _margin(Margin())
     {
@@ -145,93 +87,68 @@ public:
     };
     
     /**
-     * Default destructor.
-     * @lua NA
+     * Default destructor
      */
     virtual ~LayoutParameter(){};
     
     /**
-     * Create a empty LayoutParameter.
-     * @return A autorelease LayoutParameter instance.
+     * Allocates and initializes.
+     * @return A initialized LayoutParameter which is marked as "autorelease".
      */
     static LayoutParameter* create();
     
     /**
-     * Set margin parameter for LayoutParameter.
+     * Sets Margin parameter for LayoutParameter.
      * 
      * @see Margin
+     *
      * @param margin
      */
     void setMargin(const Margin& margin);
     
     /**
-     * Gets margin parameter of LayoutParameter.
+     * Gets Margin parameter of LayoutParameter.
      *
      * @see Margin
-     * @return Margin of layout parameter.
+     *
+     * @return const Margin&
      */
     const Margin& getMargin() const;
     
     /**
      * Gets LayoutParameterType of LayoutParameter.
      *
-     * @see LayoutParameterType.
+     * @see LayoutParameterType
+     *
      * @return LayoutParameterType
      */
     Type getLayoutType() const;
     
-    /**
-     * Create a copy of original LayoutParameter.
-     *@return A LayoutParameter pointer.
-     */
     LayoutParameter* clone();
-
-    /**
-     * Create a cloned instance of LayoutParameter.
-     *@return A LayoutParameter pointer.
-     */
     virtual LayoutParameter* createCloneInstance();
-    
-    /**
-     * Copy all the member field from argument LayoutParameter to self.
-     *@param model A LayoutParameter instance.
-     */
     virtual void copyProperties(LayoutParameter* model);
 protected:
     Margin _margin;
     Type _layoutParameterType;
 };
     
-/**
- * Protocol for getting a LayoutParameter.
- * Every element want to have layout parameter should inherit from this class.
- */
-class CC_GUI_DLL LayoutParameterProtocol
+class LayoutParameterProtocol
 {
 public:
-    /**
-     * Default destructor.
-     */
+    LayoutParameterProtocol(){}
     virtual ~LayoutParameterProtocol(){}
-
-    /**
-     *
-     *@return A LayoutParameter and its descendant pointer.
-     */
+    
     virtual LayoutParameter* getLayoutParameter() const= 0;
 };
 
     
 /**
- * @brief Linear layout parameter.
- * It is used by linear layout manager for arranging elements linearly.
- */
-class CC_GUI_DLL LinearLayoutParameter : public LayoutParameter
+*   @js NA
+*   @lua NA
+*/
+class LinearLayoutParameter : public LayoutParameter
 {
 public:
-    /**
-     * Linear gravity.
-     */
     enum class LinearGravity
     {
         NONE,
@@ -242,11 +159,8 @@ public:
         CENTER_VERTICAL,
         CENTER_HORIZONTAL
     };
-
     /**
-     * Default constructor.
-     *
-     * @lua new
+     * Default constructor
      */
     LinearLayoutParameter()
     : _linearGravity(LinearGravity::NONE)
@@ -255,14 +169,12 @@ public:
     };
     
     /**
-     * Default destructor.
-     *
-     * @lua NA
+     * Default destructor
      */
     virtual ~LinearLayoutParameter(){};
     
     /**
-     * Create a empty LinearLayoutParameter instance.
+     * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
     static LinearLayoutParameter* create();
@@ -271,7 +183,8 @@ public:
      * Sets LinearGravity parameter for LayoutParameter.
      *
      * @see LinearGravity
-     * @param gravity Gravity in LinearGravity.
+     *
+     * @param LinearGravity
      */
     void setGravity(LinearGravity gravity);
     
@@ -279,30 +192,26 @@ public:
      * Gets LinearGravity parameter for LayoutParameter.
      *
      * @see LinearGravity
+     *
      * @return LinearGravity
      */
     LinearGravity getGravity() const;
-
-    //override functions.
     virtual LayoutParameter* createCloneInstance() override;
     virtual void copyProperties(LayoutParameter* model) override;
 protected:
     LinearGravity _linearGravity;
-    int i;
 };
     
     
-
 /**
- * @brief Relative layout parameter.
- * It is mainly used by  `RelativeLayoutManager`.
- */
-class CC_GUI_DLL RelativeLayoutParameter : public LayoutParameter
+*   @js NA
+*   @lua NA
+*/
+
+    
+class RelativeLayoutParameter : public LayoutParameter
 {
 public:
-    /**
-     * Relative Alignment type
-     */
     enum class RelativeAlign
     {
         NONE,
@@ -331,11 +240,8 @@ public:
         LOCATION_BELOW_CENTER,
         LOCATION_BELOW_RIGHTALIGN
     };
-
     /**
      * Default constructor
-     *
-     * @lua new
      */
     RelativeLayoutParameter()
     : _relativeAlign(RelativeAlign::NONE),
@@ -348,13 +254,11 @@ public:
     
     /**
      * Default destructor
-     *
-     * @lua NA
      */
     virtual ~RelativeLayoutParameter(){};
     
     /**
-     * Create a RelativeLayoutParameter instance.
+     * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
     static RelativeLayoutParameter* create();
@@ -363,46 +267,48 @@ public:
      * Sets RelativeAlign parameter for LayoutParameter.
      *
      * @see RelativeAlign
-     * @param align Relative align in  `RelativeAlign`.
+     *
+     * @param RelativeAlign
      */
     void setAlign(RelativeAlign align);
     
     /**
-     * Get RelativeAlign parameter for LayoutParameter.
+     * Gets RelativeAlign parameter for LayoutParameter.
      *
      * @see RelativeAlign
-     * @return  A RelativeAlign variable.
+     *
+     * @return RelativeAlign
      */
     RelativeAlign getAlign() const;
     
     /**
-     * Set widget name your widget want to relative to.
+     * Sets a key for LayoutParameter. Witch widget named this is relative to.
      *
-     * @param name Relative widget name.
+     * @param name
      */
     void setRelativeToWidgetName(const std::string& name);
     
     /**
-     * Get the relative widget name.
-     * @return name A relative widget name in string.
+     * Gets the key of LayoutParameter. Witch widget named this is relative to.
+     *
+     * @return name
      */
     const std::string& getRelativeToWidgetName() const;
     
     /**
-     * Set a name for LayoutParameter in Relative Layout.
+     * Sets a name in Relative Layout for LayoutParameter.
      *
-     * @param name A string name.
+     * @param name
      */
     void setRelativeName(const std::string& name);
     
     /**
-     * Get a name of LayoutParameter in Relative Layout.
+     * Gets a name in Relative Layout of LayoutParameter.
      *
-     * @return name Relative name in string.
+     * @return name
      */
     const std::string& getRelativeName() const;
     
-    //override functions.
     virtual LayoutParameter* createCloneInstance() override;
     virtual void copyProperties(LayoutParameter* model) override;
 protected:
@@ -414,8 +320,7 @@ protected:
 };
 
 }
+
 NS_CC_END
-// end of ui group
-/// @}
 
 #endif /* defined(__LayoutParameter__) */

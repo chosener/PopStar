@@ -26,20 +26,14 @@
 #ifndef _CC_GROUPCOMMAND_H_
 #define _CC_GROUPCOMMAND_H_
 
-#include <vector>
 #include <unordered_map>
 
 #include "base/CCRef.h"
 #include "CCRenderCommand.h"
-
-/**
- * @addtogroup support
- * @{
- */
+#include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
-//Used for internal
 class GroupCommandManager : public Ref
 {
 public:
@@ -52,27 +46,16 @@ protected:
     ~GroupCommandManager();
     bool init();
     std::unordered_map<int, bool> _groupMapping;
-    std::vector<int> _unusedIDs;
 };
 
-/**
- GroupCommand is used to group several command together, and more, it can be nestd.
- So it is used to generate the hierarchy for the rendcommands. Evey group command will be assigned by a group ID.
- */
-class CC_DLL GroupCommand : public RenderCommand
+class GroupCommand : public RenderCommand
 {
 public:
-    /**@{
-     Constructor and Destructor.
-     */
     GroupCommand();
     ~GroupCommand();
-    /**@}*/
     
-    /**Init function for group command*/
-    void init(float globalOrder);
-    
-    /**called by renderer, get the group ID.*/
+    void init(float depth);
+
     inline int getRenderQueueID() const {return _renderQueueID;}
     
 protected:
@@ -81,8 +64,4 @@ protected:
 
 NS_CC_END
 
-/**
- end of support group
- @}
- */
 #endif //_CC_GROUPCOMMAND_H_

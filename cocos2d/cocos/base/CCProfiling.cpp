@@ -25,6 +25,8 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "base/CCProfiling.h"
 
+#include <chrono>
+
 using namespace std;
 
 NS_CC_BEGIN
@@ -42,14 +44,14 @@ Profiler* Profiler::getInstance()
 {
     if (! g_sSharedProfiler)
     {
-        g_sSharedProfiler = new (std::nothrow) Profiler();
+        g_sSharedProfiler = new Profiler();
         g_sSharedProfiler->init();
     }
 
     return g_sSharedProfiler;
 }
 
-// FIXME:: deprecated
+// XXX: deprecated
 Profiler* Profiler::sharedProfiler(void)
 {
     return Profiler::getInstance();
@@ -57,7 +59,7 @@ Profiler* Profiler::sharedProfiler(void)
 
 ProfilingTimer* Profiler::createAndAddTimerWithName(const char* timerName)
 {
-    ProfilingTimer *t = new (std::nothrow) ProfilingTimer();
+    ProfilingTimer *t = new ProfilingTimer();
     t->initWithName(timerName);
     _activeTimers.insert(timerName, t);
     t->release();

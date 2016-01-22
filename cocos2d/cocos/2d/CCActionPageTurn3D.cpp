@@ -24,13 +24,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCActionPageTurn3D.h"
-#include "2d/CCGrid.h"
 
 NS_CC_BEGIN
 
 PageTurn3D* PageTurn3D::create(float duration, const Size& gridSize)
 {
-    PageTurn3D *action = new (std::nothrow) PageTurn3D();
+    PageTurn3D *action = new PageTurn3D();
 
     if (action)
     {
@@ -49,18 +48,11 @@ PageTurn3D* PageTurn3D::create(float duration, const Size& gridSize)
 
 PageTurn3D *PageTurn3D::clone() const
 {
-    // no copy constructor    
-    auto a = new (std::nothrow) PageTurn3D();
-    a->initWithDuration(_duration, _gridSize);
-    a->autorelease();
-    return a;
-}
-
-GridBase* PageTurn3D::getGrid()
-{
-    auto result = Grid3D::create(_gridSize);
-    result->setNeedDepthTestForBlit(true);
-    return result;
+	// no copy constructor	
+	auto a = new PageTurn3D();
+	a->initWithDuration(_duration, _gridSize);
+	a->autorelease();
+	return a;
 }
 
 /*

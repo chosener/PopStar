@@ -33,7 +33,6 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "2d/CCTweenFunction.h"
-#include "cocostudio/CocosStudioExport.h"
 
 
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\
@@ -69,7 +68,7 @@ namespace cocostudio {
  * @js NA
  * @lua NA
  */
-class CC_STUDIO_DLL BaseData : public cocos2d::Ref
+class  BaseData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(BaseData)
@@ -138,7 +137,7 @@ enum DisplayType
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL DisplayData : public cocos2d::Ref
+class  DisplayData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(DisplayData)
@@ -166,7 +165,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL SpriteDisplayData : public DisplayData
+class  SpriteDisplayData : public DisplayData
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(SpriteDisplayData)
@@ -190,7 +189,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL ArmatureDisplayData  : public DisplayData
+class  ArmatureDisplayData  : public DisplayData
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(ArmatureDisplayData)
@@ -210,7 +209,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL ParticleDisplayData : public DisplayData
+class  ParticleDisplayData : public DisplayData
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(ParticleDisplayData)
@@ -235,7 +234,7 @@ public:
 * @js NA
 * @lua NA
 */
-class CC_STUDIO_DLL BoneData : public BaseData
+class  BoneData : public BaseData
 {
 public:
     CC_CREATE_NO_PARAM(BoneData)
@@ -269,7 +268,7 @@ public:
 * @js NA
 * @lua NA
 */
-class CC_STUDIO_DLL ArmatureData : public cocos2d::Ref
+class  ArmatureData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(ArmatureData)
@@ -315,7 +314,7 @@ enum BlendType
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL FrameData : public BaseData
+class  FrameData : public BaseData
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(FrameData)
@@ -362,7 +361,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL MovementBoneData : public cocos2d::Ref
+class  MovementBoneData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(MovementBoneData)
@@ -394,7 +393,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL MovementData : public cocos2d::Ref
+class  MovementData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(MovementData)
@@ -456,7 +455,7 @@ public:
 *  @js NA
 *  @lua NA
 */
-class CC_STUDIO_DLL AnimationData : public cocos2d::Ref
+class  AnimationData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM_NO_INIT(AnimationData)
@@ -487,7 +486,7 @@ public:
 * @js NA
 * @lua NA
 */
-class CC_STUDIO_DLL ContourData : public cocos2d::Ref
+class  ContourData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(ContourData)
@@ -516,7 +515,7 @@ public:
 * @js NA
 * @lua NA
 */
-class CC_STUDIO_DLL TextureData : public cocos2d::Ref
+class  TextureData : public cocos2d::Ref
 {
 public:
     CC_CREATE_NO_PARAM(TextureData)

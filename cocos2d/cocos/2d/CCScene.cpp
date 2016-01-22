@@ -27,15 +27,11 @@ THE SOFTWARE.
 
 #include "2d/CCScene.h"
 #include "base/CCDirector.h"
-#include "2d/CCCamera.h"
-#include "base/CCEventDispatcher.h"
-#include "base/CCEventListenerCustom.h"
-#include "renderer/CCRenderer.h"
-#include "deprecated/CCString.h"
-
-#if CC_USE_PHYSICS
+#include "2d/CCLayer.h"
+#include "2d/CCSprite.h"
+#include "2d/CCSpriteBatchNode.h"
 #include "physics/CCPhysicsWorld.h"
-#endif
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 
@@ -46,15 +42,6 @@ Scene::Scene()
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
-    
-    _cameraOrderDirty = true;
-    
-    //create default camera
-    _defaultCamera = Camera::create();
-    addChild(_defaultCamera);
-    
-    _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
-    _event->retain();
 }
 
 Scene::~Scene()
@@ -62,8 +49,6 @@ Scene::~Scene()
 #if CC_USE_PHYSICS
     CC_SAFE_DELETE(_physicsWorld);
 #endif
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
-    CC_SAFE_RELEASE(_event);
 }
 
 bool Scene::init()
@@ -80,7 +65,7 @@ bool Scene::initWithSize(const Size& size)
 
 Scene* Scene::create()
 {
-    Scene *ret = new (std::nothrow) Scene();
+    Scene *ret = new Scene();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -95,7 +80,7 @@ Scene* Scene::create()
 
 Scene* Scene::createWithSize(const Size& size)
 {
-    Scene *ret = new (std::nothrow) Scene();
+    Scene *ret = new Scene();
     if (ret && ret->initWithSize(size))
     {
         ret->autorelease();
@@ -113,66 +98,10 @@ std::string Scene::getDescription() const
     return StringUtils::format("<Scene | tag = %d>", _tag);
 }
 
-void Scene::onProjectionChanged(EventCustom* event)
+Scene* Scene::getScene() const
 {
-    if (_defaultCamera)
-    {
-        _defaultCamera->initDefault();
-    }
-}
-
-static bool camera_cmp(const Camera* a, const Camera* b)
-{
-    return a->getDepth() < b->getDepth();
-}
-
-void Scene::render(Renderer* renderer)
-{
-    auto director = Director::getInstance();
-    Camera* defaultCamera = nullptr;
-    const auto& transform = getNodeToParentTransform();
-    if (_cameraOrderDirty)
-    {
-        stable_sort(_cameras.begin(), _cameras.end(), camera_cmp);
-        _cameraOrderDirty = false;
-    }
-    
-    for (const auto& camera : _cameras)
-    {
-        if (!camera->isVisible())
-            continue;
-        
-        Camera::_visitingCamera = camera;
-        if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
-        {
-            defaultCamera = Camera::_visitingCamera;
-        }
-        
-        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
-        
-        //visit the scene
-        visit(renderer, transform, 0);
-        renderer->render();
-        
-        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    }
-
-    Camera::_visitingCamera = nullptr;
-}
-
-void Scene::removeAllChildren()
-{
-    if (_defaultCamera)
-        _defaultCamera->retain();
-    
-    Node::removeAllChildren();
-    
-    if (_defaultCamera)
-    {
-        addChild(_defaultCamera);
-        _defaultCamera->release();
-    }
+    // FIX ME: should use const_case<> to fix compiling error
+    return const_cast<Scene*>(this);
 }
 
 #if CC_USE_PHYSICS
@@ -188,9 +117,18 @@ void Scene::addChild(Node* child, int zOrder, const std::string &name)
     addChildToPhysicsWorld(child);
 }
 
+void Scene::update(float delta)
+{
+    Node::update(delta);
+    if (nullptr != _physicsWorld)
+    {
+        _physicsWorld->update(delta);
+    }
+}
+
 Scene* Scene::createWithPhysics()
 {
-    Scene *ret = new (std::nothrow) Scene();
+    Scene *ret = new Scene();
     if (ret && ret->initWithPhysics())
     {
         ret->autorelease();
@@ -210,10 +148,10 @@ bool Scene::initWithPhysics()
     {
         Director * director;
         CC_BREAK_IF( ! (director = Director::getInstance()) );
-        
         this->setContentSize(director->getWinSize());
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
         
+        this->scheduleUpdate();
         // success
         ret = true;
     } while (0);
@@ -227,8 +165,6 @@ void Scene::addChildToPhysicsWorld(Node* child)
         std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
         addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
         {
-            node->_physicsWorld = _physicsWorld;
-
             if (node->getPhysicsBody())
             {
                 _physicsWorld->addBody(node->getPhysicsBody());
@@ -243,7 +179,6 @@ void Scene::addChildToPhysicsWorld(Node* child)
         addToPhysicsWorldFunc(child);
     }
 }
-
 #endif
 
 NS_CC_END

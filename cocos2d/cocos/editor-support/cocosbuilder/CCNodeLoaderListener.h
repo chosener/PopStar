@@ -4,7 +4,7 @@
 
 namespace cocosbuilder {
 
-class CC_DLL NodeLoaderListener {
+class NodeLoaderListener {
     public:
         /**
          * @js NA

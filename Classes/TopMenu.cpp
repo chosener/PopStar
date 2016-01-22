@@ -1,5 +1,5 @@
 #include "TopMenu.h"
-#include "Chinese.h"
+
 #include "GameData.h"
 #include "GameLayer.h"
 bool TopMenu::init()

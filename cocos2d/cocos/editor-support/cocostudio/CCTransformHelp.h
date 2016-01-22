@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDatas.h"
-#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -36,7 +35,7 @@ namespace cocostudio {
  * @js NA
  * @lua NA
  */
-class CC_STUDIO_DLL TransformHelp
+class  TransformHelp
 {
 public:
     TransformHelp();

@@ -25,6 +25,8 @@ THE SOFTWARE.
 
 #include "2d/CCFontFreeType.h"
 
+#include <stdio.h>
+#include <algorithm>
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
@@ -94,13 +96,13 @@ FT_Library FontFreeType::getFTLibrary()
 
 FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /* = 0 */)
 : _fontRef(nullptr)
-, _stroker(nullptr)
-, _distanceFieldEnabled(distanceFieldEnabled)
-, _outlineSize(0.0f)
+,_distanceFieldEnabled(distanceFieldEnabled)
+,_outlineSize(outline)
+,_stroker(nullptr)
 {
-    if (outline > 0)
+    if (_outlineSize > 0)
     {
-        _outlineSize = outline * CC_CONTENT_SCALE_FACTOR();
+        _outlineSize *= CC_CONTENT_SCALE_FACTOR();
         FT_Stroker_New(FontFreeType::getFTLibrary(), &_stroker);
         FT_Stroker_Set(_stroker,
             (int)(_outlineSize * 64),
@@ -172,7 +174,7 @@ FontFreeType::~FontFreeType()
 
 FontAtlas * FontFreeType::createFontAtlas()
 {
-    FontAtlas *atlas = new (std::nothrow) FontAtlas(*this);
+    FontAtlas *atlas = new FontAtlas(*this);
     if (_usedGlyphs != GlyphCollection::DYNAMIC)
     {
         std::u16string utf16;
@@ -265,7 +267,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
         }
         else
         {
-            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER))
                 break;
         }
 
@@ -328,6 +330,8 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
                 }
             }
 
+            outRect.origin.x = bbox.xMin >> 6;
+            outRect.origin.y = - (bbox.yMax >> 6);
             xAdvance += 2 * _outlineSize;
             outRect.size.width  =  blendWidth;
             outRect.size.height =  blendHeight;

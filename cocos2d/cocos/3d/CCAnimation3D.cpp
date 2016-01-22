@@ -24,6 +24,8 @@
 
 #include "3d/CCAnimation3D.h"
 #include "3d/CCBundle3D.h"
+
+#include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
@@ -36,37 +38,22 @@ Animation3D* Animation3D::create(const std::string& fileName, const std::string&
     if (animation != nullptr)
         return animation;
     
-    animation = new (std::nothrow) Animation3D();
-    if(animation->initWithFile(fileName, animationName))
+    //load animation here
+    animation = new Animation3D();
+    auto bundle = Bundle3D::getInstance();
+    Animation3DData animationdata;
+    if (bundle->load(fullPath) && bundle->loadAnimationData(animationName, &animationdata) && animation->init(animationdata))
     {
+        Animation3DCache::getInstance()->addAnimation(key, animation);
         animation->autorelease();
     }
     else
     {
         CC_SAFE_DELETE(animation);
+        animation = nullptr;
     }
     
     return animation;
-}
-
-bool Animation3D::initWithFile(const std::string& filename, const std::string& animationName)
-{
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-    
-    //load animation here
-    auto bundle = Bundle3D::createBundle();
-    Animation3DData animationdata;
-    if (bundle->load(fullPath) && bundle->loadAnimationData(animationName, &animationdata) && init(animationdata))
-    {
-        std::string key = fullPath + "#" + animationName;
-        Animation3DCache::getInstance()->addAnimation(key, this);
-        Bundle3D::destroyBundle(bundle);
-        return true;
-    }
-    
-    Bundle3D::destroyBundle(bundle);
-    
-    return false;
 }
 
 Animation3D::Curve* Animation3D::getBoneCurveByName(const std::string& name) const
@@ -114,7 +101,7 @@ bool Animation3D::init(const Animation3DData &data)
         Curve* curve = _boneCurves[iter.first];
         if( curve == nullptr)
         {
-            curve = new (std::nothrow) Curve();
+            curve = new Curve();
             _boneCurves[iter.first] = curve;
         }
         
@@ -138,7 +125,7 @@ bool Animation3D::init(const Animation3DData &data)
         Curve* curve = _boneCurves[iter.first];
         if( curve == nullptr)
         {
-            curve = new (std::nothrow) Curve();
+            curve = new Curve();
             _boneCurves[iter.first] = curve;
         }
         
@@ -163,7 +150,7 @@ bool Animation3D::init(const Animation3DData &data)
         Curve* curve = _boneCurves[iter.first];
         if( curve == nullptr)
         {
-            curve = new (std::nothrow) Curve();
+            curve = new Curve();
             _boneCurves[iter.first] = curve;
         }
         
@@ -191,7 +178,7 @@ Animation3DCache* Animation3DCache::_cacheInstance = nullptr;
 Animation3DCache* Animation3DCache::getInstance()
 {
     if (_cacheInstance == nullptr)
-        _cacheInstance = new (std::nothrow) Animation3DCache();
+        _cacheInstance = new Animation3DCache();
     
     return _cacheInstance;
 }

@@ -36,7 +36,7 @@ namespace cocostudio {
 Bone *Bone::create()
 {
 
-    Bone *pBone = new (std::nothrow) Bone();
+    Bone *pBone = new Bone();
     if (pBone && pBone->init())
     {
         pBone->autorelease();
@@ -50,7 +50,7 @@ Bone *Bone::create()
 Bone *Bone::create(const std::string& name)
 {
 
-    Bone *pBone = new (std::nothrow) Bone();
+    Bone *pBone = new Bone();
     if (pBone && pBone->init(name))
     {
         pBone->autorelease();
@@ -74,7 +74,7 @@ Bone::Bone()
 //    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     _worldTransform = Mat4::IDENTITY;
     _boneTransformDirty = true;
-    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
     _blendDirty = false;
     _worldInfo = nullptr;
 
@@ -110,21 +110,21 @@ bool Bone::init(const std::string& name)
         _name = name;
 
         CC_SAFE_DELETE(_tweenData);
-        _tweenData = new (std::nothrow) FrameData();
+        _tweenData = new FrameData();
 
         CC_SAFE_DELETE(_tween);
-        _tween = new (std::nothrow) Tween();
+        _tween = new Tween();
         _tween->init(this);
 
         CC_SAFE_DELETE(_displayManager);
-        _displayManager = new (std::nothrow) DisplayManager();
+        _displayManager = new DisplayManager();
         _displayManager->init(this);
 
         CC_SAFE_DELETE(_worldInfo);
-        _worldInfo = new (std::nothrow) BaseData();
+        _worldInfo = new BaseData();
 
         CC_SAFE_DELETE(_boneData);
-        _boneData  = new (std::nothrow) BoneData();
+        _boneData  = new BoneData();
 
         bRet = true;
     }
@@ -188,20 +188,21 @@ void Bone::update(float delta)
 
     if (_boneTransformDirty)
     {
-        _worldInfo->copy(_tweenData);
         if (_dataVersion >= VERSION_COMBINED)
         {
-            TransformHelp::nodeConcat(*_worldInfo, *_boneData);
-            _worldInfo->scaleX -= 1;
-            _worldInfo->scaleY -= 1;
+            TransformHelp::nodeConcat(*_tweenData, *_boneData);
+            _tweenData->scaleX -= 1;
+            _tweenData->scaleY -= 1;
         }
 
-        _worldInfo->x = _worldInfo->x + _position.x;
-        _worldInfo->y = _worldInfo->y + _position.y;
-        _worldInfo->scaleX = _worldInfo->scaleX * _scaleX;
-        _worldInfo->scaleY = _worldInfo->scaleY * _scaleY;
-        _worldInfo->skewX = _worldInfo->skewX + _skewX + CC_DEGREES_TO_RADIANS(_rotationZ_X);
-        _worldInfo->skewY = _worldInfo->skewY + _skewY - CC_DEGREES_TO_RADIANS(_rotationZ_Y);
+        _worldInfo->copy(_tweenData);
+
+        _worldInfo->x = _tweenData->x + _position.x;
+        _worldInfo->y = _tweenData->y + _position.y;
+        _worldInfo->scaleX = _tweenData->scaleX * _scaleX;
+        _worldInfo->scaleY = _tweenData->scaleY * _scaleY;
+        _worldInfo->skewX = _tweenData->skewX + _skewX + _rotationZ_X;
+        _worldInfo->skewY = _tweenData->skewY + _skewY - _rotationZ_Y;
 
         if(_parentBone)
         {
