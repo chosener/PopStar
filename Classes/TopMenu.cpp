@@ -16,11 +16,28 @@ void TopMenu::initView()
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     ///暂停按钮
-    MenuItemImage* btnPause = MenuItemImage::create("images/pause.png","images/pause.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
+    MenuItemImage* btnPause = MenuItemImage::create("images/pause.png","images/pause_s.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
     Menu* menuPause = Menu::create(btnPause,NULL);
     menuPause->alignItemsVertically();
     menuPause->setPosition(60.0f,visibleSize.height - 50.0f);
     this->addChild(menuPause);
+    
+    ///声音
+    
+    ///技能0,刷子
+    
+    ///技能1,重新排列
+    
+    ///技能2,炸弹
+    
+    MenuItemImage* btnSkill0 = MenuItemImage::create("images/Props_Paint.png","images/Props_Paint_s.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
+    MenuItemImage* btnSkill1 = MenuItemImage::create("images/Props_Rainbow.png","images/Props_Rainbow_s.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
+    MenuItemImage* btnSkill2 = MenuItemImage::create("images/Props_Bomb.png","images/Props_Bomb_s.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
+    
+    Menu* menuSkill= Menu::create(btnSkill0,btnSkill1,btnSkill2,NULL);
+    menuSkill->alignItemsHorizontallyWithPadding(40.0f);
+    menuSkill->setPosition(visibleSize.width - 220.0f,visibleSize.height - 200.0f);
+    this->addChild(menuSkill);
     
     this->initScore();
 }

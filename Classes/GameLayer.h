@@ -6,8 +6,11 @@
 #include "StarMatrix.h"
 using namespace cocos2d;
 class StarMatrix;
-class GameLayer : public Layer{
+class GameLayer : public Layer
+{
 public:
+    GameLayer();
+    ~GameLayer();
 	virtual bool init();
 	CREATE_FUNC(GameLayer);
 	void floatLevelWord();

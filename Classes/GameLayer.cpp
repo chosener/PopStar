@@ -5,6 +5,16 @@
 #include "StarMatrix.h"
 #include "MenuScene.h"
 #include "Audio.h"
+
+GameLayer::GameLayer()
+{
+    
+}
+GameLayer::~GameLayer()
+{
+
+}
+
 bool GameLayer::init()
 {
 	if(!Layer::init())
@@ -14,9 +24,14 @@ bool GameLayer::init()
 
 	matrix = nullptr;
 	this->scheduleUpdate();
-	EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
+    
+    EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
+    
 	listener->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan,this);
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener,this);
+
+    
+    //Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 5);
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Sprite* background = Sprite::create("bg_mainscene.jpg");
@@ -26,7 +41,7 @@ bool GameLayer::init()
 	this->addChild(menu);
     
 	linkNum = Label::create("","Arial",40);
-	linkNum->setPosition(visibleSize.width/2,visibleSize.height-320);
+	linkNum->setPosition(visibleSize.width/2,visibleSize.height-400.0f);
 	linkNum->setVisible(false);
 	this->addChild(linkNum,1);
     
@@ -54,7 +69,7 @@ void GameLayer::floatLevelWord()
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
     
-    string strGuanqia = ChineseWord("guanqia") + cocos2d::String::createWithFormat(": %d",GAMEDATA::getInstance()->getNextLevel())->_string;
+    string strGuanqia = ChineseWord("guanqia") + StringUtils::format(": %d",GAMEDATA::getInstance()->getNextLevel());
     
 	_levelMsg = FloatWord::create(strGuanqia,50,Point(visibleSize.width,visibleSize.height/3*2));
     
@@ -70,7 +85,7 @@ void GameLayer::floatTargetScoreWord()
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	_targetScore = FloatWord::create(
-		ChineseWord("mubiao") + cocos2d::String::createWithFormat(": %d",GAMEDATA::getInstance()->getNextScore())->_string + ChineseWord("fen"),
+		ChineseWord("mubiao") + StringUtils::format(": %d",GAMEDATA::getInstance()->getNextScore()) + ChineseWord("fen"),
 		50, Point(visibleSize.width,visibleSize.height/3)
 		);
 	this->addChild(_targetScore,1);
@@ -95,11 +110,13 @@ void GameLayer::update(float delta){
 	}
 }
 
-bool GameLayer::onTouchBegan(Touch* touch,Event* event){
+bool GameLayer::onTouchBegan(Touch* touch,Event* event)
+{
 	Point p = touch->getLocationInView();
 	p = Director::getInstance()->convertToGL(p);
 	CCLOG("x=%f y=%f",p.x,p.y);
-	if(matrix){
+	if(matrix)
+    {
 		matrix->onTouch(p);
 	}
 	return true;
@@ -108,15 +125,6 @@ bool GameLayer::onTouchBegan(Touch* touch,Event* event){
 void GameLayer::refreshMenu()
 {
 	menu->refresh();
-}
-
-void GameLayer::showLinkNum(int size)
-{
-	
-	string s = String::createWithFormat("%d",size)->_string + ChineseWord("lianji") + 
-		String::createWithFormat("%d",size*size*5)->_string + ChineseWord("fen");
-	linkNum->setString(s);
-	linkNum->setVisible(true);
 }
 
 
@@ -133,12 +141,22 @@ void GameLayer::flyNumScore(int num,Vec2 _position)
                                           {
                                               curScore->removeFromParent();
                                           });
-
+    
     Sequence* seq = Sequence::create(jumpTo,callBack, NULL);
     curScore->runAction(seq);
 }
 
-void GameLayer::hideLinkNum(){
+void GameLayer::showLinkNum(int size)
+{
+	string s = StringUtils::format("%d",size) + ChineseWord("lianji") + StringUtils::format("%d",size*size*5) + ChineseWord("fen");
+	linkNum->setString(s);
+	linkNum->setVisible(true);
+}
+
+
+
+void GameLayer::hideLinkNum()
+{
 	linkNum->setVisible(false);
 }
 

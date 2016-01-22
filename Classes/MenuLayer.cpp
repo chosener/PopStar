@@ -2,8 +2,10 @@
 #include "GameScene.h"
 #include "GameData.h"
 #include "Audio.h"
-bool MenuLayer::init(){
-	if(!Layer::init()){
+bool MenuLayer::init()
+{
+	if(!Layer::init())
+    {
 		return false;
 	}
 

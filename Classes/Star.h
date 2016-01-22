@@ -28,8 +28,8 @@ private:
 public:
 	const static int MOVE_SPEED = 12;
 	static const int COLOR_MAX_NUM = 5;
-	static const int STAR_WIDTH = 73;
-	static const int STAR_HEIGHT = 73;
+	static const int STAR_WIDTH = 72;
+	static const int STAR_HEIGHT = 72;
 private:
 	int color;
 	Point desPosition;
