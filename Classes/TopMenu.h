@@ -25,5 +25,7 @@ private:
 	LabelAtlas* level;
 	LabelAtlas* targetScore;
 	LabelAtlas* curScore;
+    
+    Menu* m_menuBtnPause;
 };
 #endif

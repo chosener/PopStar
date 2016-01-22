@@ -158,6 +158,7 @@
 		FD78A2691C48A21500002027 /* zengsong.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A21C1C48A21500002027 /* zengsong.png */; };
 		FD78A26A1C48A21500002027 /* music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = FD78A21D1C48A21500002027 /* music.ogg */; };
 		FD78A26B1C48A21500002027 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A21E1C48A21500002027 /* star.png */; };
+		FD80231C1C521AAA00CF6729 /* LogoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD80231A1C521AAA00CF6729 /* LogoLayer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -357,6 +358,9 @@
 		FD78A21C1C48A21500002027 /* zengsong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zengsong.png; sourceTree = "<group>"; };
 		FD78A21D1C48A21500002027 /* music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = music.ogg; sourceTree = "<group>"; };
 		FD78A21E1C48A21500002027 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		FD8023191C5219E100CF6729 /* GlobalEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalEnum.h; sourceTree = "<group>"; };
+		FD80231A1C521AAA00CF6729 /* LogoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogoLayer.cpp; sourceTree = "<group>"; };
+		FD80231B1C521AAA00CF6729 /* LogoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoLayer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -561,6 +565,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FD80231A1C521AAA00CF6729 /* LogoLayer.cpp */,
+				FD80231B1C521AAA00CF6729 /* LogoLayer.h */,
 				FD76BC841C50D42600E9BBEB /* PauseLayer.cpp */,
 				FD76BC851C50D42600E9BBEB /* PauseLayer.h */,
 				FD78A1A31C48A1F900002027 /* Audio.cpp */,
@@ -598,6 +604,7 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
+				FD8023191C5219E100CF6729 /* GlobalEnum.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -873,6 +880,7 @@
 				FD78A1CA1C48A1F900002027 /* MenuLayer.cpp in Sources */,
 				FD78A1C31C48A1F900002027 /* Chinese.cpp in Sources */,
 				FD78A1D11C48A1F900002027 /* LayerChangeUtil.cpp in Sources */,
+				FD80231C1C521AAA00CF6729 /* LogoLayer.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				FD78A1CC1C48A1F900002027 /* Star.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,

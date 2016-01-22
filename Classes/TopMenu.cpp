@@ -21,7 +21,9 @@ void TopMenu::initView()
     Menu* menuPause = Menu::create(btnPause,NULL);
     menuPause->alignItemsVertically();
     menuPause->setPosition(60.0f,visibleSize.height - 50.0f);
-    this->addChild(menuPause);
+    this->addChild(menuPause,1,100);
+    
+    this->m_menuBtnPause = menuPause;
     
     ///声音
     
@@ -130,10 +132,11 @@ Vec2 TopMenu::getPosCurScore()
 void TopMenu::pauseGame()
 {
     CCLOG("PAUSE!");
+    this->m_menuBtnPause->setEnabled(false);
     //Director::getInstance()->replaceScene(GameScene::create());
     GameLayer* gameLayer = (GameLayer*)this->getParent();
     //gameLayer->setiGameState(2);
     
     Scene* scene = (Scene*)gameLayer->getParent();
-    scene->addChild(PauseLayer::create());
+    scene->addChild(PauseLayer::create(),2);
 }

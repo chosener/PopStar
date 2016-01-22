@@ -33,7 +33,7 @@ bool GameLayer::init()
 	background->setPosition(visibleSize.width/2,visibleSize.height/2);
 	this->addChild(background,-1);
 	menu = TopMenu::create();
-	this->addChild(menu);
+	this->addChild(menu,1,9999);
     
 	linkNum = Label::create("","Arial",40);
 	linkNum->setPosition(visibleSize.width/2,visibleSize.height-400.0f);

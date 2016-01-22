@@ -14,33 +14,34 @@ Star* Star::create(int color){
 	return nullptr;
 }
 
-char* Star::getImage(int color)
+string Star::getImage(int color)
 {
-	switch(color){
-	case color::BLUE:
+	switch(color)
+    {
+    case Color_BLUE:
 		return "blue.png";
-	case color::GREEN:
+	case Color_GREEN:
 		return "green.png";
-	case color::YELLOW:
+	case Color_YELLOW:
 		return "orange.png";
-	case color::RED:
+	case Color_RED:
 		return "red.png";
-	case color::PURPLE:
+	case Color_PURPLE:
 		return "purple.png";
 	}
 }
-char* Star::getImageFrame(int color)
+string  Star::getImageFrame(int color)
 {
     switch(color){
-        case color::BLUE:
+        case Color_BLUE:
             return "40.png";
-        case color::GREEN:
+        case Color_GREEN:
             return "20.png";
-        case color::YELLOW:
+        case Color_YELLOW:
             return "30.png";
-        case color::RED:
+        case Color_RED:
             return "50.png";
-        case color::PURPLE:
+        case Color_PURPLE:
             return "10.png";
     }
 }

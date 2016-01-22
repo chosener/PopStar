@@ -2,7 +2,8 @@
 #include "GameScene.h"
 #include "GameData.h"
 #include "Audio.h"
-
+#include "GameLayer.h"
+#include "TopMenu.h"
 
 PauseLayer::PauseLayer()
 {
@@ -77,6 +78,16 @@ void PauseLayer::startGame(Ref* node)
     int tag = pender->getTag();
     
     CCLOG("btn tag = %d",tag);
+    
+    Scene* scene = (Scene*)this->getParent();
+    
+    GameLayer* gameLayer = (GameLayer*)scene->getChildByTag(999);
+    
+    TopMenu* topMenu = (TopMenu*)gameLayer->getChildByTag(9999);
+    
+    Menu* menuPause = (Menu*)topMenu->getChildByTag(100);
+    
+    menuPause->setEnabled(true);
     
     switch (tag)
     {
