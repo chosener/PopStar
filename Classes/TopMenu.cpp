@@ -31,6 +31,7 @@ void TopMenu::initView()
     
     ///技能2,炸弹
     
+#if 0
     MenuItemImage* btnSkill0 = MenuItemImage::create("images/Props_Paint.png","images/Props_Paint_s.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
     MenuItemImage* btnSkill1 = MenuItemImage::create("images/Props_Rainbow.png","images/Props_Rainbow_s.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
     MenuItemImage* btnSkill2 = MenuItemImage::create("images/Props_Bomb.png","images/Props_Bomb_s.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
@@ -39,6 +40,7 @@ void TopMenu::initView()
     menuSkill->alignItemsHorizontallyWithPadding(40.0f);
     menuSkill->setPosition(visibleSize.width - 220.0f,visibleSize.height - 200.0f);
     this->addChild(menuSkill);
+#endif
     
     this->initScore();
 }

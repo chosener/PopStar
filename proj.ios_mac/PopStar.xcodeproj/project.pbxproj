@@ -128,7 +128,6 @@
 		FD78A2471C48A21500002027 /* menu_shop.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A1FA1C48A21500002027 /* menu_shop.png */; };
 		FD78A2481C48A21500002027 /* menu_sound_off.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A1FB1C48A21500002027 /* menu_sound_off.png */; };
 		FD78A2491C48A21500002027 /* menu_sound_on.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A1FC1C48A21500002027 /* menu_sound_on.png */; };
-		FD78A24A1C48A21500002027 /* menu_start.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A1FD1C48A21500002027 /* menu_start.png */; };
 		FD78A24B1C48A21500002027 /* menu_Text.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A1FE1C48A21500002027 /* menu_Text.png */; };
 		FD78A24C1C48A21500002027 /* menu_top.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A1FF1C48A21500002027 /* menu_top.png */; };
 		FD78A24D1C48A21500002027 /* MrDu_choujiang1.png in Resources */ = {isa = PBXBuildFile; fileRef = FD78A2001C48A21500002027 /* MrDu_choujiang1.png */; };
@@ -328,7 +327,6 @@
 		FD78A1FA1C48A21500002027 /* menu_shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_shop.png; sourceTree = "<group>"; };
 		FD78A1FB1C48A21500002027 /* menu_sound_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_sound_off.png; sourceTree = "<group>"; };
 		FD78A1FC1C48A21500002027 /* menu_sound_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_sound_on.png; sourceTree = "<group>"; };
-		FD78A1FD1C48A21500002027 /* menu_start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_start.png; sourceTree = "<group>"; };
 		FD78A1FE1C48A21500002027 /* menu_Text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_Text.png; sourceTree = "<group>"; };
 		FD78A1FF1C48A21500002027 /* menu_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_top.png; sourceTree = "<group>"; };
 		FD78A2001C48A21500002027 /* MrDu_choujiang1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MrDu_choujiang1.png; sourceTree = "<group>"; };
@@ -520,7 +518,6 @@
 				FD78A1FA1C48A21500002027 /* menu_shop.png */,
 				FD78A1FB1C48A21500002027 /* menu_sound_off.png */,
 				FD78A1FC1C48A21500002027 /* menu_sound_on.png */,
-				FD78A1FD1C48A21500002027 /* menu_start.png */,
 				FD78A1FE1C48A21500002027 /* menu_Text.png */,
 				FD78A1FF1C48A21500002027 /* menu_top.png */,
 				FD78A2001C48A21500002027 /* MrDu_choujiang1.png */,
@@ -804,7 +801,6 @@
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				FD78A2381C48A21500002027 /* green_heart.png in Resources */,
 				FD78A2541C48A21500002027 /* paint_arrow.png in Resources */,
-				FD78A24A1C48A21500002027 /* menu_start.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				FD78A2221C48A21500002027 /* bg_menuscene_zx2014.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,

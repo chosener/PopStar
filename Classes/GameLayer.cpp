@@ -27,14 +27,6 @@ bool GameLayer::init()
     //this->setiGameState(0);
     
 	this->scheduleUpdate();
-    
-    listener = EventListenerTouchOneByOne::create();
-    
-	listener->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan,this);
-
-    
-    //Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 5);
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Sprite* background = Sprite::create("bg_mainscene.jpg");
@@ -80,6 +72,16 @@ void GameLayer::onEnterTransitionDidFinish()
     Layer::onEnterTransitionDidFinish();
     log("GameScene onEnterTransitionDidFinish");
     
+    
+    listener = EventListenerTouchOneByOne::create();
+    
+    listener->onTouchBegan = CC_CALLBACK_2(GameLayer::onTouchBegan,this);
+    
+    
+    //Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 5);
+
+    
     this->initEventCustom();
 }
 
@@ -92,6 +94,9 @@ void GameLayer::onExit()
     //获取事件分发器
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeCustomEventListeners("Game_Reset");
+    
+    dispatcher->removeEventListener(listener);
+    
 #endif
 }
 
@@ -133,7 +138,7 @@ void GameLayer::reset()
 #if 1
     GAMEDATA::getInstance()->init();
     refreshMenu();
-    Director::getInstance()->getEventDispatcher()->removeEventListener(listener);
+    //Director::getInstance()->getEventDispatcher()->removeEventListener(listener);
     Director::getInstance()->replaceScene(GameScene::create());
 #endif
 
