@@ -33,7 +33,7 @@ bool MenuLayer::init()
 		);
 	Menu* menu = Menu::create(startBtn,NULL);
 	menu->alignItemsVertically();
-	menu->setPosition(visibleSize.width/2,visibleSize.height/2 -200.0f);
+	menu->setPosition(visibleSize.width/2,visibleSize.height/2 -150.0f);
 	this->addChild(menu);
     
     ScaleTo* scaleTo0 = ScaleTo::create(1.0f, 1.2f);
