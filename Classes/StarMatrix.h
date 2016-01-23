@@ -43,5 +43,6 @@ private:
 	bool needClear;
     static float ONE_CLEAR_TIME;
 	float clearSumTime;
+    CC_SYNTHESIZE(bool, m_bIsPassLevel, bIsPassLevel);
 };
 #endif

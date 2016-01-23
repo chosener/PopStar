@@ -57,6 +57,8 @@ bool GameLayer::init()
     
     this->floatLevelWord();
     
+    Audio::getInstance()->playBGM();
+    
 	return true;
 }
 

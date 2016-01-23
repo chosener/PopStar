@@ -361,7 +361,7 @@
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		FD80231E1C5239E500CF6729 /* GameData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameData.cpp; path = ../Classes/GameData.cpp; sourceTree = "<group>"; };
-		FD80231F1C5239E500CF6729 /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameData.h; path = ../Classes/GameData.h; sourceTree = "<group>"; };
+		FD80231F1C5239E500CF6729 /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; name = GameData.h; path = ../Classes/GameData.h; sourceTree = "<group>"; };
 		FD8023201C5239E500CF6729 /* GameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameLayer.cpp; path = ../Classes/GameLayer.cpp; sourceTree = "<group>"; };
 		FD8023211C5239E500CF6729 /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameLayer.h; path = ../Classes/GameLayer.h; sourceTree = "<group>"; };
 		FD8023221C5239E500CF6729 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = ../Classes/GameScene.cpp; sourceTree = "<group>"; };
@@ -374,7 +374,7 @@
 		FD8023291C5239E500CF6729 /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PauseLayer.h; path = ../Classes/PauseLayer.h; sourceTree = "<group>"; };
 		FD80232A1C5239E500CF6729 /* Star.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Star.cpp; path = ../Classes/Star.cpp; sourceTree = "<group>"; };
 		FD80232B1C5239E500CF6729 /* Star.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Star.h; path = ../Classes/Star.h; sourceTree = "<group>"; };
-		FD80232C1C5239E500CF6729 /* StarMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StarMatrix.cpp; path = ../Classes/StarMatrix.cpp; sourceTree = "<group>"; };
+		FD80232C1C5239E500CF6729 /* StarMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; name = StarMatrix.cpp; path = ../Classes/StarMatrix.cpp; sourceTree = "<group>"; };
 		FD80232D1C5239E500CF6729 /* StarMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StarMatrix.h; path = ../Classes/StarMatrix.h; sourceTree = "<group>"; };
 		FD80232E1C5239E500CF6729 /* StarParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StarParticle.cpp; path = ../Classes/StarParticle.cpp; sourceTree = "<group>"; };
 		FD80232F1C5239E500CF6729 /* StarParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StarParticle.h; path = ../Classes/StarParticle.h; sourceTree = "<group>"; };

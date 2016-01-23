@@ -2,6 +2,7 @@
 
 #include "GameData.h"
 #include "GameLayer.h"
+
 bool TopMenu::init()
 {
 	if(!Node::init())
@@ -27,6 +28,18 @@ void TopMenu::initView()
     
     ///声音
     
+    //音乐
+    auto musicOnMenuItem  =MenuItemImage::create("images/ico_audio_on.png","images/ico_audio_on.png");
+    auto musicOffMenuItem  =MenuItemImage::create("images/ico_audio_off.png","images/ico_audio_off.png");
+    
+    auto musicToggleMenuItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(TopMenu::menuMusicToggleCallback,this),musicOnMenuItem,musicOffMenuItem,NULL );
+    
+    auto menuMusic = Menu::create(musicToggleMenuItem, nullptr );
+    menuMusic->setPosition(visibleSize.width - 80.0f,visibleSize.height - 50.0f);
+    this->addChild(menuMusic);
+    
+    musicToggleMenuItem->setSelectedIndex((Audio::getInstance()->getbIsOpenMusic() ? 0 : 1));
+    
     ///技能0,刷子
     
     ///技能1,重新排列
@@ -45,6 +58,32 @@ void TopMenu::initView()
 #endif
     
     this->initScore();
+}
+void TopMenu::menuMusicToggleCallback(Ref* pSender)
+{
+    MenuItemToggle* menuMusic = (MenuItemToggle*)pSender;
+    
+    CCLOG("selected index:%d",menuMusic->getSelectedIndex());
+    
+    int select = menuMusic->getSelectedIndex();
+    
+    switch (select) {
+        case 0:
+        {
+            Audio::getInstance()->setbIsOpenMusic(true);
+            Audio::getInstance()->playBGM();
+        }
+            break;
+        case 1:
+        {
+            Audio::getInstance()->setbIsOpenMusic(false);
+            Audio::getInstance()->pauseBGM();
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 void TopMenu::initScore()

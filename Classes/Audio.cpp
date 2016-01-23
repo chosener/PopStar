@@ -1,6 +1,16 @@
 #include "Audio.h"
 #include "SimpleAudioEngine.h"
+
 Audio* Audio::m_instance = nullptr;
+
+Audio::Audio()
+{
+    this->init();
+}
+Audio::~Audio()
+{
+    
+}
 Audio* Audio::getInstance()
 {
 	if(m_instance == nullptr)
@@ -10,23 +20,45 @@ Audio* Audio::getInstance()
 	return m_instance;
 }
 
+void Audio::init()
+{
+    this->setbIsOpenMusic(true);
+}
+
 void Audio::playBGM()
 {
+    if(!this->m_bIsOpenMusic)
+        return;
 	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Music/music.ogg",true);
+}
+
+void Audio::pauseBGM()
+{
+    CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+}
+void Audio::resumeBGM()
+{
+    CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
 
 void Audio::playReadyGo()
 {
+    if(!this->m_bIsOpenMusic)
+        return;
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Music/readygo.ogg",false);
 }
 
 void Audio::playPop()
 {
+    if(!this->m_bIsOpenMusic)
+        return;
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Music/pop.ogg",false);
 }
 
 void Audio::playCombo(int size)
 {
+    if(!this->m_bIsOpenMusic)
+        return;
 	if(size < 5)
 		return;
 	if(size >= 10)

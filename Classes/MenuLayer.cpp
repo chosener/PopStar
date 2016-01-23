@@ -54,6 +54,11 @@ bool MenuLayer::init()
     menuMusic->setPosition(visibleSize.width - 80.0f,visibleSize.height - 80.0f);
     this->addChild(menuMusic);
     
+    musicToggleMenuItem->setSelectedIndex((Audio::getInstance()->getbIsOpenMusic() ? 0 : 1));
+    
+    Audio::getInstance()->playBGM();
+    
+    
 	return true;
 }
 
@@ -62,6 +67,26 @@ void MenuLayer::menuMusicToggleCallback(Ref* pSender)
     MenuItemToggle* menuMusic = (MenuItemToggle*)pSender;
     
     CCLOG("selected index:%d",menuMusic->getSelectedIndex());
+    
+    int select = menuMusic->getSelectedIndex();
+    
+    switch (select) {
+        case 0:
+        {
+            Audio::getInstance()->setbIsOpenMusic(true);
+            Audio::getInstance()->playBGM();
+        }
+            break;
+        case 1:
+        {
+            Audio::getInstance()->setbIsOpenMusic(false);
+            Audio::getInstance()->pauseBGM();
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 void MenuLayer::startGame()

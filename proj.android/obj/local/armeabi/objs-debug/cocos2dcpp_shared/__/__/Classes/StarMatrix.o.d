@@ -320,9 +320,9 @@
   jni/../../Classes/GlobalEnum.h jni/../../Classes/GameLayer.h \
   jni/../../Classes/FloatWord.h jni/../../Classes/TopMenu.h \
   jni/../../Classes/PauseLayer.h jni/../../Classes/MenuScene.h \
-  jni/../../Classes/GameData.h jni/../../Classes/GameScene.h \
-  jni/../../Classes/StarParticle.h jni/../../Classes/ComboEffect.h \
-  jni/../../Classes/Audio.h
+  jni/../../Classes/Audio.h jni/../../Classes/GameData.h \
+  jni/../../Classes/GameScene.h jni/../../Classes/StarParticle.h \
+  jni/../../Classes/ComboEffect.h
 
 jni/../../Classes/StarMatrix.h:
 
@@ -972,6 +972,8 @@ jni/../../Classes/PauseLayer.h:
 
 jni/../../Classes/MenuScene.h:
 
+jni/../../Classes/Audio.h:
+
 jni/../../Classes/GameData.h:
 
 jni/../../Classes/GameScene.h:
@@ -979,5 +981,3 @@ jni/../../Classes/GameScene.h:
 jni/../../Classes/StarParticle.h:
 
 jni/../../Classes/ComboEffect.h:
-
-jni/../../Classes/Audio.h:

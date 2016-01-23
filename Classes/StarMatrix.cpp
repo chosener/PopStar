@@ -26,6 +26,7 @@ bool StarMatrix::init(GameLayer* layer)
 	needClear = false;
 	clearSumTime = 0;
 	memset(stars, 0, sizeof(Star*) * ROW_NUM * COL_NUM);
+    this->setbIsPassLevel(false);
 	initMatrix();
 	return true;
 }
@@ -172,7 +173,7 @@ void StarMatrix::deleteSelectedList()
     
     int size = (int)selectedList.size();
     
-    int total = 0;
+    //int total = 0;
 
     for(int i = 0; i< size;i++)
 	//for(auto it = selectedList.begin();it != selectedList.end();it++)
@@ -214,6 +215,19 @@ void StarMatrix::deleteSelectedList()
     
     //µ÷ÕûÐÇÐÇ
 	adjustMatrix();
+    
+    if(!this->m_bIsPassLevel)
+    {
+
+        if(GAMEDATA::getInstance()->getCurScore() >= GAMEDATA::getInstance()->getNextScore())
+        {
+            showCongratulationPassLevel(this);
+            
+            this->setbIsPassLevel(true);
+            
+        }
+    }
+
     
 	if(isEnded())
     {
@@ -296,8 +310,10 @@ void StarMatrix::refreshScore()
 bool StarMatrix::isEnded()
 {
 	bool bRet = true;
-	for(int i=0;i<ROW_NUM;i++){
-		for(int j=0;j<COL_NUM;j++){
+	for(int i=0;i<ROW_NUM;i++)
+    {
+		for(int j=0;j<COL_NUM;j++)
+        {
 			if(stars[i][j] == nullptr)
 				continue;
 			int curColor = stars[i][j]->getColor();
