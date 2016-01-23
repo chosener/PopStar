@@ -369,7 +369,7 @@
 		FD8023241C5239E500CF6729 /* GlobalEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlobalEnum.h; path = ../Classes/GlobalEnum.h; sourceTree = "<group>"; };
 		FD8023251C5239E500CF6729 /* LogoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LogoLayer.cpp; path = ../Classes/LogoLayer.cpp; sourceTree = "<group>"; };
 		FD8023261C5239E500CF6729 /* LogoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogoLayer.h; path = ../Classes/LogoLayer.h; sourceTree = "<group>"; };
-		FD8023271C5239E500CF6729 /* MenuLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuLayer.cpp; path = ../Classes/MenuLayer.cpp; sourceTree = "<group>"; };
+		FD8023271C5239E500CF6729 /* MenuLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; name = MenuLayer.cpp; path = ../Classes/MenuLayer.cpp; sourceTree = "<group>"; };
 		FD8023281C5239E500CF6729 /* PauseLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PauseLayer.cpp; path = ../Classes/PauseLayer.cpp; sourceTree = "<group>"; };
 		FD8023291C5239E500CF6729 /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PauseLayer.h; path = ../Classes/PauseLayer.h; sourceTree = "<group>"; };
 		FD80232A1C5239E500CF6729 /* Star.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Star.cpp; path = ../Classes/Star.cpp; sourceTree = "<group>"; };

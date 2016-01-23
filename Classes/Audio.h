@@ -1,6 +1,7 @@
 #ifndef _AUDIO_H_
 #define _AUDIO_H_
-class Audio{
+class Audio
+{
 public:
 	static Audio* getInstance();
 	void playBGM();

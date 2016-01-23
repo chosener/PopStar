@@ -44,7 +44,24 @@ bool MenuLayer::init()
     
     startBtn->runAction(repeate);
     
+    //ÒôÀÖ
+    auto musicOnMenuItem  =MenuItemImage::create("images/sound-on1.png","images/sound-on1.png");
+    auto musicOffMenuItem  =MenuItemImage::create("images/sound-off1.png","images/sound-off1.png");
+    
+    auto musicToggleMenuItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(MenuLayer::menuMusicToggleCallback,this),musicOnMenuItem,musicOffMenuItem,NULL );
+
+    auto menuMusic = Menu::create(musicToggleMenuItem, nullptr );
+    menuMusic->setPosition(visibleSize.width - 80.0f,visibleSize.height - 80.0f);
+    this->addChild(menuMusic);
+    
 	return true;
+}
+
+void MenuLayer::menuMusicToggleCallback(Ref* pSender)
+{
+    MenuItemToggle* menuMusic = (MenuItemToggle*)pSender;
+    
+    CCLOG("selected index:%d",menuMusic->getSelectedIndex());
 }
 
 void MenuLayer::startGame()
