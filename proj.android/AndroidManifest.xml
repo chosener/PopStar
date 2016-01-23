@@ -1,38 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.ds.popstar"
-      android:versionCode="1"
-      android:versionName="1.0"
-      android:installLocation="auto">
+    package="com.ds.popstar"
+    android:installLocation="auto"
+    android:versionCode="1"
+    android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="9"/>
+    <uses-sdk android:minSdkVersion="9" />
+
     <uses-feature android:glEsVersion="0x00020000" />
 
-    <application android:label="@string/app_name"
-                 android:icon="@drawable/icon">
-					 
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+
         <!-- Tell Cocos2dxActivity the name of our .so -->
-        <meta-data android:name="android.app.lib_name"
-	              android:value="cocos2dcpp" />
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="cocos2dcpp" />
 
-        <activity android:name="org.cocos2dx.cpp.AppActivity"
-                  android:label="@string/app_name"
-                  android:screenOrientation="portrait"
-                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-                  android:configChanges="orientation">
-
+        <activity
+            android:name="org.cocos2dx.cpp.AppActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Analytics start -->
+        <activity android:name=".analytics.AnalyticsHome" >
+        </activity>
+        <activity android:name=".analytics.WebviewAnalytic" >
+        </activity>
+        <activity android:name=".analytics.FragmentStack" >
+        </activity>
+        <activity android:name=".analytics.FragmentTabs" >
+        </activity>
+        <activity android:name=".game.GameAnalyticsHome" >
+        </activity>
+
+        <!-- Caution! Do not change this app key. It is only for demo usage. -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="56a329d267e58e4d7200243e" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng" >
+        </meta-data>
     </application>
 
-    <supports-screens android:anyDensity="true"
-                      android:smallScreens="true"
-                      android:normalScreens="true"
-                      android:largeScreens="true"
-                      android:xlargeScreens="true"/>
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-</manifest> 
+    <!-- 网络访问权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 获取网络信息状态，如当前的网络连接是否有效 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 读取手机状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 允许程序写入外部存储，如SD卡上写文件 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 获取错略位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 获取WiFi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- 以下权限为可选权限，主要是品牌广告会用到，如果您没有添加，需要这些效果的品牌广告将不会投放到您的应用上 -->
+    <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+</manifest>

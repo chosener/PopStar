@@ -32,6 +32,15 @@ void FloatWord::floatIn(const float delay,std::function<void()> callback){
 	_label->runAction(action);
 }
 
+
+void FloatWord::floatIn(const float delay,CallFunc* callBack)
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    MoveTo* move = MoveTo::create(delay,Point(visibleSize.width/2,_begin.y));;
+    Sequence* action = Sequence::create(move,callBack,NULL);
+    _label->runAction(action);
+}
+
 void FloatWord::floatOut(const float delay,std::function<void()> callback){
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	MoveTo* move = MoveTo::create(delay,Point(0,_begin.y));

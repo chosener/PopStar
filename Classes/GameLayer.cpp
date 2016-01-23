@@ -29,7 +29,7 @@ bool GameLayer::init()
 	this->scheduleUpdate();
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Sprite* background = Sprite::create("bg_mainscene.jpg");
+	Sprite* background = Sprite::create("bg/bg_mainscene.jpg");
 	background->setPosition(visibleSize.width/2,visibleSize.height/2);
 	this->addChild(background,-1);
 	menu = TopMenu::create();
@@ -51,13 +51,15 @@ bool GameLayer::init()
 
     //底下的一条线
     Sprite* spLine = Sprite::create("images/img_bars.png");
-    spLine->setPosition(Vec2(visibleSize.width/2, 95.0f));
+    spLine->setPosition(Vec2(visibleSize.width/2, 105.0f));
     this->addChild(spLine);
     
     
     this->floatLevelWord();
     
     Audio::getInstance()->playBGM();
+    
+    //showAD();
     
 	return true;
 }
@@ -285,12 +287,31 @@ void GameLayer::gotoNextLevel()
 
 void GameLayer::gotoGameOver()
 {
-	//ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩﬂ∑Ôø?
+
 	GAMEDATA::getInstance()->saveHighestScore();
-	//∆ÆÔøΩ÷£ÔøΩÔøΩ–ªÔøΩscene
+	
 	Size visibleSize = Director::getInstance()->getVisibleSize();
+    
 	FloatWord* gameOver = FloatWord::create(
-		"GAME OVER",80,Point(visibleSize.width,visibleSize.height/2));
+		"GAME OVER",80,Point(visibleSize.width,visibleSize.height/2 + 300.0f));
+    
 	this->addChild(gameOver);
+#if 0
 	gameOver->floatIn(1.0f,[]{Director::getInstance()->replaceScene(MenuScene::create());});
+#endif
+#if 1
+    
+    CallFunc* callBack = CallFunc::create([=]
+    {
+        Scene* scene = (Scene*)this->getParent();
+        scene->addChild(GameOver::create(),2);
+    });
+
+    gameOver->floatIn(1.0f,callBack);
+    
+#endif
+    
 }
+
+
+

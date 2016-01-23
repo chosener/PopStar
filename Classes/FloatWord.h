@@ -7,6 +7,7 @@ public:
 	static FloatWord* create(const std::string& word,const int fontSize,Point begin);
 	bool init(const std::string& word,const int fontSize,Point begin);
 	void floatIn(const float delay,std::function<void()> callback);
+    void floatIn(const float delay,CallFunc* callBack);
 	void floatOut(const float delay,std::function<void()> callback);
 	void floatInOut(const float speed,const float delay,std::function<void()> callback);
 

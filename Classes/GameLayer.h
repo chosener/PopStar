@@ -6,6 +6,9 @@
 #include "GameData.h"
 #include "StarMatrix.h"
 #include "GameScene.h"
+#include "JniSms.h"
+#include "GameOver.h"
+
 using namespace cocos2d;
 class StarMatrix;
 class GameLayer : public Layer

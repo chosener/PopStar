@@ -64,6 +64,8 @@ bool PauseLayer::init()
     menuSkill->setPosition(visibleSize.width/2,visibleSize.height/2 - 50.0f);
     this->addChild(menuSkill);
     
+    showAD();
+    
 	return true;
 }
 

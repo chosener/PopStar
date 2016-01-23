@@ -35,7 +35,7 @@ void TopMenu::initView()
     auto musicToggleMenuItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(TopMenu::menuMusicToggleCallback,this),musicOnMenuItem,musicOffMenuItem,NULL );
     
     auto menuMusic = Menu::create(musicToggleMenuItem, nullptr );
-    menuMusic->setPosition(visibleSize.width - 80.0f,visibleSize.height - 50.0f);
+    menuMusic->setPosition(visibleSize.width - 70.0f,visibleSize.height - 50.0f);
     this->addChild(menuMusic);
     
     musicToggleMenuItem->setSelectedIndex((Audio::getInstance()->getbIsOpenMusic() ? 0 : 1));

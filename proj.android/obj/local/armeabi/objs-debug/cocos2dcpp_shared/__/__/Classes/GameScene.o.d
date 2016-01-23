@@ -317,11 +317,11 @@
   jni/../../cocos2d/cocos/./deprecated/CCDeprecated.h \
   jni/../../Classes/GameLayer.h jni/../../Classes/FloatWord.h \
   jni/../../Classes/TopMenu.h jni/../../Classes/PauseLayer.h \
-  jni/../../Classes/MenuScene.h jni/../../Classes/Audio.h \
-  jni/../../Classes/GameData.h jni/../../Classes/StarMatrix.h \
-  jni/../../Classes/Star.h \
+  jni/../../Classes/MenuScene.h jni/../../Classes/JniSms.h \
   /Users/saintking/Documents/ndk/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/iostream \
-  jni/../../Classes/GlobalEnum.h
+  jni/../../Classes/Audio.h jni/../../Classes/GameData.h \
+  jni/../../Classes/StarMatrix.h jni/../../Classes/Star.h \
+  jni/../../Classes/GlobalEnum.h jni/../../Classes/GameOver.h
 
 jni/../../Classes/GameScene.h:
 
@@ -965,6 +965,10 @@ jni/../../Classes/PauseLayer.h:
 
 jni/../../Classes/MenuScene.h:
 
+jni/../../Classes/JniSms.h:
+
+/Users/saintking/Documents/ndk/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/iostream:
+
 jni/../../Classes/Audio.h:
 
 jni/../../Classes/GameData.h:
@@ -973,6 +977,6 @@ jni/../../Classes/StarMatrix.h:
 
 jni/../../Classes/Star.h:
 
-/Users/saintking/Documents/ndk/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/iostream:
-
 jni/../../Classes/GlobalEnum.h:
+
+jni/../../Classes/GameOver.h:
