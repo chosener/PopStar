@@ -53,6 +53,8 @@ public final class R {
         public static final int online_config=0x7f040001;
         public static final int page_stack=0x7f040008;
         public static final int page_tabs=0x7f040009;
+        public static final int paying_message=0x7f040010;
+        public static final int paying_title=0x7f04000f;
         public static final int signin=0x7f04000d;
         public static final int signoff=0x7f04000e;
         public static final int social_analytics=0x7f04000a;

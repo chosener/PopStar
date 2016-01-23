@@ -15,4 +15,7 @@
     <string name="flush_cache">send cache message ,right now !</string>
     <string name="signin">signin</string>
     <string name="signoff">signoff</string>
+    <string name="paying_title">支付提示</string>
+    <string name="paying_message">当前有一笔支付未完成，是否等待？</string>
+    
 </resources>
