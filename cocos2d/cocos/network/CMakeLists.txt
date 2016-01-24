@@ -1,28 +1,37 @@
+if(WIN32)
+  set(PLATFORM_SRC
+    network/WebSocket.cpp
+  )
 
-if(WINDOWS)
-  set(PLATFORM_LINK websockets)
-elseif(LINUX)
-  set(PLATFORM_LINK websockets ssl crypto)
-else()
-  set(PLATFORM_LINK websockets)
+  set(PLATFORM_LINK
+    websockets
+  )
+elseif(NOT APPLE)
+  set(PLATFORM_SRC
+    network/WebSocket.cpp
+  )
+
+  set(PLATFORM_LINK
+    websockets
+    ssl
+    crypto
+  )
 endif()
 
 set(COCOS_NETWORK_SRC
-
-    network/HttpClient.cpp
-    network/SocketIO.cpp
-    network/WebSocket.cpp
-
+  network/HttpClient.cpp
+  network/SocketIO.cpp
+  ${PLATFORM_SRC}
 )
 
-if(MSVC)
-  set(COCOS_NETWORK_LINK 
-    libcurl_imp 
+IF (WIN32 AND NOT MINGW)
+  set(COCOS_NETWORK_LINK
+    libcurl_imp
     ${PLATFORM_LINK}
   )
-else()
-  set(COCOS_NETWORK_LINK 
+ELSE()
+  set(COCOS_NETWORK_LINK
     curl
-    ${PLATFORM_LINK} 
+    ${PLATFORM_LINK}
   )
-endif()
+ENDIF()

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -24,9 +24,8 @@
 
 #ifndef __CCDATAVISITOR_H__
 #define __CCDATAVISITOR_H__
-/// @cond DO_NOT_SHOW
 
-#include "platform/CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -40,6 +39,11 @@ class __String;
 class __Array;
 class __Dictionary;
 class __Set;
+
+/**
+ * @addtogroup data_structures
+ * @{
+ */
 
 /**
  * Visitor that helps to perform action that depends on polymorphic object type
@@ -102,11 +106,9 @@ private:
     std::string _result;
 };
 
-/**
- * @endcond
- */
+// end of data_structure group
+/// @}
 
 NS_CC_END
 
-/// @endcond
 #endif // __CCDATAVISITOR_H__

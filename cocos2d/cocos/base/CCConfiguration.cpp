@@ -25,6 +25,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "base/CCConfiguration.h"
+#include <string.h>
+#include "base/ccMacros.h"
+#include "base/ccConfig.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
@@ -47,10 +50,6 @@ Configuration::Configuration()
 , _maxSamplesAllowed(0)
 , _maxTextureUnits(0)
 , _glExtensions(nullptr)
-, _maxDirLightInShader(1)
-, _maxPointLightInShader(1)
-, _maxSpotLightInShader(1)
-, _animate3DQuality(Animate3DQuality::QUALITY_HIGH)
 {
 }
 
@@ -150,7 +149,7 @@ Configuration* Configuration::getInstance()
 {
     if (! s_sharedConfiguration)
     {
-        s_sharedConfiguration = new (std::nothrow) Configuration();
+        s_sharedConfiguration = new Configuration();
         s_sharedConfiguration->init();
     }
     
@@ -162,13 +161,13 @@ void Configuration::destroyInstance()
     CC_SAFE_RELEASE_NULL(s_sharedConfiguration);
 }
 
-// FIXME: deprecated
+// XXX: deprecated
 Configuration* Configuration::sharedConfiguration()
 {
     return Configuration::getInstance();
 }
 
-// FIXME: deprecated
+// XXX: deprecated
 void Configuration::purgeConfiguration()
 {
     Configuration::destroyInstance();
@@ -248,26 +247,6 @@ bool Configuration::supportsShareableVAO() const
 #endif
 }
 
-int Configuration::getMaxSupportDirLightInShader() const
-{
-    return _maxDirLightInShader;
-}
-
-int Configuration::getMaxSupportPointLightInShader() const
-{
-    return _maxPointLightInShader;
-}
-
-int Configuration::getMaxSupportSpotLightInShader() const
-{
-    return _maxSpotLightInShader;
-}
-
-Animate3DQuality Configuration::getAnimate3DQuality() const
-{
-    return _animate3DQuality;
-}
-
 //
 // generic getters for properties
 //
@@ -337,31 +316,6 @@ void Configuration::loadConfigFile(const std::string& filename)
         else
             CCLOG("Key already present. Ignoring '%s'",dataMapIter->first.c_str());
     }
-    
-    //light info
-    std::string name = "cocos2d.x.3d.max_dir_light_in_shader";
-	if (_valueDict.find(name) != _valueDict.end())
-        _maxDirLightInShader = _valueDict[name].asInt();
-    else
-        _valueDict[name] = Value(_maxDirLightInShader);
-    
-    name = "cocos2d.x.3d.max_point_light_in_shader";
-	if (_valueDict.find(name) != _valueDict.end())
-        _maxPointLightInShader = _valueDict[name].asInt();
-    else
-        _valueDict[name] = Value(_maxPointLightInShader);
-    
-    name = "cocos2d.x.3d.max_spot_light_in_shader";
-	if (_valueDict.find(name) != _valueDict.end())
-        _maxSpotLightInShader = _valueDict[name].asInt();
-    else
-        _valueDict[name] = Value(_maxSpotLightInShader);
-    
-    name = "cocos2d.x.3d.animate_quality";
-    if (_valueDict.find(name) != _valueDict.end())
-        _animate3DQuality = (Animate3DQuality)_valueDict[name].asInt();
-    else
-        _valueDict[name] = Value((int)_animate3DQuality);
 }
 
 NS_CC_END

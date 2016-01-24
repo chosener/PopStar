@@ -19,7 +19,7 @@
 #pragma once
 
 
-#include "platform/CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 // Helper utilities to make Win32 APIs work with exceptions.

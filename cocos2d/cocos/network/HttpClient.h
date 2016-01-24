@@ -24,59 +24,40 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCHTTPCLIENT_H__
-#define __CCHTTPCLIENT_H__
+#ifndef __CCHTTPREQUEST_H__
+#define __CCHTTPREQUEST_H__
 
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
-
-/**
- * @addtogroup core
- * @{
- */
+#include "network/HttpClient.h"
 
 NS_CC_BEGIN
 
 namespace network {
 
-/** Singleton that handles asynchrounous http requests.
- *
- * Once the request completed, a callback will issued in main thread when it provided during make request.
- *
- * @lua NA
+/**
+ * @addtogroup Network
+ * @{
  */
-class CC_DLL HttpClient
+
+
+/** @brief Singleton that handles asynchrounous http requests
+ * Once the request completed, a callback will issued in main thread when it provided during make request
+ */
+class HttpClient
 {
 public:
-    /**
-     * Get instance of HttpClient.
-     *
-     * @return the instance of HttpClient.
-     */
+    /** Return the shared instance **/
     static HttpClient *getInstance();
     
-    /** 
-     * Relase the instance of HttpClient. 
-     */
+    /** Relase the shared instance **/
     static void destroyInstance();
 
-    /** 
-     * Enable cookie support.
-     *
-     * @param cookieFile the filepath of cookie file.
-     */
+    /** Enable cookie support. **/
     void enableCookies(const char* cookieFile);
-    
-    /**
-     * Set root certificate path for SSL verification.
-     *
-     * @param caFile a full path of root certificate.if it is empty, SSL verification is disabled.
-     */
-    void setSSLVerification(const std::string& caFile);
         
     /**
      * Add a get request to task queue
-     *
      * @param request a HttpRequest object, which includes url, response callback etc.
                       please make sure request->_requestData is clear before calling "send" here.
      */
@@ -84,7 +65,6 @@ public:
 
     /**
      * Immediate send a request
-     *
      * @param request a HttpRequest object, which includes url, response callback etc.
                       please make sure request->_requestData is clear before calling "sendImmediate" here.
      */
@@ -92,32 +72,28 @@ public:
   
     
     /**
-     * Set the timeout value for connecting.
-     *
-     * @param value the timeout value for connecting.
+     * Change the connect timeout
+     * @param value The desired timeout.
      */
     inline void setTimeoutForConnect(int value) {_timeoutForConnect = value;};
     
     /**
-     * Get the timeout value for connecting.
-     *
-     * @return int the timeout value for connecting.
+     * Get connect timeout
+     * @return int
      */
     inline int getTimeoutForConnect() {return _timeoutForConnect;}
     
     
     /**
-     * Set the timeout value for reading.
-     *
-     * @param value the timeout value for reading.
+     * Change the download timeout
+     * @param value
      */
     inline void setTimeoutForRead(int value) {_timeoutForRead = value;};
     
 
     /**
-     * Get the timeout value for reading.
-     *
-     * @return int the timeout value for reading.
+     * Get download timeout
+     * @return int
      */
     inline int getTimeoutForRead() {return _timeoutForRead;};
         
@@ -132,7 +108,7 @@ private:
      */
     bool lazyInitThreadSemphore();
     void networkThread();
-    void networkThreadAlone(HttpRequest* request, HttpResponse* response);
+    void networkThreadAlone(HttpRequest* request);
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
     void dispatchResponseCallbacks();
     
@@ -141,11 +117,11 @@ private:
     int _timeoutForRead;
 };
 
+// end of Network group
+/// @}
+
 }
 
 NS_CC_END
-
-// end group
-/// @}
 
 #endif //__CCHTTPREQUEST_H__

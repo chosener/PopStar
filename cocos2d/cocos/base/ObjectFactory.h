@@ -27,28 +27,24 @@ THE SOFTWARE.
 
 #include <string>
 #include <unordered_map>
-#include <functional>
 #include "base/CCRef.h"
-#include "platform/CCPlatformMacros.h"
+#include "base/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
-class CC_DLL ObjectFactory
+class ObjectFactory
 {
 public:
     typedef cocos2d::Ref* (*Instance)(void);
-    typedef std::function<cocos2d::Ref* (void)> InstanceFunc;
-    struct CC_DLL TInfo
+    struct TInfo
     {
         TInfo(void);
-        TInfo(const std::string& type, Instance ins = nullptr);
-        TInfo(const std::string& type, InstanceFunc ins = nullptr);
+        TInfo(const std::string& type, Instance ins = NULL);
         TInfo(const TInfo &t);
         ~TInfo(void);
         TInfo& operator= (const TInfo &t);
         std::string _class;
         Instance _fun;
-        InstanceFunc _func;
     };
     typedef std::unordered_map<std::string, TInfo>  FactoryMap;
 

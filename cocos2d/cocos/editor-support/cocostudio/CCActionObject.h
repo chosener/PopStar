@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "cocostudio/CCActionNode.h"
 #include "2d/CCActionInstant.h"
 #include "cocostudio/DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -39,7 +38,7 @@ struct stExpCocoNode;
 *  @js NA
 *  @lua NA
 */
-class CC_STUDIO_DLL ActionObject : public cocos2d::Ref
+class ActionObject : public cocos2d::Ref
 {
 public:
 

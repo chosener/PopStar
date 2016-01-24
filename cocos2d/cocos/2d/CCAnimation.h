@@ -27,11 +27,12 @@ THE SOFTWARE.
 #ifndef __CC_ANIMATION_H__
 #define __CC_ANIMATION_H__
 
-#include "platform/CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #include "base/CCRef.h"
 #include "base/CCValue.h"
-#include "base/CCVector.h"
+#include "math/CCGeometry.h"
 #include "2d/CCSpriteFrame.h"
+#include "base/CCVector.h"
 
 #include <string>
 
@@ -41,25 +42,22 @@ class Texture2D;
 class SpriteFrame;
 
 /**
- * @addtogroup _2d
+ * @addtogroup sprite_nodes
  * @{
  */
 
-/** @class AnimationFrame
- *
- * A frame of the animation. It contains information like:
- * - sprite frame name.
- * - # of delay units.
- * - offset
+/** AnimationFrame
+ A frame of the animation. It contains information like:
+    - sprite frame name
+    - # of delay units.
+    - offset
  
  @since v2.0
  */
 class CC_DLL AnimationFrame : public Ref, public Clonable
 {
 public:
-    /** @struct DisplayedEventInfo
-     * When the animation display,Dispatches the event of UserData.
-     */
+    
     struct DisplayedEventInfo
     {
         Node* target;
@@ -67,23 +65,13 @@ public:
     };
     
     /**
-     * Creates the animation frame with a spriteframe, number of delay units and a notification user info.
-     *
-     * @param spriteFrame The animation frame with a spriteframe.
-     * @param delayUnits Number of delay units.
-     * @param userInfo A notification user info.
+     * Creates the animation frame with a spriteframe, number of delay units and a notification user info
      * @since 3.0
      */
     static AnimationFrame* create(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
-    /** Return a SpriteFrameName to be used.
-     *
-     * @return a SpriteFrameName to be used.
-     */
+
     SpriteFrame* getSpriteFrame() const { return _spriteFrame; };
-    /** Set the SpriteFrame.
-     *
-     * @param frame A SpriteFrame will be used.
-     */
+    
     void setSpriteFrame(SpriteFrame* frame)
     {
         CC_SAFE_RETAIN(frame);
@@ -91,30 +79,19 @@ public:
         _spriteFrame = frame;
     }
 
-    /** Gets the units of time the frame takes.
-     *
-     * @return The units of time the frame takes.
-     */
+    /** Gets the units of time the frame takes */
     float getDelayUnits() const { return _delayUnits; };
     
-    /** Sets the units of time the frame takes.
-     *
-     * @param delayUnits The units of time the frame takes.
-     */
+    /** Sets the units of time the frame takes */ 
     void setDelayUnits(float delayUnits) { _delayUnits = delayUnits; };
     
     /** @brief Gets user infomation
-     * A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. 
-     * If UserInfo is nil, then no notification will be broadcast.
-     *
-     * @return A dictionary as UserInfo
+        A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast.
      */
     const ValueMap& getUserInfo() const { return _userInfo; };
     ValueMap& getUserInfo() { return _userInfo; };
     
-    /** Sets user infomation.
-     * @param userInfo A dictionary as UserInfo.
-     */
+    /** Sets user infomation */
     void setUserInfo(const ValueMap& userInfo)
     {
         _userInfo = userInfo;
@@ -155,127 +132,89 @@ private:
 
 
 
-/** @class Animation
- * A Animation object is used to perform animations on the Sprite objects.
- * The Animation object contains AnimationFrame objects, and a possible delay between the frames.
- * You can animate a Animation object by using the Animate action. Example:
- * @code
- * sprite->runAction(Animate::create(animation));
- * @endcode
+/** A Animation object is used to perform animations on the Sprite objects.
+
+The Animation object contains AnimationFrame objects, and a possible delay between the frames.
+You can animate a Animation object by using the Animate action. Example:
+
+@code
+    sprite->runAction(Animate::create(animation));
+@endcode
+
 */
 class CC_DLL Animation : public Ref, public Clonable
 {
 public:
-    /** Creates an animation.
-     * @since v0.99.5
+    /** Creates an animation
+     @since v0.99.5
      */
     static Animation* create(void);
 
     /* Creates an animation with an array of SpriteFrame and a delay between frames in seconds.
-     * The frames will be added with one "delay unit".
-     * @since v0.99.5
-     * @param arrayOfSpriteFrameNames An array of SpriteFrame.
-     * @param delay A delay between frames in seconds.
-     * @param loops The times the animation is going to loop.
+     The frames will be added with one "delay unit".
+     @since v0.99.5
      */
     static Animation* createWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f, unsigned int loops = 1);
 
     /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
-     * @since v2.0
-     * @param arrayOfAnimationFrameNames An animation with an array of AnimationFrame.
-     * @param delayPerUnit The delay per units in seconds and and how many times it should be executed.
-     * @param loops The times the animation is going to loop.
+     @since v2.0
+     * @js NA
      */
     static Animation* create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);
 
     /** Adds a SpriteFrame to a Animation.
-     *
-     * @param frame The frame will be added with one "delay unit".
+     The frame will be added with one "delay unit".
      */
     void addSpriteFrame(SpriteFrame *frame);
 
     /** Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it.
-     * The frame will be added with one "delay unit".
-     * Added to facilitate the migration from v0.8 to v0.9.
-     * @param filename The path of SpriteFrame.
+     The frame will be added with one "delay unit".
+     Added to facilitate the migration from v0.8 to v0.9.
      */
     void addSpriteFrameWithFile(const std::string& filename);
     /**
-     * @deprecated. Use addSpriteFrameWithFile() instead.
-	 @js NA
+     @deprecated. Use addSpriteFrameWithFile() instead
      */
     CC_DEPRECATED_ATTRIBUTE void addSpriteFrameWithFileName(const std::string& filename){ addSpriteFrameWithFile(filename);}
 
     /** Adds a frame with a texture and a rect. Internally it will create a SpriteFrame and it will add it.
-     * The frame will be added with one "delay unit".
-     * Added to facilitate the migration from v0.8 to v0.9.
-     * @param pobTexture A frame with a texture.
-     * @param rect The Texture of rect.
+     The frame will be added with one "delay unit".
+     Added to facilitate the migration from v0.8 to v0.9.
      */
     void addSpriteFrameWithTexture(Texture2D* pobTexture, const Rect& rect);
 
-    /** Gets the total Delay units of the Animation. 
-     *
-     * @return The total Delay units of the Animation.
-     */
+    /** Gets the total Delay units of the Animation. */
     float getTotalDelayUnits() const { return _totalDelayUnits; };
     
-    /** Sets the delay in seconds of the "delay unit".
-     *
-     * @param delayPerUnit The delay in seconds of the "delay unit".
-     */
+    /** Sets the delay in seconds of the "delay unit" */
     void setDelayPerUnit(float delayPerUnit) { _delayPerUnit = delayPerUnit; };
     
-    /** Gets the delay in seconds of the "delay unit".
-     * 
-     * @return The delay in seconds of the "delay unit".
-     */
+    /** Gets the delay in seconds of the "delay unit" */
     float getDelayPerUnit() const { return _delayPerUnit; };
 
     
-    /** Gets the duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit.
-     *
-     * @return Result of totalDelayUnits * delayPerUnit.
-     */
+    /** Gets the duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit */
     float getDuration() const;
     
-    /** Gets the array of AnimationFrames.
-     * 
-     * @return The array of AnimationFrames.
-     */
+    /** Gets the array of AnimationFrames */
     const Vector<AnimationFrame*>& getFrames() const { return _frames; };
     
-    /** Sets the array of AnimationFrames. 
-     *
-     * @param frames The array of AnimationFrames.
-     */
+    /** Sets the array of AnimationFrames */
     void setFrames(const Vector<AnimationFrame*>& frames)
     {
         _frames = frames;
     }
     
-    /** Checks whether to restore the original frame when animation finishes. 
-     *
-     * @return Restore the original frame when animation finishes.
-     */
+    /** Checks whether to restore the original frame when animation finishes. */
     bool getRestoreOriginalFrame() const { return _restoreOriginalFrame; };
     
-    /** Sets whether to restore the original frame when animation finishes. 
-     *
-     * @param restoreOriginalFrame Whether to restore the original frame when animation finishes.
-     */
+    /** Sets whether to restore the original frame when animation finishes */
     void setRestoreOriginalFrame(bool restoreOriginalFrame) { _restoreOriginalFrame = restoreOriginalFrame; };
     
-    /** Gets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... 
-     *
-     * @return The times the animation is going to loop.
-     */
+    /** Gets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
     unsigned int getLoops() const { return _loops; };
     
-    /** Sets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... 
-     *
-     * @param loops The times the animation is going to loop.
-     */
+    /** Sets the times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
     void setLoops(unsigned int loops) { _loops = loops; };
     
     // overrides
@@ -285,16 +224,16 @@ CC_CONSTRUCTOR_ACCESS:
     Animation();
     virtual ~Animation(void);
     
-    /** Initializes a Animation. */
+    /** Initializes a Animation */
     bool init();
     
-    /** Initializes a Animation with frames and a delay between frames.
-     * @since v0.99.5
+    /** Initializes a Animation with frames and a delay between frames
+     @since v0.99.5
      */
     bool initWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f, unsigned int loops = 1);
     
-    /** Initializes a Animation with AnimationFrame.
-     * @since v2.0
+    /** Initializes a Animation with AnimationFrame
+     @since v2.0
      */
     bool initWithAnimationFrames(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
@@ -302,16 +241,16 @@ protected:
     /** total Delay units of the Animation. */
     float _totalDelayUnits;
 
-    /** Delay in seconds of the "delay unit". */
+    /** Delay in seconds of the "delay unit" */
     float _delayPerUnit;
 
-    /** duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit. */
+    /** duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit */
     float _duration;
 
-    /** array of AnimationFrames. */
+    /** array of AnimationFrames */
     Vector<AnimationFrame*> _frames;
 
-    /** whether or not it shall restore the original frame when the animation finishes. */
+    /** whether or not it shall restore the original frame when the animation finishes */
     bool _restoreOriginalFrame;
 
     /** how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */

@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 
-#include "platform/CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 #include "CCPThreadWinRT.h"

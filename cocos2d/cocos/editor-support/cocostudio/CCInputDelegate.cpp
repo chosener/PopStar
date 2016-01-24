@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventListenerAcceleration.h"
 #include "base/CCEventListenerKeyboard.h"
-#include "base/CCEventDispatcher.h"
 
 using namespace cocos2d;
 

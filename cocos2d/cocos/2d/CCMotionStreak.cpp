@@ -26,12 +26,14 @@ THE SOFTWARE.
 
 #include "2d/CCMotionStreak.h"
 #include "math/CCVertex.h"
+#include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
-#include "renderer/CCTexture2D.h"
-#include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -40,6 +42,7 @@ MotionStreak::MotionStreak()
 , _startingPositionInitialized(false)
 , _texture(nullptr)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
+, _positionR(Vec2::ZERO)
 , _stroke(0.0f)
 , _fadeDelta(0.0f)
 , _minSeg(0.0f)
@@ -66,7 +69,7 @@ MotionStreak::~MotionStreak()
 
 MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path)
 {
-    MotionStreak *ret = new (std::nothrow) MotionStreak();
+    MotionStreak *ret = new MotionStreak();
     if (ret && ret->initWithFade(fade, minSeg, stroke, color, path))
     {
         ret->autorelease();
@@ -79,7 +82,7 @@ MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const
 
 MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture)
 {
-    MotionStreak *ret = new (std::nothrow) MotionStreak();
+    MotionStreak *ret = new MotionStreak();
     if (ret && ret->initWithFade(fade, minSeg, stroke, color, texture))
     {
         ret->autorelease();
@@ -105,7 +108,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     ignoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
-    _positionR.setZero();
+    _positionR = Vec2::ZERO;
     _fastMode = true;
     _minSeg = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
     _minSeg *= _minSeg;
@@ -166,11 +169,6 @@ void MotionStreak::getPosition(float* x, float* y) const
 float MotionStreak::getPositionX() const
 {
     return _positionR.x;
-}
-
-Vec3 MotionStreak::getPosition3D() const
-{
-    return Vec3(_positionR.x, _positionR.y, getPositionZ());
 }
 
 void MotionStreak::setPositionX(float x)
@@ -410,9 +408,10 @@ void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flag
 {
     if(_nuPoints <= 1)
         return;
-    _customCommand.init(_globalZOrder, transform, flags);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
 NS_CC_END
+

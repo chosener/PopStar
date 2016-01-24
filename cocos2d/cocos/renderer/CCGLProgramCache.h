@@ -33,14 +33,14 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 
-/**
- * @addtogroup support
- * @{
- */
-
 NS_CC_BEGIN
 
 class GLProgram;
+
+/**
+ * @addtogroup shaders
+ * @{
+ */
 
 /** GLProgramCache
  Singleton that stores manages GLProgram objects (shaders)
@@ -50,12 +50,10 @@ class CC_DLL GLProgramCache : public Ref
 {
 public:
     /**
-    Constructor.
      * @js ctor
      */
     GLProgramCache();
     /**
-    Destructor.
      * @js NA
      * @lua NA
      */
@@ -92,25 +90,16 @@ public:
     CC_DEPRECATED_ATTRIBUTE void addProgram(GLProgram* program, const std::string &key) { addGLProgram(program, key); }
 
 private:
-    /**
-    @{
-        Init and load predefined shaders.
-    */
     bool init();
     void loadDefaultGLProgram(GLProgram *program, int type);
-    /**
-    @}
-    */
 
-    /**Get macro define for lights in current openGL driver.*/
-    std::string getShaderMacrosForLight() const;
-
-    /**Predefined shaders.*/
+//    Dictionary* _programs;
     std::unordered_map<std::string, GLProgram*> _programs;
 };
 
-NS_CC_END
 // end of shaders group
 /// @}
+
+NS_CC_END
 
 #endif /* __CCGLPROGRAMCACHE_H__ */

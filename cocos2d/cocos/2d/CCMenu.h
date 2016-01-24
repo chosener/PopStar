@@ -28,43 +28,41 @@ THE SOFTWARE.
 
 #include "2d/CCMenuItem.h"
 #include "2d/CCLayer.h"
+#include "base/CCVector.h"
+#include "base/CCEventTouch.h"
 #include "base/CCValue.h"
 
 NS_CC_BEGIN
-class Touch;
 
 /**
- * @addtogroup _2d
+ * @addtogroup GUI
+ * @{
+ * @addtogroup menu
  * @{
  */
 
 
 
-/** @brief A Menu for touch handling.
+/** @brief A Menu
 * 
 * Features and Limitation:
-*  - You can add MenuItem objects in runtime using addChild.
-*  - But the only accepted children are MenuItem objects.
+*  - You can add MenuItem objects in runtime using addChild:
+*  - But the only accepted children are MenuItem objects
 */
 class CC_DLL Menu : public Layer
 {
 public:
-    /**
-     * Menu state, it's used internally.
-     */
     enum class State
     {
         WAITING,
         TRACKING_TOUCH,
     };
     
-    /**
-     *@brief Creates an empty Menu.
-     */
+    /** creates an empty Menu */
     static Menu* create();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported.
+    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef MenuItem* M;
     static Menu* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Menu* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -77,88 +75,56 @@ public:
     static Menu* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, NULL); }
     static Menu* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, M m10, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,  NULL); }
 
-    // On WP8 for lists longer than 10 items, use createWithArray or variadicCreate with NULL as the last argument.
+    // On WP8 for lists longer than 10 items, use createWithArray or variadicCreate with NULL as the last argument
     static Menu* variadicCreate(MenuItem* item, ...);
 #else
-    /** Creates a Menu with MenuItem objects. */
+    /** creates a Menu with MenuItem objects */
     static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 #endif
 
-    /** 
-     * Creates a Menu with a Array of MenuItem objects.
-     * @js NA
-     */
+    /** creates a Menu with a Array of MenuItem objects */
     static Menu* createWithArray(const Vector<MenuItem*>& arrayOfItems);
 
-    /**
-     * Creates a Menu with it's item, then use addChild() to add 
-     * other items. It is used for script, it can't init with undetermined
-     * number of variables.
-     * @js NA
-     */
+    /** creates a Menu with it's item, then use addChild() to add 
+      * other items. It is used for script, it can't init with undetermined
+      * number of variables.
+    */
     static Menu* createWithItem(MenuItem* item);
     
-    /** Creates a Menu with MenuItem objects.
-     * @js NA
-     */
+    /** creates a Menu with MenuItem objects */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
 
-    /** Align items vertically. */
+    /** align items vertically */
     void alignItemsVertically();
-
-    /** Align items vertically with padding.
+    /** align items vertically with padding
     @since v0.7.2
     */
     void alignItemsVerticallyWithPadding(float padding);
 
-    /** Align items horizontally. */
+    /** align items horizontally */
     void alignItemsHorizontally();
-    
-    /** Align items horizontally with padding.
+    /** align items horizontally with padding
     @since v0.7.2
     */
     void alignItemsHorizontallyWithPadding(float padding);
 
-    /** Align items in rows of columns. */
+    /** align items in rows of columns */
     void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
-    
-    /** Align items in rows of columns. */
     void alignItemsInColumns(int columns, va_list args);
-    
-    /** Align items in array of columns.
-     * @js NA
-     */
     void alignItemsInColumnsWithArray(const ValueVector& rows);
 
-    /** Align items in columns of rows. */
+    /** align items in columns of rows */
     void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
-    
-    /** Align items in columns of rows. */
     void alignItemsInRows(int rows, va_list args);
-    
-    /** Align items in array of rows.
-     * @js NA
-     */
     void alignItemsInRowsWithArray(const ValueVector& columns);
 
-    /**
-     * Determines if the menu is enable.
-     * @see `setEnabled(bool)`.
-     * @return whether the menu is enabled or not.
-     */
     virtual bool isEnabled() const { return _enabled; }
-
-    /**
-     * Set whether the menu is visible.
-     * The default value is true, a menu is default to visible.
-     *@param value true if menu is enable, false if menu is disable.
-     */
     virtual void setEnabled(bool value) { _enabled = value; };
 
-    virtual bool onTouchBegan(Touch* touch, Event* event) override;
-    virtual void onTouchEnded(Touch* touch, Event* event) override;
-    virtual void onTouchCancelled(Touch* touch, Event* event) override;
-    virtual void onTouchMoved(Touch* touch, Event* event) override;
+    virtual bool onTouchBegan(Touch* touch, Event* event);
+    virtual void onTouchEnded(Touch* touch, Event* event);
+    virtual void onTouchCancelled(Touch* touch, Event* event);
+    virtual void onTouchMoved(Touch* touch, Event* event);
     
     // overrides
     virtual void removeChild(Node* child, bool cleanup) override;
@@ -183,7 +149,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Menu();
 
     /** initializes an empty Menu */
-    bool init() override;
+    bool init();
 
     /** initializes a Menu with a NSArray of MenuItem objects */
     bool initWithArray(const Vector<MenuItem*>& arrayOfItems);
@@ -203,7 +169,8 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Menu);
 };
 
-// end of _2d group
+// end of GUI group
+/// @}
 /// @}
 
 NS_CC_END

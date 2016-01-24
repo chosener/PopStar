@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCController.h"
-#include "platform/CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 #include "ccMacros.h"
@@ -120,7 +120,7 @@ void Controller::startDiscoveryController()
     
     [[GCControllerConnectionEventHandler getInstance] observerConnection: ^(GCController* gcController) {
         
-        auto controller = new (std::nothrow) Controller();
+        auto controller = new Controller();
         controller->_impl->_gcController = gcController;
         controller->_deviceName = [gcController.vendorName UTF8String];
         

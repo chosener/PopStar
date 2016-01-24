@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDatas.h"
-#include "cocostudio/CocosStudioExport.h"
 
 #ifndef PT_RATIO
 #define PT_RATIO 32
@@ -49,7 +48,7 @@ class Bone;
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL ColliderFilter
+class ColliderFilter
 {
 public:
     virtual ~ColliderFilter() { }
@@ -86,7 +85,7 @@ protected:
 #endif
 };
 
-class CC_STUDIO_DLL ColliderBody : public cocos2d::Ref
+class ColliderBody : public cocos2d::Ref
 {
 public:
     ColliderBody(ContourData *contourData);
@@ -131,7 +130,7 @@ private:
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL ColliderDetector : public cocos2d::Ref
+class ColliderDetector : public cocos2d::Ref
 {
 public:
     static ColliderDetector *create();

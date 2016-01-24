@@ -23,9 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "2d/CCFontCharMap.h"
+#include "CCFontCharMap.h"
 #include "2d/CCFontAtlas.h"
 #include "platform/CCFileUtils.h"
+#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 
@@ -119,7 +120,7 @@ int * FontCharMap::getHorizontalKerningForTextUTF16(const std::u16string& text, 
 
 FontAtlas * FontCharMap::createFontAtlas()
 {
-    FontAtlas *tempAtlas = new (std::nothrow) FontAtlas(*this);
+    FontAtlas *tempAtlas = new FontAtlas(*this);
     if (!tempAtlas)
         return nullptr;
     

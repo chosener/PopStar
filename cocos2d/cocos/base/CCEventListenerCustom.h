@@ -27,18 +27,12 @@
 
 #include "base/CCEventListener.h"
 
-/**
- * @addtogroup base
- * @{
- */
-
 NS_CC_BEGIN
 
 class EventCustom;
 
-/** @class EventListenerCustom
- * @brief Custom event listener.
- * @code Usage:
+/**
+ *  Usage:
  *        auto dispatcher = Director::getInstance()->getEventDispatcher();
  *     Adds a listener:
  *
@@ -54,16 +48,13 @@ class EventCustom;
  *     Removes a listener
  *
  *        dispatcher->removeEventListener(listener);
- * \endcode
- * @js cc._EventListenerCustom
  */
-class CC_DLL EventListenerCustom : public EventListener
+class EventListenerCustom : public EventListener
 {
 public:
     /** Creates an event listener with type and callback.
-     * @param eventName The type of the event.
-     * @param callback The callback function when the specified event was emitted.
-     * @return An autoreleased EventListenerCustom object.
+     *  @param eventType The type of the event.
+     *  @param callback The callback function when the specified event was emitted.
      */
     static EventListenerCustom* create(const std::string& eventName, const std::function<void(EventCustom*)>& callback);
     
@@ -85,8 +76,5 @@ protected:
 };
 
 NS_CC_END
-
-// end of base group
-/// @}
 
 #endif /* defined(__cocos2d_libs__CCCustomEventListener__) */

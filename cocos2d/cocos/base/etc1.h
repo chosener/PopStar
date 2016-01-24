@@ -14,7 +14,6 @@
 
 #ifndef __etc1_h__
 #define __etc1_h__
-/// @cond DO_NOT_SHOW
 
 #define ETC1_ENCODED_BLOCK_SIZE 8
 #define ETC1_DECODED_BLOCK_SIZE 48
@@ -104,5 +103,4 @@ etc1_uint32 etc1_pkm_get_height(const etc1_byte* pHeader);
 }
 #endif
 
-/// @endcond
 #endif

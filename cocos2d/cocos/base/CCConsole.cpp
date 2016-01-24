@@ -39,13 +39,9 @@
 #include <io.h>
 #include <WS2tcpip.h>
 #include <Winsock2.h>
-#if defined(__MINGW32__)
-#include "platform/win32/inet_pton_mingw.h"
-#endif
 #define bzero(a, b) memset(a, 0, b);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "inet_ntop_winrt.h"
-#include "inet_pton_winrt.h"
 #include "CCWinRTUtils.h"
 #endif
 #else
@@ -60,14 +56,14 @@
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "platform/CCPlatformConfig.h"
+#include "base/CCPlatformConfig.h"
 #include "base/CCConfiguration.h"
 #include "2d/CCScene.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
+#include "CCGLView.h"
 #include "base/base64.h"
 #include "base/ccUtils.h"
-#include "base/allocator/CCAllocatorDiagnostics.h"
 NS_CC_BEGIN
 
 extern const char* cocos2dVersion(void);
@@ -116,6 +112,8 @@ static bool isFloat( std::string myString ) {
     return iss.eof() && !iss.fail(); 
 }
 
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT
+
 // helper free functions
 
 // dprintf() is not defined in Android
@@ -134,7 +132,7 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 static void sendPrompt(int fd)
 {
     const char prompt[] = "> ";
-    send(fd, prompt, strlen(prompt),0);
+    send(fd, prompt, sizeof(prompt),0);
 }
 
 static int printSceneGraph(int fd, Node* node, int level)
@@ -165,14 +163,14 @@ static void printFileUtils(int fd)
     FileUtils* fu = FileUtils::getInstance();
 
     mydprintf(fd, "\nSearch Paths:\n");
-    auto& list = fu->getSearchPaths();
+    auto list = fu->getSearchPaths();
     for( const auto &item : list) {
         mydprintf(fd, "%s\n", item.c_str());
     }
 
     mydprintf(fd, "\nResolution Order:\n");
-    auto& list1 = fu->getSearchResolutionsOrder();
-    for( const auto &item : list1) {
+    list = fu->getSearchResolutionsOrder();
+    for( const auto &item : list) {
         mydprintf(fd, "%s\n", item.c_str());
     }
 
@@ -180,12 +178,13 @@ static void printFileUtils(int fd)
     mydprintf(fd, "%s\n", fu->getWritablePath().c_str());
 
     mydprintf(fd, "\nFull Path Cache:\n");
-    auto& cache = fu->getFullPathCache();
+    auto cache = fu->getFullPathCache();
     for( const auto &item : cache) {
         mydprintf(fd, "%s -> %s\n", item.first.c_str(), item.second.c_str());
     }
     sendPrompt(fd);
 }
+#endif
 
 
 #if defined(__MINGW32__)
@@ -205,29 +204,6 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 }
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-static const int CCLOG_STRING_TAG = 1;
-void SendLogToWindow(const char *log)
-{
-    // Send data as a message
-    COPYDATASTRUCT myCDS;
-    myCDS.dwData = CCLOG_STRING_TAG;
-    myCDS.cbData = (DWORD)strlen(log) + 1;
-    myCDS.lpData = (PVOID)log;
-    if (Director::getInstance()->getOpenGLView())
-    {
-        HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
-        SendMessage(hwnd,
-            WM_COPYDATA,
-            (WPARAM)(HWND)hwnd,
-            (LPARAM)(LPVOID)&myCDS);
-    }
-}
-#else
-void SendLogToWindow(const char *log)
-{
-}
-#endif
 
 //
 // Free functions to log
@@ -249,19 +225,20 @@ static void _log(const char *format, va_list args)
     OutputDebugStringW(wszBuf);
     WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), nullptr, FALSE);
     printf("%s", buf);
-    SendLogToWindow(buf);
     fflush(stdout);
 #else
     // Linux, Mac, iOS, etc
-    fprintf(stdout, "%s", buf);
+    fprintf(stdout, "cocos2d: %s", buf);
     fflush(stdout);
 #endif
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     Director::getInstance()->getConsole()->log(buf);
+#endif
 
 }
 
-// FIXME: Deprecated
+// XXX: Deprecated
 void CCLog(const char * format, ...)
 {
     va_list args;
@@ -278,6 +255,8 @@ void log(const char * format, ...)
     va_end(args);
 }
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+
 //
 // Console code
 //
@@ -287,11 +266,9 @@ Console::Console()
 , _running(false)
 , _endThread(false)
 , _sendDebugStrings(false)
-, _bindAddress("")
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
-        { "allocator", "Display allocator diagnostics for all allocators", std::bind(&Console::commandAllocator, this, std::placeholders::_1, std::placeholders::_2) },
         { "config", "Print the Configuration object", std::bind(&Console::commandConfig, this, std::placeholders::_1, std::placeholders::_2) },
         { "debugmsg", "Whether or not to forward the debug messages on the console. Args: [on | off]", [&](int fd, const std::string& args) {
             if( args.compare("on")==0 || args.compare("off")==0) {
@@ -352,7 +329,7 @@ bool Console::listenOnTCP(int port)
     hints.ai_family = AF_INET; // AF_UNSPEC: Do we need IPv6 ?
     hints.ai_socktype = SOCK_STREAM;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     WSADATA wsaData;
     n = WSAStartup(MAKEWORD(2, 2),&wsaData);
 
@@ -374,27 +351,11 @@ bool Console::listenOnTCP(int port)
             continue;       /* error, try next one */
 
         setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (const char*)&on, sizeof(on));
-
-        // bind address
-        if (_bindAddress.length() > 0)
-        {
-            if (res->ai_family == AF_INET)
-            {
-                struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
-                inet_pton(res->ai_family, _bindAddress.c_str(), (void*)&sin->sin_addr);
-            }
-            else if (res->ai_family == AF_INET6)
-            {
-                struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
-                inet_pton(res->ai_family, _bindAddress.c_str(), (void*)&sin->sin6_addr);
-            }
-        }
-
         if (bind(listenfd, res->ai_addr, res->ai_addrlen) == 0)
             break;          /* success */
 
 /* bind error, close and try next one */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         closesocket(listenfd);
 #else
         close(listenfd);
@@ -481,7 +442,7 @@ void Console::commandExit(int fd, const std::string &args)
 {
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         closesocket(fd);
 #else
         close(fd);
@@ -818,16 +779,6 @@ void Console::commandTouch(int fd, const std::string& args)
     }
 }
 
-void Console::commandAllocator(int fd, const std::string& args)
-{
-#if CC_ENABLE_ALLOCATOR_DIAGNOSTICS
-    auto info = allocator::AllocatorDiagnostics::instance()->diagnostics();
-    mydprintf(fd, info.c_str());
-#else
-    mydprintf(fd, "allocator diagnostics not available. CC_ENABLE_ALLOCATOR_DIAGNOSTICS must be set to 1 in ccConfig.h");
-#endif
-}
-
 static char invalid_filename_char[] = {':', '/', '\\', '?', '%', '*', '<', '>', '"', '|', '\r', '\n', '\t'};
 
 void Console::commandUpload(int fd)
@@ -1124,7 +1075,7 @@ void Console::loop()
                     //receive a SIGPIPE, which will cause linux system shutdown the sending process.
                     //Add this ioctl code to check if the socket has been closed by peer.
                     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
                     u_long n = 0;
                     ioctlsocket(fd, FIONREAD, &n);
 #else
@@ -1169,14 +1120,14 @@ void Console::loop()
     // clean up: ignore stdin, stdout and stderr
     for(const auto &fd: _fds )
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
         closesocket(fd);
 #else
         close(fd);
 #endif
     }
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     closesocket(_listenfd);
 	WSACleanup();
 #else
@@ -1185,9 +1136,7 @@ void Console::loop()
     _running = false;
 }
 
-void Console::setBindAddress(const std::string &address)
-{
-    _bindAddress = address;
-}
+#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) */
+
 
 NS_CC_END

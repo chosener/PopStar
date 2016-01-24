@@ -1,6 +1,4 @@
-
 set(COCOS_MATH_SRC
-
 	math/CCAffineTransform.cpp
 	math/CCGeometry.cpp
 	math/CCVertex.cpp
@@ -11,5 +9,5 @@ set(COCOS_MATH_SRC
 	math/Vec2.cpp
 	math/Vec3.cpp
 	math/Vec4.cpp
-
 )
+

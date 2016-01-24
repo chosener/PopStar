@@ -254,7 +254,7 @@ FrameData::FrameData(void)
     , easingParams(nullptr)
     , isTween(true)
     , displayIndex(0)
-    , blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
+    , blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 
     , strEvent("")
     , strMovement("")

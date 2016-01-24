@@ -1,17 +1,18 @@
 #ifndef _STAR_H_
 #define _STAR_H_
 
+#include <iostream>
+#include "GlobalEnum.h"
+
 #include "cocos2d.h"
+
+using namespace std;
 using namespace cocos2d;
-class Star : public Sprite{
+
+class Star : public Sprite
+{
 public:
-	enum color{
-		GREEN,
-		RED,
-		YELLOW,
-		PURPLE,
-		BLUE
-	};
+
 	static Star* create(int color);
 	bool isSelected();
 	inline void setSelected(bool b){selected = b;}
@@ -23,8 +24,8 @@ public:
 	inline int getIndexJ(){return index_j;}
 	inline void setIndex_ij(int i,int j){index_i = i;index_j = j;}
 private:
-	char* getImage(int color);
-    char* getImageFrame(int color);
+	string getImage(int color);
+    string  getImageFrame(int color);
 public:
 	const static int MOVE_SPEED = 12;
 	static const int COLOR_MAX_NUM = 5;

@@ -128,7 +128,8 @@ bool ComAudio::serialize(void* r)
 		}
 		if (strcmp(className, "CCBackgroundAudio") == 0)
 		{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+			// no MP3 support for CC_PLATFORM_WP8
 			std::string::size_type pos = filePath.find(".mp3");
 			if (pos  == filePath.npos)
 			{
@@ -155,7 +156,7 @@ bool ComAudio::serialize(void* r)
 
 ComAudio* ComAudio::create(void)
 {
-    ComAudio * pRet = new (std::nothrow) ComAudio();
+    ComAudio * pRet = new ComAudio();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

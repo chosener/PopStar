@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "PluginProtocol.h"
 #include <map>
 #include <string>
-#include <functional>
 
 namespace cocos2d { namespace plugin {
 
@@ -81,8 +80,6 @@ public:
         kPosBottomRight,
     } AdsPos;
 
-    typedef std::function<void(int, std::string&)> ProtocolAdsCallback;
-
     /**
     @brief config the application info
     @param devInfo This parameter is the info of aplication,
@@ -119,41 +116,20 @@ public:
     void spendPoints(int points);
 
     /**
-     @deprecated
      @brief set the Ads listener
     */
-    CC_DEPRECATED_ATTRIBUTE inline void setAdsListener(AdsListener* listener)
+    inline void setAdsListener(AdsListener* listener)
     {
         _listener = listener;
     }
 
-    /**
-     @deprecated
-     @brief set the Ads listener
-    */
-    CC_DEPRECATED_ATTRIBUTE inline AdsListener* getAdsListener()
+    inline AdsListener* getAdsListener()
     {
         return _listener;
     }
 
-    /**
-     @brief set the Ads callback function
-    */
-    inline void setCallback(ProtocolAdsCallback& cb)
-    {
-    	_callback = cb;
-    }
-
-    /**
-     @brief get the Ads callback function
-    */
-    inline ProtocolAdsCallback getCallback()
-    {
-    	return _callback;
-    }
 protected:
     AdsListener* _listener;
-    ProtocolAdsCallback _callback;
 };
 
 }} // namespace cocos2d { namespace plugin {

@@ -29,9 +29,12 @@ THE SOFTWARE.
 #include "2d/CCLayer.h"
 #include "base/CCScriptSupport.h"
 #include "platform/CCDevice.h"
+#include "2d/CCScene.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
-#include "renderer/CCGLProgramState.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerTouch.h"
@@ -40,7 +43,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventAcceleration.h"
 #include "base/CCEventListenerAcceleration.h"
-
+#include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h"
 
@@ -79,7 +82,7 @@ bool Layer::init()
 
 Layer *Layer::create()
 {
-    Layer *ret = new (std::nothrow) Layer();
+    Layer *ret = new Layer();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -460,7 +463,7 @@ void LayerColor::setBlendFunc(const BlendFunc &var)
 
 LayerColor* LayerColor::create()
 {
-    LayerColor* ret = new (std::nothrow) LayerColor();
+    LayerColor* ret = new LayerColor();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -474,7 +477,7 @@ LayerColor* LayerColor::create()
 
 LayerColor * LayerColor::create(const Color4B& color, GLfloat width, GLfloat height)
 {
-    LayerColor * layer = new (std::nothrow) LayerColor();
+    LayerColor * layer = new LayerColor();
     if( layer && layer->initWithColor(color,width,height))
     {
         layer->autorelease();
@@ -486,7 +489,7 @@ LayerColor * LayerColor::create(const Color4B& color, GLfloat width, GLfloat hei
 
 LayerColor * LayerColor::create(const Color4B& color)
 {
-    LayerColor * layer = new (std::nothrow) LayerColor();
+    LayerColor * layer = new LayerColor();
     if(layer && layer->initWithColor(color))
     {
         layer->autorelease();
@@ -576,7 +579,7 @@ void LayerColor::updateColor()
 
 void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder, transform, flags);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
     
@@ -594,9 +597,8 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
-    
+
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
-    
     //
     // Attributes
     //
@@ -607,11 +609,10 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
     setGLBufferData(_squareColors, 4 * sizeof(Color4F), 1);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0);
 #else
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 #endif // EMSCRIPTEN
-    
+
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -644,7 +645,7 @@ LayerGradient::~LayerGradient()
 
 LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
 {
-    LayerGradient * layer = new (std::nothrow) LayerGradient();
+    LayerGradient * layer = new LayerGradient();
     if( layer && layer->initWithColor(start, end))
     {
         layer->autorelease();
@@ -656,7 +657,7 @@ LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
 
 LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, const Vec2& v)
 {
-    LayerGradient * layer = new (std::nothrow) LayerGradient();
+    LayerGradient * layer = new LayerGradient();
     if( layer && layer->initWithColor(start, end, v))
     {
         layer->autorelease();
@@ -668,7 +669,7 @@ LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, c
 
 LayerGradient* LayerGradient::create()
 {
-    LayerGradient* ret = new (std::nothrow) LayerGradient();
+    LayerGradient* ret = new LayerGradient();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -682,7 +683,7 @@ LayerGradient* LayerGradient::create()
 
 bool LayerGradient::init()
 {
-    return initWithColor(Color4B(0, 0, 0, 255), Color4B(0, 0, 0, 255));
+	return initWithColor(Color4B(0, 0, 0, 255), Color4B(0, 0, 0, 255));
 }
 
 bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end)
@@ -714,7 +715,7 @@ void LayerGradient::updateColor()
         return;
 
     float c = sqrtf(2.0f);
-    Vec2 u(_alongVector.x / h, _alongVector.y / h);
+    Vec2 u = Vec2(_alongVector.x / h, _alongVector.y / h);
 
     // Compressed Interpolation mode
     if (_compressedInterpolation)
@@ -851,7 +852,7 @@ LayerMultiplex * LayerMultiplex::createVariadic(Layer * layer, ...)
     va_list args;
     va_start(args,layer);
 
-    LayerMultiplex * multiplexLayer = new (std::nothrow) LayerMultiplex();
+    LayerMultiplex * multiplexLayer = new LayerMultiplex();
     if(multiplexLayer && multiplexLayer->initWithLayers(layer, args))
     {
         multiplexLayer->autorelease();
@@ -868,7 +869,7 @@ LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)
     va_list args;
     va_start(args,layer);
 
-    LayerMultiplex * multiplexLayer = new (std::nothrow) LayerMultiplex();
+    LayerMultiplex * multiplexLayer = new LayerMultiplex();
     if(multiplexLayer && multiplexLayer->initWithLayers(layer, args))
     {
         multiplexLayer->autorelease();
@@ -888,7 +889,7 @@ LayerMultiplex * LayerMultiplex::createWithLayer(Layer* layer)
 
 LayerMultiplex* LayerMultiplex::create()
 {
-    LayerMultiplex* ret = new (std::nothrow) LayerMultiplex();
+    LayerMultiplex* ret = new LayerMultiplex();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -902,7 +903,7 @@ LayerMultiplex* LayerMultiplex::create()
 
 LayerMultiplex* LayerMultiplex::createWithArray(const Vector<Layer*>& arrayOfLayers)
 {
-    LayerMultiplex* ret = new (std::nothrow) LayerMultiplex();
+    LayerMultiplex* ret = new LayerMultiplex();
     if (ret && ret->initWithArray(arrayOfLayers))
     {
         ret->autorelease();

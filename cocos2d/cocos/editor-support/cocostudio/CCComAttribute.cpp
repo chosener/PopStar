@@ -130,7 +130,7 @@ std::string ComAttribute::getString(const std::string& key, const std::string& d
 
 ComAttribute* ComAttribute::create(void)
 {
-	ComAttribute * pRet = new (std::nothrow) ComAttribute();
+	ComAttribute * pRet = new ComAttribute();
 	if (pRet && pRet->init())
 	{
 		pRet->autorelease();

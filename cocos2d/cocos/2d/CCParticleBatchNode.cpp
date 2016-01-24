@@ -29,13 +29,23 @@
  */
 
 #include "2d/CCParticleBatchNode.h"
+
+#include "renderer/CCTextureAtlas.h"
 #include "2d/CCGrid.h"
 #include "2d/CCParticleSystem.h"
+#include "platform/CCFileUtils.h"
+#include "base/CCProfiling.h"
+#include "base/ccConfig.h"
+#include "base/ccMacros.h"
+#include "base/base64.h"
+#include "base/ZipUtils.h"
 #include "renderer/CCTextureCache.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCTextureAtlas.h"
-#include "deprecated/CCString.h"
+
 
 NS_CC_BEGIN
 
@@ -55,7 +65,7 @@ ParticleBatchNode::~ParticleBatchNode()
 
 ParticleBatchNode* ParticleBatchNode::createWithTexture(Texture2D *tex, int capacity/* = kParticleDefaultCapacity*/)
 {
-    ParticleBatchNode * p = new (std::nothrow) ParticleBatchNode();
+    ParticleBatchNode * p = new ParticleBatchNode();
     if( p && p->initWithTexture(tex, capacity))
     {
         p->autorelease();
@@ -71,7 +81,7 @@ ParticleBatchNode* ParticleBatchNode::createWithTexture(Texture2D *tex, int capa
 
 ParticleBatchNode* ParticleBatchNode::create(const std::string& imageFile, int capacity/* = kParticleDefaultCapacity*/)
 {
-    ParticleBatchNode * p = new (std::nothrow) ParticleBatchNode();
+    ParticleBatchNode * p = new ParticleBatchNode();
     if( p && p->initWithFile(imageFile, capacity))
     {
         p->autorelease();
@@ -86,7 +96,7 @@ ParticleBatchNode* ParticleBatchNode::create(const std::string& imageFile, int c
  */
 bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
 {
-    _textureAtlas = new (std::nothrow) TextureAtlas();
+    _textureAtlas = new TextureAtlas();
     _textureAtlas->initWithTexture(tex, capacity);
 
     _children.reserve(capacity);
@@ -120,7 +130,7 @@ void ParticleBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, u
     // The alternative is to have a void Sprite#visit, but
     // although this is less maintainable, is faster
     //
-    if (!_visible || !isVisitableByVisitingCamera())
+    if (!_visible)
     {
         return;
     }
@@ -197,8 +207,8 @@ void ParticleBatchNode::addChildByTagOrName(ParticleSystem* child, int zOrder, i
 }
 
 // don't use lazy sorting, reordering the particle systems quads afterwards would be too complex
-// FIXME: research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster
-// FIXME: or possibly using vertexZ for reordering, that would be fastest
+// XXX research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster
+// XXX or possibly using vertexZ for reordering, that would be fastest
 // this helper is almost equivalent to Node's addChild, but doesn't make use of the lazy sorting
 int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag, const std::string &name, bool setTag)
 {
@@ -217,7 +227,7 @@ int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag, co
     else
         child->setName(name);
     
-    child->setLocalZOrder(z);
+    child->_setLocalZOrder(z);
 
     child->setParent(this);
 
@@ -284,7 +294,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
         }
     }
 
-    child->setLocalZOrder(zOrder);
+    child->_setLocalZOrder(zOrder);
 }
 
 void ParticleBatchNode::getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z)
@@ -401,7 +411,13 @@ void ParticleBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t
     {
         return;
     }
-    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, _modelViewTransform, flags);
+
+    _batchCommand.init(
+                       _globalZOrder,
+                       getGLProgram(),
+                       _blendFunc,
+                       _textureAtlas,
+                       _modelViewTransform);
     renderer->addCommand(&_batchCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }

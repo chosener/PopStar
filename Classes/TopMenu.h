@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "PauseLayer.h"
+#include "Audio.h"
 
 using namespace cocos2d;
 class TopMenu : public Node
@@ -20,10 +21,13 @@ private:
     void initScore();
     void pauseGame();
     
+    void menuMusicToggleCallback(Ref* pSender);
 private:
 	LabelAtlas* highestScore;
 	LabelAtlas* level;
 	LabelAtlas* targetScore;
 	LabelAtlas* curScore;
+    
+    Menu* m_menuBtnPause;
 };
 #endif

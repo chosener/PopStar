@@ -26,25 +26,22 @@
 #ifndef __CCEVENT_H__
 #define __CCEVENT_H__
 
-#include "base/CCRef.h"
-#include "platform/CCPlatformMacros.h"
+#include <string>
+#include <stdint.h>
 
-/**
- * @addtogroup base
- * @{
- */
+#include "base/CCRef.h"
+#include "base/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
 class Node;
 
-/** @class Event
- * @brief Base class of all kinds of events.
+/**
+ *   Base class of all kinds of events.
  */
-class CC_DLL Event : public Ref
+class Event : public Ref
 {
 public:
-    /** Type Event type.*/
     enum class Type
     {
         TOUCH,
@@ -52,37 +49,31 @@ public:
         ACCELERATION,
         MOUSE,
         FOCUS,
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         GAME_CONTROLLER,
+#endif
         CUSTOM
     };
     
-CC_CONSTRUCTOR_ACCESS:
+protected:
     /** Constructor */
     Event(Type type);
 public:
-    /** Destructor.
-     */
+    /** Destructor */
     virtual ~Event();
 
-    /** Gets the event type.
-     *
-     * @return The event type.
-     */
+    /** Gets the event type */
 	inline Type getType() const { return _type; };
     
-    /** Stops propagation for current event.
-     */
+    /** Stops propagation for current event */
     inline void stopPropagation() { _isStopped = true; };
     
-    /** Checks whether the event has been stopped.
-     *
-     * @return True if the event has been stopped.
-     */
+    /** Checks whether the event has been stopped */
     inline bool isStopped() const { return _isStopped; };
     
-    /** Gets current target of the event.
-     * @return The target with which the event associates.
-     * @note It onlys be available when the event listener is associated with node.
+    /** @brief Gets current target of the event
+     *  @return The target with which the event associates.
+     *  @note It onlys be available when the event listener is associated with node. 
      *        It returns 0 when the listener is associated with fixed priority.
      */
     inline Node* getCurrentTarget() { return _currentTarget; };
@@ -101,7 +92,5 @@ protected:
 
 NS_CC_END
 
-// end of base group
-/// @}
 
 #endif // __CCEVENT_H__

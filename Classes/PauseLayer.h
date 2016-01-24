@@ -2,7 +2,7 @@
 #define _PauseLayer_H_
 #include "cocos2d.h"
 #include "MenuScene.h"
-
+#include "JniSms.h"
 using namespace cocos2d;
 
 
@@ -19,5 +19,7 @@ public:
     
 private:
     EventListenerTouchOneByOne* listener;
+    
+    void removeSelfListener();
 };
 #endif

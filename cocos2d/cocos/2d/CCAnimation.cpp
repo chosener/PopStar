@@ -25,15 +25,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCAnimation.h"
+#include "2d/CCSpriteFrame.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTexture2D.h"
+#include "base/ccMacros.h"
 #include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
 AnimationFrame* AnimationFrame::create(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo)
 {
-    auto ret = new (std::nothrow) AnimationFrame();
+    auto ret = new AnimationFrame();
     if (ret && ret->initWithSpriteFrame(spriteFrame, delayUnits, userInfo))
     {
         ret->autorelease();
@@ -70,21 +72,21 @@ AnimationFrame::~AnimationFrame()
 
 AnimationFrame* AnimationFrame::clone() const
 {
-    // no copy constructor
-    auto frame = new (std::nothrow) AnimationFrame();
+	// no copy constructor
+	auto frame = new AnimationFrame();
     frame->initWithSpriteFrame(_spriteFrame->clone(),
-                               _delayUnits,
-                               _userInfo);
+							   _delayUnits,
+							   _userInfo);
 
-    frame->autorelease();
-    return frame;
+	frame->autorelease();
+	return frame;
 }
 
 // implementation of Animation
 
 Animation* Animation::create(void)
 {
-    Animation *animation = new (std::nothrow) Animation();
+    Animation *animation = new Animation();
     animation->init();
     animation->autorelease();
 
@@ -93,7 +95,7 @@ Animation* Animation::create(void)
 
 Animation* Animation::createWithSpriteFrames(const Vector<SpriteFrame*>& frames, float delay/* = 0.0f*/, unsigned int loops/* = 1*/)
 {
-    Animation *animation = new (std::nothrow) Animation();
+    Animation *animation = new Animation();
     animation->initWithSpriteFrames(frames, delay, loops);
     animation->autorelease();
 
@@ -102,7 +104,7 @@ Animation* Animation::createWithSpriteFrames(const Vector<SpriteFrame*>& frames,
 
 Animation* Animation::create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops /* = 1 */)
 {
-    Animation *animation = new (std::nothrow) Animation();
+    Animation *animation = new Animation();
     animation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
     animation->autorelease();
     return animation;
@@ -191,12 +193,12 @@ float Animation::getDuration(void) const
 
 Animation* Animation::clone() const
 {
-    // no copy constructor    
-    auto a = new (std::nothrow) Animation();
+	// no copy constructor	
+	auto a = new Animation();
     a->initWithAnimationFrames(_frames, _delayPerUnit, _loops);
     a->setRestoreOriginalFrame(_restoreOriginalFrame);
-    a->autorelease();
-    return a;
+	a->autorelease();
+	return a;
 }
 
 NS_CC_END

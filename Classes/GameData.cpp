@@ -1,18 +1,23 @@
 #include "GameData.h"
 #include "cocos2d.h"
 using namespace cocos2d;
+
 GAMEDATA* GAMEDATA::_instance = 0;
-GAMEDATA::GAMEDATA(){
+
+GAMEDATA::GAMEDATA()
+{
 	this->init();
 }
-GAMEDATA* GAMEDATA::getInstance(){
+GAMEDATA* GAMEDATA::getInstance()
+{
 	if(_instance == 0){
 		_instance = new GAMEDATA();
 	}
 	return _instance;
 }
 
-void GAMEDATA::init(){
+void GAMEDATA::init()
+{
     setCurLevel(0);
 	setCurScore(0);
 	setHistoryScore(UserDefault::getInstance()->getIntegerForKey("highestScore",0));

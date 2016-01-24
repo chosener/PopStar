@@ -51,9 +51,6 @@ _backGroundSelectedTexType(TextureResType::LOCAL),
 _frontCrossTexType(TextureResType::LOCAL),
 _backGroundDisabledTexType(TextureResType::LOCAL),
 _frontCrossDisabledTexType(TextureResType::LOCAL),
-_zoomScale(0.1f),
-_backgroundTextureScaleX(1.0),
-_backgroundTextureScaleY(1.0),
 _backGroundFileName(""),
 _backGroundSelectedFileName(""),
 _frontCrossFileName(""),
@@ -75,7 +72,7 @@ CheckBox::~CheckBox()
 
 CheckBox* CheckBox::create()
 {
-    CheckBox* widget = new (std::nothrow) CheckBox();
+    CheckBox* widget = new CheckBox();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -92,31 +89,12 @@ CheckBox* CheckBox::create(const std::string& backGround,
                            const std::string& frontCrossDisabled,
                            TextureResType texType)
 {
-    CheckBox *pWidget = new (std::nothrow) CheckBox;
+    CheckBox *pWidget = new CheckBox;
     if (pWidget && pWidget->init(backGround,
                                  backGroundSeleted,
                                  cross,
                                  backGroundDisabled,
                                  frontCrossDisabled,
-                                 texType))
-    {
-        pWidget->autorelease();
-        return pWidget;
-    }
-    CC_SAFE_DELETE(pWidget);
-    return nullptr;
-}
-    
-CheckBox* CheckBox::create(const std::string& backGround,
-                           const std::string& cross,
-                           TextureResType texType)
-{
-    CheckBox *pWidget = new (std::nothrow) CheckBox;
-    if (pWidget && pWidget->init(backGround,
-                                 "",
-                                 cross,
-                                 "",
-                                 "",
                                  texType))
     {
         pWidget->autorelease();
@@ -134,15 +112,13 @@ bool CheckBox::init(const std::string& backGround,
                     TextureResType texType)
 {
     bool ret = true;
-    do
-    {
-        if (!Widget::init())
-        {
+    do {
+        if (!Widget::init()) {
             ret = false;
             break;
         }
         
-        setSelected(false);
+        setSelectedState(false);
         loadTextures(backGround, backGroundSeleted, cross, backGroundDisabled, frontCrossDisabled,texType);
     } while (0);
     return ret;
@@ -152,7 +128,7 @@ bool CheckBox::init()
 {
     if (Widget::init())
     {
-        setSelected(false);
+        setSelectedState(false);
         return true;
     }
     return false;
@@ -189,7 +165,7 @@ void CheckBox::loadTextures(const std::string& backGround,
 
 void CheckBox::loadTextureBackGround(const std::string& backGround,TextureResType texType)
 {
-    if (backGround.empty() || (_backGroundFileName == backGround && _backGroundTexType == texType))
+    if (backGround.empty())
     {
         return;
     }
@@ -206,21 +182,19 @@ void CheckBox::loadTextureBackGround(const std::string& backGround,TextureResTyp
         default:
             break;
     }
-   
-    this->updateChildrenDisplayedRGBA();
-
+    updateFlippedX();
+    updateFlippedY();
+    
     updateContentSizeWithTextureSize(_backGroundBoxRenderer->getContentSize());
     _backGroundBoxRendererAdaptDirty = true;
 }
 
 void CheckBox::loadTextureBackGroundSelected(const std::string& backGroundSelected,TextureResType texType)
 {
-    if (backGroundSelected.empty() ||
-        (_backGroundSelectedFileName == backGroundSelected && _backGroundSelectedTexType == texType))
+    if (backGroundSelected.empty())
     {
         return;
     }
-    
     _backGroundSelectedFileName = backGroundSelected;
     _backGroundSelectedTexType = texType;
     switch (_backGroundSelectedTexType)
@@ -234,15 +208,15 @@ void CheckBox::loadTextureBackGroundSelected(const std::string& backGroundSelect
         default:
             break;
     }
-  
-    this->updateChildrenDisplayedRGBA();
-
+    updateFlippedX();
+    updateFlippedY();
+    
     _backGroundSelectedBoxRendererAdaptDirty = true;
 }
 
 void CheckBox::loadTextureFrontCross(const std::string& cross,TextureResType texType)
 {
-    if (cross.empty() || (_frontCrossFileName == cross && _frontCrossTexType == texType))
+    if (cross.empty())
     {
         return;
     }
@@ -259,16 +233,15 @@ void CheckBox::loadTextureFrontCross(const std::string& cross,TextureResType tex
         default:
             break;
     }
+    updateFlippedX();
+    updateFlippedY();
    
-    this->updateChildrenDisplayedRGBA();
-
     _frontCrossRendererAdaptDirty = true;
 }
 
 void CheckBox::loadTextureBackGroundDisabled(const std::string& backGroundDisabled,TextureResType texType)
 {
-    if (backGroundDisabled.empty() ||
-        (_backGroundDisabledFileName == backGroundDisabled && _backGroundDisabledTexType == texType))
+    if (backGroundDisabled.empty())
     {
         return;
     }
@@ -285,16 +258,15 @@ void CheckBox::loadTextureBackGroundDisabled(const std::string& backGroundDisabl
         default:
             break;
     }
-   
-    this->updateChildrenDisplayedRGBA();
-
+    updateFlippedX();
+    updateFlippedY();
+    
     _backGroundBoxDisabledRendererAdaptDirty = true;
 }
 
 void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabled,TextureResType texType)
 {
-    if (frontCrossDisabled.empty() ||
-        (_frontCrossDisabledFileName == frontCrossDisabled && _frontCrossDisabledTexType == texType))
+    if (frontCrossDisabled.empty())
     {
         return;
     }
@@ -311,9 +283,9 @@ void CheckBox::loadTextureFrontCrossDisabled(const std::string& frontCrossDisabl
         default:
             break;
     }
-  
-    this->updateChildrenDisplayedRGBA();
-
+    updateFlippedX();
+    updateFlippedY();
+    
     _frontCrossDisabledRendererAdaptDirty = true;
 }
 
@@ -322,14 +294,13 @@ void CheckBox::releaseUpEvent()
 {
     Widget::releaseUpEvent();
     
-    if (_isSelected)
-    {
-        setSelected(false);
+    if (_isSelected){
+        setSelectedState(false);
         unSelectedEvent();
     }
     else
     {
-        setSelected(true);
+        setSelectedState(true);
         selectedEvent();
     }
 }
@@ -341,78 +312,29 @@ void CheckBox::onPressStateChangedToNormal()
     _backGroundSelectedBoxRenderer->setVisible(false);
     _backGroundBoxDisabledRenderer->setVisible(false);
     _frontCrossDisabledRenderer->setVisible(false);
-    
-    _backGroundBoxRenderer->setGLProgramState(this->getNormalGLProgramState());
-    _frontCrossRenderer->setGLProgramState(this->getNormalGLProgramState());
-    
-    
-    _backGroundBoxRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
-    _frontCrossRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
-
-    
-    if (_isSelected)
-    {
-        _frontCrossRenderer->setVisible(true);
-    }
 }
 
 void CheckBox::onPressStateChangedToPressed()
 {
-    _backGroundBoxRenderer->setGLProgramState(this->getNormalGLProgramState());
-    _frontCrossRenderer->setGLProgramState(this->getNormalGLProgramState());
-    
-    if (_backGroundSelectedFileName.empty())
-    {
-        _backGroundBoxRenderer->setScale(_backgroundTextureScaleX + _zoomScale,
-                                         _backgroundTextureScaleY + _zoomScale);
-        _frontCrossRenderer->setScale(_backgroundTextureScaleX + _zoomScale,
-                                      _backgroundTextureScaleY + _zoomScale);
-    }
-    else
-    {
-        _backGroundBoxRenderer->setVisible(false);
-        _backGroundSelectedBoxRenderer->setVisible(true);
-        _backGroundBoxDisabledRenderer->setVisible(false);
-        _frontCrossDisabledRenderer->setVisible(false);
-    }
+    _backGroundBoxRenderer->setVisible(false);
+    _backGroundSelectedBoxRenderer->setVisible(true);
+    _backGroundBoxDisabledRenderer->setVisible(false);
+    _frontCrossDisabledRenderer->setVisible(false);
 }
 
 void CheckBox::onPressStateChangedToDisabled()
 {
-    if (_backGroundDisabledFileName.empty() || _frontCrossDisabledFileName.empty())
-    {
-        _backGroundBoxRenderer->setGLProgramState(this->getGrayGLProgramState());
-        _frontCrossRenderer->setGLProgramState(this->getGrayGLProgramState());
-    }
-    else
-    {
-        _backGroundBoxRenderer->setVisible(false);
-        _backGroundBoxDisabledRenderer->setVisible(true);
-        
-    }
-    
+    _backGroundBoxRenderer->setVisible(false);
     _backGroundSelectedBoxRenderer->setVisible(false);
+    _backGroundBoxDisabledRenderer->setVisible(true);
     _frontCrossRenderer->setVisible(false);
-    _backGroundBoxRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
-    _frontCrossRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
-    
     if (_isSelected)
     {
         _frontCrossDisabledRenderer->setVisible(true);
     }
 }
-    
-void CheckBox::setZoomScale(float scale)
-{
-    _zoomScale = scale;
-}
 
-float CheckBox::getZoomScale()const
-{
-    return _zoomScale;
-}
-
-void CheckBox::setSelected(bool selected)
+void CheckBox::setSelectedState(bool selected)
 {
     if (selected == _isSelected)
     {
@@ -421,47 +343,34 @@ void CheckBox::setSelected(bool selected)
     _isSelected = selected;
     _frontCrossRenderer->setVisible(_isSelected);
 }
-    
-bool CheckBox::isSelected()const
+
+bool CheckBox::getSelectedState()const
 {
     return _isSelected;
 }
 
 void CheckBox::selectedEvent()
 {
-    this->retain();
     if (_checkBoxEventCallback)
     {
         _checkBoxEventCallback(this, EventType::SELECTED);
-    }
-    if (_ccEventCallback)
-    {
-        _ccEventCallback(this, static_cast<int>(EventType::SELECTED));
     }
     
     if (_checkBoxEventListener && _checkBoxEventSelector)
     {
         (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_SELECTED);
     }
-    this->release();
 }
 
 void CheckBox::unSelectedEvent()
 {
-    this->retain();
-    if (_checkBoxEventCallback)
-    {
+    if (_checkBoxEventCallback) {
         _checkBoxEventCallback(this, EventType::UNSELECTED);
-    }
-    if (_ccEventCallback)
-    {
-        _ccEventCallback(this, static_cast<int>(EventType::UNSELECTED));
     }
     if (_checkBoxEventListener && _checkBoxEventSelector)
     {
         (_checkBoxEventListener->*_checkBoxEventSelector)(this,CHECKBOX_STATE_EVENT_UNSELECTED);
     }
-    this->release();
 }
 
 void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent selector)
@@ -475,6 +384,24 @@ void CheckBox::addEventListener(const ccCheckBoxCallback& callback)
     _checkBoxEventCallback = callback;
 }
     
+void CheckBox::updateFlippedX()
+{
+    _backGroundBoxRenderer->setFlippedX(_flippedX);
+    _backGroundSelectedBoxRenderer->setFlippedX(_flippedX);
+    _frontCrossRenderer->setFlippedX(_flippedX);
+    _backGroundBoxDisabledRenderer->setFlippedX(_flippedX);
+    _frontCrossDisabledRenderer->setFlippedX(_flippedX);
+}
+    
+void CheckBox::updateFlippedY()
+{
+    _backGroundBoxRenderer->setFlippedY(_flippedY);
+    _backGroundSelectedBoxRenderer->setFlippedY(_flippedY);
+    _frontCrossRenderer->setFlippedY(_flippedY);
+    _backGroundBoxDisabledRenderer->setFlippedY(_flippedY);
+    _frontCrossDisabledRenderer->setFlippedY(_flippedY);
+}
+
 void CheckBox::onSizeChanged()
 {
     Widget::onSizeChanged();
@@ -514,7 +441,7 @@ void CheckBox::adaptRenderers()
     }
 }
 
-Size CheckBox::getVirtualRendererSize() const
+const Size& CheckBox::getVirtualRendererSize() const
 {
     return _backGroundBoxRenderer->getContentSize();
 }
@@ -529,7 +456,6 @@ void CheckBox::backGroundTextureScaleChangedWithSize()
     if (_ignoreSize)
     {
         _backGroundBoxRenderer->setScale(1.0f);
-        _backgroundTextureScaleX = _backgroundTextureScaleY = 1.0f;
     }
     else
     {
@@ -537,17 +463,14 @@ void CheckBox::backGroundTextureScaleChangedWithSize()
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _backGroundBoxRenderer->setScale(1.0f);
-            _backgroundTextureScaleX = _backgroundTextureScaleY = 1.0f;
             return;
         }
         float scaleX = _contentSize.width / textureSize.width;
         float scaleY = _contentSize.height / textureSize.height;
-        _backgroundTextureScaleX = scaleX;
-        _backgroundTextureScaleY = scaleY;
         _backGroundBoxRenderer->setScaleX(scaleX);
         _backGroundBoxRenderer->setScaleY(scaleY);
     }
-    _backGroundBoxRenderer->setPosition(_contentSize.width / 2, _contentSize.height / 2);
+    _backGroundBoxRenderer->setPosition(Vec2(_contentSize.width / 2, _contentSize.height / 2));
 }
 
 void CheckBox::backGroundSelectedTextureScaleChangedWithSize()
@@ -569,7 +492,7 @@ void CheckBox::backGroundSelectedTextureScaleChangedWithSize()
         _backGroundSelectedBoxRenderer->setScaleX(scaleX);
         _backGroundSelectedBoxRenderer->setScaleY(scaleY);
     }
-    _backGroundSelectedBoxRenderer->setPosition(_contentSize.width / 2, _contentSize.height / 2);
+    _backGroundSelectedBoxRenderer->setPosition(Vec2(_contentSize.width / 2, _contentSize.height / 2));
 }
 
 void CheckBox::frontCrossTextureScaleChangedWithSize()
@@ -591,7 +514,7 @@ void CheckBox::frontCrossTextureScaleChangedWithSize()
         _frontCrossRenderer->setScaleX(scaleX);
         _frontCrossRenderer->setScaleY(scaleY);
     }
-    _frontCrossRenderer->setPosition(_contentSize.width / 2, _contentSize.height / 2);
+    _frontCrossRenderer->setPosition(Vec2(_contentSize.width / 2, _contentSize.height / 2));
 }
 
 void CheckBox::backGroundDisabledTextureScaleChangedWithSize()
@@ -613,7 +536,7 @@ void CheckBox::backGroundDisabledTextureScaleChangedWithSize()
         _backGroundBoxDisabledRenderer->setScaleX(scaleX);
         _backGroundBoxDisabledRenderer->setScaleY(scaleY);
     }
-    _backGroundBoxDisabledRenderer->setPosition(_contentSize.width / 2, _contentSize.height / 2);
+    _backGroundBoxDisabledRenderer->setPosition(Vec2(_contentSize.width / 2, _contentSize.height / 2));
 }
 
 void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
@@ -635,7 +558,7 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
         _frontCrossDisabledRenderer->setScaleX(scaleX);
         _frontCrossDisabledRenderer->setScaleY(scaleY);
     }
-    _frontCrossDisabledRenderer->setPosition(_contentSize.width / 2, _contentSize.height / 2);
+    _frontCrossDisabledRenderer->setPosition(Vec2(_contentSize.width / 2, _contentSize.height / 2));
 }
 
 std::string CheckBox::getDescription() const
@@ -658,14 +581,10 @@ void CheckBox::copySpecialProperties(Widget *widget)
         loadTextureFrontCross(checkBox->_frontCrossFileName, checkBox->_frontCrossTexType);
         loadTextureBackGroundDisabled(checkBox->_backGroundDisabledFileName, checkBox->_backGroundDisabledTexType);
         loadTextureFrontCrossDisabled(checkBox->_frontCrossDisabledFileName, checkBox->_frontCrossDisabledTexType);
-        setSelected(checkBox->_isSelected);
+        setSelectedState(checkBox->_isSelected);
         _checkBoxEventListener = checkBox->_checkBoxEventListener;
         _checkBoxEventSelector = checkBox->_checkBoxEventSelector;
         _checkBoxEventCallback = checkBox->_checkBoxEventCallback;
-        _ccEventCallback = checkBox->_ccEventCallback;
-        _zoomScale = checkBox->_zoomScale;
-        _backgroundTextureScaleX = checkBox->_backgroundTextureScaleX;
-        _backgroundTextureScaleY = checkBox->_backgroundTextureScaleY;
     }
 }
 

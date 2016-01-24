@@ -1,7 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
- Copyright (c) 2014-2015 Chukong Technologies
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
@@ -25,11 +24,6 @@
 #include "math/Vec3.h"
 #include "math/Mat4.h"
 //#include "Plane.h"
-
-/**
- * @addtogroup base
- * @{
- */
 
 NS_CC_MATH_BEGIN
 
@@ -63,7 +57,7 @@ class Mat4;
  * q4 = (-0.8, 0.0, -0.6, 0.0).
  * For the point p = (1.0, 1.0, 1.0), the following figures show the trajectories of p using lerp, slerp, and squad.
  */
-class CC_DLL Quaternion
+class Quaternion
 {
     friend class Curve;
     friend class Transform;
@@ -189,8 +183,9 @@ public:
     void conjugate();
 
     /**
-     * Gets the conjugate of this quaternion.
+     * Gets the conjugate of this quaternion in dst.
      *
+     * @param dst A quaternion to store the conjugate in.
      */
     Quaternion getConjugated() const;
 
@@ -207,12 +202,16 @@ public:
     bool inverse();
 
     /**
-     * Gets the inverse of this quaternion.
+     * Gets the inverse of this quaternion in dst.
      *
      * Note that the inverse of a quaternion is equal to its conjugate
      * when the quaternion is unit-length. For this reason, it is more
      * efficient to use the conjugate method directly when you know your
      * quaternion is already unit-length.
+     *
+     * @param dst A quaternion to store the inverse in.
+     * 
+     * @return true if the inverse can be computed, false otherwise.
      */
     Quaternion getInversed() const;
 
@@ -241,11 +240,13 @@ public:
     void normalize();
 
     /**
-     * Get the normalized quaternion.
+     * Normalizes this quaternion and stores the result in dst.
      *
      * If the quaternion already has unit length or if the length
      * of the quaternion is zero, this method simply copies
-     * this vector.
+     * this vector into dst.
+     *
+     * @param dst A quaternion to store the result in.
      */
     Quaternion getNormalized() const;
 
@@ -362,22 +363,12 @@ public:
     inline const Quaternion operator*(const Quaternion& q) const;
 
     /**
-     * Calculates the quaternion product of this quaternion with the given vec3.
-     * @param v The vec3 to multiply.
-     * @return The vec3 product.
-     */
-    inline Vec3 operator*(const Vec3& v) const;
-
-    /**
      * Multiplies this quaternion with the given quaternion.
      * 
      * @param q The quaternion to multiply.
      * @return This quaternion, after the multiplication occurs.
      */
     inline Quaternion& operator*=(const Quaternion& q);
-    
-    /** equals to Quaternion(0,0,0, 0) */
-    static const Quaternion ZERO;
 
 private:
 
@@ -411,10 +402,7 @@ private:
 };
 
 NS_CC_MATH_END
-/**
- end of base group
- @}
- */
+
 #include "Quaternion.inl"
 
 #endif

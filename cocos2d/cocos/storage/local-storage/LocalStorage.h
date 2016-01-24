@@ -1,8 +1,6 @@
-/****************************************************************************
-Copyright (c) 2012 Zynga Inc.
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+/*
 
-http://www.cocos2d-x.org
+Copyright (c) 2012 - Zynga Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,37 +19,32 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-****************************************************************************/
+
+*/
+
+/*
+ Local Storage support for the JS Bindings for iOS.
+ Works on cocos2d-iphone and cocos2d-x.
+ */
 
 #ifndef __JSB_LOCALSTORAGE_H
 #define __JSB_LOCALSTORAGE_H
 
 #include <string>
-#include "CCPlatformMacros.h"
 
-/**
- * @addtogroup core
- * @{
- */
+/** Initializes the database. If path is null, it will create an in-memory DB */
+void localStorageInit( const std::string& fullpath = "");
 
-/** Local Storage support for the JS Bindings.*/
+/** Frees the allocated resources */
+void localStorageFree();
 
-/** Initializes the database. If path is null, it will create an in-memory DB. */
-void CC_DLL localStorageInit( const std::string& fullpath = "");
+/** sets an item in the LS */
+void localStorageSetItem( const std::string& key, const std::string& value);
 
-/** Frees the allocated resources. */
-void CC_DLL localStorageFree();
+/** gets an item from the LS */
+std::string localStorageGetItem( const std::string& key );
 
-/** Sets an item in the JS. */
-void CC_DLL localStorageSetItem( const std::string& key, const std::string& value);
-
-/** Gets an item from the JS. */
-std::string CC_DLL localStorageGetItem( const std::string& key );
-
-/** Removes an item from the JS. */
-void CC_DLL localStorageRemoveItem( const std::string& key );
-
-// end group
-/// @}
+/** removes an item from the LS */
+void localStorageRemoveItem( const std::string& key );
 
 #endif // __JSB_LOCALSTORAGE_H

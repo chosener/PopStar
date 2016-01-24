@@ -1,6 +1,8 @@
 #include "TopMenu.h"
-#include "Chinese.h"
+
 #include "GameData.h"
+#include "GameLayer.h"
+
 bool TopMenu::init()
 {
 	if(!Node::init())
@@ -20,9 +22,23 @@ void TopMenu::initView()
     Menu* menuPause = Menu::create(btnPause,NULL);
     menuPause->alignItemsVertically();
     menuPause->setPosition(60.0f,visibleSize.height - 50.0f);
-    this->addChild(menuPause);
+    this->addChild(menuPause,1,100);
+    
+    this->m_menuBtnPause = menuPause;
     
     ///声音
+    
+    //音乐
+    auto musicOnMenuItem  =MenuItemImage::create("images/ico_audio_on.png","images/ico_audio_on.png");
+    auto musicOffMenuItem  =MenuItemImage::create("images/ico_audio_off.png","images/ico_audio_off.png");
+    
+    auto musicToggleMenuItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(TopMenu::menuMusicToggleCallback,this),musicOnMenuItem,musicOffMenuItem,NULL );
+    
+    auto menuMusic = Menu::create(musicToggleMenuItem, nullptr );
+    menuMusic->setPosition(visibleSize.width - 70.0f,visibleSize.height - 50.0f);
+    this->addChild(menuMusic);
+    
+    musicToggleMenuItem->setSelectedIndex((Audio::getInstance()->getbIsOpenMusic() ? 0 : 1));
     
     ///技能0,刷子
     
@@ -30,6 +46,7 @@ void TopMenu::initView()
     
     ///技能2,炸弹
     
+#if 0
     MenuItemImage* btnSkill0 = MenuItemImage::create("images/Props_Paint.png","images/Props_Paint_s.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
     MenuItemImage* btnSkill1 = MenuItemImage::create("images/Props_Rainbow.png","images/Props_Rainbow_s.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
     MenuItemImage* btnSkill2 = MenuItemImage::create("images/Props_Bomb.png","images/Props_Bomb_s.png",CC_CALLBACK_0(TopMenu::pauseGame,this));
@@ -38,8 +55,35 @@ void TopMenu::initView()
     menuSkill->alignItemsHorizontallyWithPadding(40.0f);
     menuSkill->setPosition(visibleSize.width - 220.0f,visibleSize.height - 200.0f);
     this->addChild(menuSkill);
+#endif
     
     this->initScore();
+}
+void TopMenu::menuMusicToggleCallback(Ref* pSender)
+{
+    MenuItemToggle* menuMusic = (MenuItemToggle*)pSender;
+    
+    CCLOG("selected index:%d",menuMusic->getSelectedIndex());
+    
+    int select = menuMusic->getSelectedIndex();
+    
+    switch (select) {
+        case 0:
+        {
+            Audio::getInstance()->setbIsOpenMusic(true);
+            Audio::getInstance()->playBGM();
+        }
+            break;
+        case 1:
+        {
+            Audio::getInstance()->setbIsOpenMusic(false);
+            Audio::getInstance()->pauseBGM();
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 void TopMenu::initScore()
@@ -127,8 +171,11 @@ Vec2 TopMenu::getPosCurScore()
 void TopMenu::pauseGame()
 {
     CCLOG("PAUSE!");
+    this->m_menuBtnPause->setEnabled(false);
     //Director::getInstance()->replaceScene(GameScene::create());
-    Layer* gameLayer = (Layer*)this->getParent();
+    GameLayer* gameLayer = (GameLayer*)this->getParent();
+    //gameLayer->setiGameState(2);
+    
     Scene* scene = (Scene*)gameLayer->getParent();
-    scene->addChild(PauseLayer::create());
+    scene->addChild(PauseLayer::create(),2);
 }

@@ -30,7 +30,6 @@
 
 #include "CCControl.h"
 #include "2d/CCLabel.h"
-#include "extensions/ExtensionExport.h"
 
 NS_CC_EXT_BEGIN
 
@@ -41,7 +40,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-class CC_EX_DLL ControlStepper : public Control
+class ControlStepper : public Control
 {
 public:
     enum class Part
@@ -54,7 +53,6 @@ public:
     static ControlStepper* create(Sprite *minusSprite, Sprite *plusSprite);
     /**
      * @js ctor
-     * @lua new
      */
     ControlStepper();
     /**
@@ -80,7 +78,7 @@ public:
     virtual bool onTouchBegan(Touch *pTouch, Event *pEvent) override;
     virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
     virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
-    void update(float dt) override;
+    void update(float dt);
 
     /** Update the layout of the stepper with the given touch location. */
     void updateLayoutUsingTouchLocation(Vec2 location);

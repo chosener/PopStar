@@ -49,12 +49,13 @@ bool GroupCommandManager::init()
 int GroupCommandManager::getGroupID()
 {
     //Reuse old id
-    if (!_unusedIDs.empty())
+    for(auto it = _groupMapping.begin(); it != _groupMapping.end(); ++it)
     {
-        int groupID = *_unusedIDs.rbegin();
-        _unusedIDs.pop_back();
-        _groupMapping[groupID] = true;
-        return groupID;
+        if(!it->second)
+        {
+            _groupMapping[it->first] = true;
+            return it->first;
+        }
     }
 
     //Create new ID
@@ -68,7 +69,6 @@ int GroupCommandManager::getGroupID()
 void GroupCommandManager::releaseGroupID(int groupID)
 {
     _groupMapping[groupID] = false;
-    _unusedIDs.push_back(groupID);
 }
 
 GroupCommand::GroupCommand()

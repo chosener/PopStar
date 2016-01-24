@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDecorativeDisplay.h"
 #include "cocostudio/CCDatas.h"
-#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -38,7 +37,7 @@ class Bone;
  *  @js NA
  *  @lua NA
  */
-class CC_STUDIO_DLL DisplayManager : public cocos2d::Ref
+class  DisplayManager : public cocos2d::Ref
 {
 public:
     static DisplayManager *create(Bone *bone);

@@ -29,8 +29,7 @@
 
 #include "2d/CCFontFNT.h"
 #include "2d/CCFontFreeType.h"
-#include "2d/CCFontAtlas.h"
-#include "2d/CCFontCharMap.h"
+#include "CCFontCharMap.h"
 #include "base/CCDirector.h"
 
 NS_CC_BEGIN
@@ -179,10 +178,7 @@ FontAtlas * FontAtlasCache::getFontAtlasCharMap(Texture2D* texture, int itemWidt
 
 FontAtlas * FontAtlasCache::getFontAtlasCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    char tmp[255];
-    snprintf(tmp,250,"name:%s_%d_%d_%d",charMapFile.c_str(),itemWidth,itemHeight,startCharMap);
-
-    std::string atlasName = generateFontName(tmp, 0, GlyphCollection::CUSTOM,false);
+    std::string atlasName = generateFontName(charMapFile, 0, GlyphCollection::CUSTOM,false);
 
     auto it = _atlasMap.find(atlasName);
     if ( it == _atlasMap.end() )

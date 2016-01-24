@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "base/CCEventDispatcher.h"
-#include <algorithm>
-
+#include "base/CCEvent.h"
+#include "base/CCEventTouch.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventListenerAcceleration.h"
@@ -37,6 +37,8 @@
 #include "2d/CCScene.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
+
+#include <algorithm>
 
 
 #define DUMP_LISTENER_ITEM_PRIORITY_INFO 0
@@ -459,7 +461,7 @@ void EventDispatcher::forceAddEventListener(EventListener* listener)
     if (itr == _listenerMap.end())
     {
         
-        listeners = new (std::nothrow) EventListenerVector();
+        listeners = new EventListenerVector();
         _listenerMap.insert(std::make_pair(listenerID, listeners));
     }
     else
@@ -1024,10 +1026,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
 void EventDispatcher::updateListeners(Event* event)
 {
     CCASSERT(_inDispatch > 0, "If program goes here, there should be event in dispatch.");
-
-    if (_inDispatch > 1)
-        return;
-
+    
     auto onUpdateListeners = [this](const EventListener::ListenerID& listenerID)
     {
         auto listenersIter = _listenerMap.find(listenerID);
@@ -1084,6 +1083,7 @@ void EventDispatcher::updateListeners(Event* event)
         }
     };
 
+    
     if (event->getType() == Event::Type::TOUCH)
     {
         onUpdateListeners(EventListenerTouchOneByOne::LISTENER_ID);
@@ -1093,6 +1093,9 @@ void EventDispatcher::updateListeners(Event* event)
     {
         onUpdateListeners(__getListenerID(event));
     }
+    
+    if (_inDispatch > 1)
+        return;
     
     CCASSERT(_inDispatch == 1, "_inDispatch should be 1 here.");
     

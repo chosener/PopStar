@@ -151,20 +151,16 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
             else
             {
                 StringUtils::trimUTF16Vector(last_word);
-                //issue #8492:endless loop if not using system font, and constrained length is less than one character width
-                if (isStartOfLine && last_word.size() == 0)
-                    last_word.push_back(character);
-                else
-                    --j;
 
                 last_word.push_back('\n');
+                
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
                 last_word.clear();
-                
                 isStartOfWord = false;
                 isStartOfLine = false;
                 startOfWord = -1;
                 startOfLine = -1;
+                --j;
             }
         }
         else
@@ -269,16 +265,18 @@ bool LabelTextFormatter::alignText(Label *theLabel)
 
 bool LabelTextFormatter::createStringSprites(Label *theLabel)
 {
-    theLabel->_limitShowCount = 0;
     // check for string
-    int stringLen = theLabel->getStringLength();
-    if (stringLen <= 0)
+    unsigned int stringLen = theLabel->getStringLength();
+    theLabel->_limitShowCount = 0;
+
+    // no string
+    if (stringLen == 0)
         return false;
     
-    auto totalHeight = theLabel->_commonLineHeight * theLabel->_currNumLines;
-    auto longestLine = 0.0f;
-    auto nextFontPositionX = 0.0f;
-    auto nextFontPositionY = totalHeight;
+    int longestLine             = 0;
+    unsigned int totalHeight    = theLabel->_commonLineHeight * theLabel->_currNumLines;
+    int nextFontPositionX       = 0;
+    int nextFontPositionY       = totalHeight;
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
 
     if (theLabel->_labelHeight > 0)
@@ -305,6 +303,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
         }
     }
     
+    Rect charRect;
     int charXOffset = 0;
     int charYOffset = 0;
     int charAdvance = 0;
@@ -314,19 +313,18 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     FontLetterDefinition tempDefinition;
     Vec2 letterPosition;
     const auto& kernings = theLabel->_horizontalKernings;
-    CCASSERT(kernings, "kernings must's be nullptr!!!");
 
     float clipTop = 0;
     float clipBottom = 0;
     int lineIndex = 0;
     bool lineStart = true;
-    bool clipBlank = false;
+    bool clip = false;
     if (theLabel->_currentLabelType == Label::LabelType::TTF && theLabel->_clipEnabled)
     {
-        clipBlank = true;
+        clip = true;
     }
     
-    for (int i = 0; i < stringLen; i++)
+    for (unsigned int i = 0; i < stringLen; i++)
     {
         char16_t c    = strWhole[i];
         if (fontAtlas->getLetterDefinitionForChar(c, tempDefinition))
@@ -355,7 +353,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             lineStart = true;
             continue;     
         }
-        else if (clipBlank && tempDefinition.height > 0.0f)
+        else if (clip && tempDefinition.height > 0.0f)
         {
             if (lineStart)
             {
@@ -380,21 +378,18 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
         letterPosition.x = (nextFontPositionX + charXOffset + kernings[i]) / contentScaleFactor;
         letterPosition.y = (nextFontPositionY - charYOffset) / contentScaleFactor;
                
-        if( theLabel->recordLetterInfo(letterPosition, tempDefinition, i) == false)
+        if( theLabel->recordLetterInfo(letterPosition,tempDefinition,i) == false)
         {
             log("WARNING: can't find letter definition in font file for letter: %c", c);
             continue;
         }
-        
-        nextFontPositionX += charAdvance + kernings[i];
+
+        nextFontPositionX += charAdvance + kernings[i] + theLabel->_additionalKerning;
         
         if (longestLine < nextFontPositionX)
         {
             longestLine = nextFontPositionX;
         }
-        
-        // check longest line before adding additional kerning
-        nextFontPositionX += theLabel->_additionalKerning;
     }
     
     float lastCharWidth = tempDefinition.width * contentScaleFactor;
@@ -418,7 +413,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
         tmpSize.height = theLabel->_labelHeight * contentScaleFactor;
     }
 
-    if (clipBlank)
+    if (clip)
     {
         int clipTotal = (clipTop + clipBottom) / contentScaleFactor;
         tmpSize.height -= clipTotal * contentScaleFactor;

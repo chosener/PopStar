@@ -105,7 +105,7 @@ bool TriggerObj::init()
 
 TriggerObj* TriggerObj::create()
 {
-    TriggerObj * pRet = new (std::nothrow) TriggerObj();
+    TriggerObj * pRet = new TriggerObj();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

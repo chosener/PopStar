@@ -1,7 +1,6 @@
 set(UNZIP_SRC
   ioapi.cpp
   unzip.cpp
-  ioapi_mem.cpp
 )
 
 add_library(unzip STATIC

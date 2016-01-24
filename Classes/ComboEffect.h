@@ -4,4 +4,7 @@
 using namespace cocos2d;
 
 void showComboEffect(int size,Node* node);
+
+void showCongratulationPassLevel(Node* node);
+
 #endif

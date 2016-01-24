@@ -213,7 +213,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PluginUmeng;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -236,7 +235,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PluginUmeng;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};

@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "MenuScene.h"
+#include "LogoLayer.h"
 #include "Audio.h"
 
 USING_NS_CC;
@@ -18,7 +19,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview)
     {
-        glview = GLViewImpl::create("POPSTAR");
+        glview = GLView::create("POPSTAR");
         director->setOpenGLView(glview);
     }
 	//glview->setDesignResolutionSize(480,800,ResolutionPolicy::SHOW_ALL);
@@ -31,10 +32,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-	auto scene = MenuScene::create();
+	//auto scene = LogoLayer::create();
 
     // run
-    director->runWithScene(scene);
+    director->runWithScene(LogoLayer::createScene());
 	Audio::getInstance()->prepare();
     return true;
 }

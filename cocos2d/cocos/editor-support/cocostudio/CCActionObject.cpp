@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCActionObject.h"
+#include "cocostudio/DictionaryHelper.h"
 #include "cocostudio/CocoLoader.h"
 
 #include "base/CCDirector.h"
@@ -114,7 +115,7 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic, Ref* root)
     int actionNodeCount = DICTOOL->getArrayCount_json(dic, "actionnodelist");
     int maxLength = 0;
     for (int i=0; i<actionNodeCount; i++) {
-        ActionNode* actionNode = new (std::nothrow) ActionNode();
+        ActionNode* actionNode = new ActionNode();
         actionNode->autorelease();
         const rapidjson::Value& actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
         actionNode->initWithDictionary(actionNodeDic,root);
@@ -155,7 +156,7 @@ void ActionObject::initWithBinary(CocoLoader *cocoLoader,
         stExpCocoNode *actionNodeArray = actionNodeList->GetChildArray(cocoLoader);
         int maxLength = 0;
         for (int i=0; i<actionNodeCount; i++) {
-            ActionNode* actionNode = new (std::nothrow) ActionNode();
+            ActionNode* actionNode = new ActionNode();
             actionNode->autorelease();
             
             actionNode->initWithBinary(cocoLoader, &actionNodeArray[i] , root);
@@ -220,11 +221,11 @@ void ActionObject::play()
     }
     if (_loop)
     {
-        _pScheduler->schedule(CC_SCHEDULE_SELECTOR(ActionObject::simulationActionUpdate), this, 0.0f , CC_REPEAT_FOREVER, 0.0f, false);
+        _pScheduler->schedule(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f , kRepeatForever, 0.0f, false);
     }
     else
     {
-        _pScheduler->schedule(CC_SCHEDULE_SELECTOR(ActionObject::simulationActionUpdate), this, 0.0f, false);
+        _pScheduler->schedule(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f, false);
     }
 }
 
@@ -237,7 +238,6 @@ void ActionObject::play(CallFunc* func)
 void ActionObject::pause()
 {
 	_bPause = true;
-	_bPlaying = false;
 }
 
 void ActionObject::stop()
@@ -246,8 +246,7 @@ void ActionObject::stop()
 	{
 		e->stopAction();
 	}
-	_bPlaying = false;
-	_pScheduler->unschedule(CC_SCHEDULE_SELECTOR(ActionObject::simulationActionUpdate), this);
+	_pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
 	_bPause = false;
 }
 
@@ -285,8 +284,7 @@ void ActionObject::simulationActionUpdate(float dt)
 		}
 		else
 		{
-			_bPlaying = false;
-			_pScheduler->unschedule(CC_SCHEDULE_SELECTOR(ActionObject::simulationActionUpdate), this);
+			_pScheduler->unschedule(schedule_selector(ActionObject::simulationActionUpdate), this);
 		}
 	}
 }

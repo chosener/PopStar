@@ -65,7 +65,7 @@ bool Margin::equals(const Margin &target) const
 
 LayoutParameter* LayoutParameter::create()
 {
-    LayoutParameter* parameter = new (std::nothrow) LayoutParameter();
+    LayoutParameter* parameter = new LayoutParameter();
     if (parameter)
     {
         parameter->autorelease();
@@ -109,7 +109,7 @@ void LayoutParameter::copyProperties(LayoutParameter *model)
 
 LinearLayoutParameter* LinearLayoutParameter::create()
 {
-    LinearLayoutParameter* parameter = new (std::nothrow) LinearLayoutParameter();
+    LinearLayoutParameter* parameter = new LinearLayoutParameter();
     if (parameter)
     {
         parameter->autorelease();
@@ -146,7 +146,7 @@ void LinearLayoutParameter::copyProperties(LayoutParameter *model)
 
 RelativeLayoutParameter* RelativeLayoutParameter::create()
 {
-    RelativeLayoutParameter* parameter = new (std::nothrow) RelativeLayoutParameter();
+    RelativeLayoutParameter* parameter = new RelativeLayoutParameter();
     if (parameter)
     {
         parameter->autorelease();

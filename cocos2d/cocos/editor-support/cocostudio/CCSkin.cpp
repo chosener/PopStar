@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CCSkin.h"
 #include "cocostudio/CCTransformHelp.h"
+#include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmature.h"
 
 
@@ -42,9 +43,11 @@ namespace cocostudio {
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
+#define SET_VERTEX3F(_v_, _x_, _y_, _z_) (_v_).x = (_x_); (_v_).y = (_y_); (_v_).z = (_z_);
+
 Skin *Skin::create()
 {
-    Skin *skin = new (std::nothrow) Skin();
+    Skin *skin = new Skin();
     if(skin && skin->init())
     {
         skin->autorelease();
@@ -56,7 +59,7 @@ Skin *Skin::create()
 
 Skin *Skin::createWithSpriteFrameName(const std::string& pszSpriteFrameName)
 {
-    Skin *skin = new (std::nothrow) Skin();
+    Skin *skin = new Skin();
     if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
     {
         skin->autorelease();
@@ -68,7 +71,7 @@ Skin *Skin::createWithSpriteFrameName(const std::string& pszSpriteFrameName)
 
 Skin *Skin::create(const std::string& pszFileName)
 {
-    Skin *skin = new (std::nothrow) Skin();
+    Skin *skin = new Skin();
     if(skin && skin->initWithFile(pszFileName))
     {
         skin->autorelease();
@@ -125,7 +128,7 @@ void Skin::setSkinData(const BaseData &var)
     setScaleY(_skinData.scaleY);
     setRotationSkewX(CC_RADIANS_TO_DEGREES(_skinData.skewX));
     setRotationSkewY(CC_RADIANS_TO_DEGREES(-_skinData.skewY));
-    setPosition(_skinData.x, _skinData.y);
+    setPosition(Vec2(_skinData.x, _skinData.y));
 
     _skinTransform = getNodeToParentTransform();
     updateArmatureTransform();
@@ -150,10 +153,7 @@ void Skin::updateTransform()
     // If it is not visible, or one of its ancestors is not visible, then do nothing:
     if( !_visible)
     {
-        _quad.br.vertices.setZero();
-        _quad.tl.vertices.setZero();
-        _quad.tr.vertices.setZero();
-        _quad.bl.vertices.setZero();
+        _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vec3(0, 0, 0);
     }
     else
     {
@@ -189,10 +189,10 @@ void Skin::updateTransform()
         float dx = x1 * cr - y2 * sr2 + x;
         float dy = x1 * sr + y2 * cr2 + y;
 
-        _quad.bl.vertices.set(RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ);
-        _quad.br.vertices.set(RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ);
-        _quad.tl.vertices.set(RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ);
-        _quad.tr.vertices.set(RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ);
+        SET_VERTEX3F( _quad.bl.vertices, RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ );
+        SET_VERTEX3F( _quad.br.vertices, RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ );
+        SET_VERTEX3F( _quad.tl.vertices, RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ );
+        SET_VERTEX3F( _quad.tr.vertices, RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ );
     }
 
     // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -222,10 +222,10 @@ Mat4 Skin::getNodeToWorldTransformAR() const
 
 void Skin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    auto mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    Mat4 mv = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
-    //TODO: implement z order
-    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, mv, flags);
+    //TODO implement z order
+    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, mv);
     renderer->addCommand(&_quadCommand);
 }
 

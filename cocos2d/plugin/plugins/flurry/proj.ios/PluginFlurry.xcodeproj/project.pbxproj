@@ -240,7 +240,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PluginFlurry;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -264,7 +263,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PluginFlurry;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};

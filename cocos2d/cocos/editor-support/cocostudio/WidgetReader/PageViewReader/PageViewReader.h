@@ -25,33 +25,24 @@
 #ifndef __TestCpp__PageViewReader__
 #define __TestCpp__PageViewReader__
 
-#include "cocostudio/WidgetReader/LayoutReader/LayoutReader.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "../LayoutReader/LayoutReader.h"
 
 namespace cocostudio
 {
-    class CC_STUDIO_DLL PageViewReader : public LayoutReader
+    class PageViewReader : public LayoutReader
     {
-        DECLARE_CLASS_NODE_READER_INFO
-        
     public:
+        DECLARE_CLASS_WIDGET_READER_INFO
+        
         PageViewReader();
         virtual ~PageViewReader();
         
         static PageViewReader* getInstance();
-        /** @deprecated Use method destroyInstance() instead */
-        CC_DEPRECATED_ATTRIBUTE static void purge();
-        static void destroyInstance();
+        static void purge();
         
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode* cocoNode) ;        
-        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
-                                                                             flatbuffers::FlatBufferBuilder* builder);
-        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* pageViewOptions);
-        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* pageViewOptions);
-        
-        int getResourceType(std::string key);
-        
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode* cocoNode) ;
+
     };
 }
 

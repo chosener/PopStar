@@ -50,3 +50,21 @@ void showComboEffect(int size,Node* node)
 	Sequence* action = Sequence::create(blink,remove,nullptr);
 	comboSprite->runAction(action);
 }
+void showCongratulationPassLevel(Node* node)
+{
+
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    
+    Sprite* comboSprite;
+    
+    comboSprite = Sprite::create("images/congratulationPassLevel.png");
+
+    
+    comboSprite->setPosition(Point(visibleSize.width/2,visibleSize.height/2 + 400.0f));
+    node->addChild(comboSprite);
+    
+    Blink* blink = Blink::create(3.0f,5);
+    CallFunc* remove = CallFunc::create([=](){comboSprite->removeFromParentAndCleanup(true);});
+    Sequence* action = Sequence::create(blink,remove,nullptr);
+    comboSprite->runAction(action);
+}

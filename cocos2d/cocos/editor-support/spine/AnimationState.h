@@ -1,31 +1,34 @@
 /******************************************************************************
- * Spine Runtimes Software License
- * Version 2.1
+ * Spine Runtime Software License - Version 1.1
  * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to install, execute and perform the Spine Runtimes
- * Software (the "Software") solely for internal use. Without the written
- * permission of Esoteric Software (typically granted by licensing Spine), you
- * may not (a) modify, translate, adapt or otherwise create derivative works,
- * improvements of the Software or develop new applications using the Software
- * or (b) remove, delete, alter or obscure any trademarks or any copyright,
- * trademark, patent or other intellectual property or proprietary rights
- * notices on or in the Software, including any copy thereof. Redistributions
- * in binary or source form must include this license and terms.
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 #ifndef SPINE_ANIMATIONSTATE_H_
@@ -40,7 +43,7 @@ extern "C" {
 #endif
 
 typedef enum {
-	SP_ANIMATION_START, SP_ANIMATION_END, SP_ANIMATION_COMPLETE, SP_ANIMATION_EVENT
+	ANIMATION_START, ANIMATION_END, ANIMATION_COMPLETE, ANIMATION_EVENT
 } spEventType;
 
 typedef struct spAnimationState spAnimationState;
@@ -50,52 +53,23 @@ typedef void (*spAnimationStateListener) (spAnimationState* state, int trackInde
 
 typedef struct spTrackEntry spTrackEntry;
 struct spTrackEntry {
-	spAnimationState* const state;
 	spTrackEntry* next;
 	spTrackEntry* previous;
 	spAnimation* animation;
 	int/*bool*/loop;
 	float delay, time, lastTime, endTime, timeScale;
 	spAnimationStateListener listener;
-	float mixTime, mixDuration, mix;
-
-	void* rendererObject;
-
-#ifdef __cplusplus
-	spTrackEntry() :
-		state(0),
-		next(0),
-		previous(0),
-		animation(0),
-		loop(0),
-		delay(0), time(0), lastTime(0), endTime(0), timeScale(0),
-		listener(0),
-		mixTime(0), mixDuration(0), mix(0),
-		rendererObject(0) {
-	}
-#endif
+	float mixTime, mixDuration;
 };
 
 struct spAnimationState {
 	spAnimationStateData* const data;
 	float timeScale;
 	spAnimationStateListener listener;
+	void* context;
 
-	int tracksCount;
+	int trackCount;
 	spTrackEntry** tracks;
-
-	void* rendererObject;
-
-#ifdef __cplusplus
-	spAnimationState() :
-		data(0),
-		timeScale(0),
-		listener(0),
-		tracksCount(0),
-		tracks(0),
-		rendererObject(0) {
-	}
-#endif
 };
 
 /* @param data May be 0 for no mixing. */
@@ -124,10 +98,6 @@ spTrackEntry* spAnimationState_getCurrent (spAnimationState* self, int trackInde
 
 #ifdef SPINE_SHORT_NAMES
 typedef spEventType EventType;
-#define ANIMATION_START SP_ANIMATION_START
-#define ANIMATION_END SP_ANIMATION_END
-#define ANIMATION_COMPLETE SP_ANIMATION_COMPLETE
-#define ANIMATION_EVENT SP_ANIMATION_EVENT
 typedef spAnimationStateListener AnimationStateListener;
 typedef spTrackEntry TrackEntry;
 typedef spAnimationState AnimationState;

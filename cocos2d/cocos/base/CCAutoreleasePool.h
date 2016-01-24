@@ -25,26 +25,23 @@ THE SOFTWARE.
 #ifndef __AUTORELEASEPOOL_H__
 #define __AUTORELEASEPOOL_H__
 
+#include <stack>
 #include <vector>
 #include <string>
 #include "base/CCRef.h"
 
-/**
- * @addtogroup base
- * @{
- */
 NS_CC_BEGIN
 
-
 /**
- * A pool for managing autorlease objects.
- * @js NA
+ * @addtogroup base_nodes
+ * @{
  */
+
 class CC_DLL AutoreleasePool
 {
 public:
     /**
-     * @warning Don't create an autorelease pool in heap, create it in stack.
+     * @warn Don't create an auto release pool in heap, create it in stack.
      * @js NA
      * @lua NA
      */
@@ -52,11 +49,6 @@ public:
     
     /**
      * Create an autorelease pool with specific name. This name is useful for debugging.
-     * @warning Don't create an autorelease pool in heap, create it in stack.
-     * @js NA
-     * @lua NA
-     *
-     * @param name The name of created autorelease pool.
      */
     AutoreleasePool(const std::string &name);
     
@@ -67,13 +59,13 @@ public:
     ~AutoreleasePool();
 
     /**
-     * Add a given object to this autorelease pool.
+     * Add a given object to this pool.
      *
-     * The same object may be added several times to an autorelease pool. When the
-     * pool is destructed, the object's `Ref::release()` method will be called
-     * the same times as it was added.
+     * The same object may be added several times to the same pool; When the
+     * pool is destructed, the object's Ref::release() method will be called
+     * for each time it was added.
      *
-     * @param object    The object to be added into the autorelease pool.
+     * @param object    The object to add to the pool.
      * @js NA
      * @lua NA
      */
@@ -82,8 +74,8 @@ public:
     /**
      * Clear the autorelease pool.
      *
-     * It will invoke each element's `release()` function.
-     *
+     * Ref::release() will be called for each time the managed object is
+     * added to the pool.
      * @js NA
      * @lua NA
      */
@@ -91,34 +83,22 @@ public:
     
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     /**
-     * Whether the autorelease pool is doing `clear` operation.
-     *
-     * @return True if autorelase pool is clearning, false if not.
-     *
-     * @js NA
-     * @lua NA
+     * Whether the pool is doing `clear` operation.
      */
     bool isClearing() const { return _isClearing; };
 #endif
     
     /**
-     * Checks whether the autorelease pool contains the specified object.
-     *
-     * @param object The object to be checked.
-     * @return True if the autorelease pool contains the object, false if not
-     * @js NA
-     * @lua NA
+     * Checks whether the pool contains the specified object.
      */
     bool contains(Ref* object) const;
 
     /**
-     * Dump the objects that are put into the autorelease pool. It is used for debugging.
+     * Dump the objects that are put into autorelease pool. It is used for debugging.
      *
      * The result will look like:
      * Object pointer address     object id     reference count
      *
-     * @js NA
-     * @lua NA
      */
     void dump();
     
@@ -143,19 +123,20 @@ private:
 #endif
 };
 
-// end of base group
-/** @} */
-
-/**
- * @cond
- */
 class CC_DLL PoolManager
 {
 public:
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE static PoolManager* sharedPoolManager() { return getInstance(); }
     static PoolManager* getInstance();
     
+    /**
+     * @js NA
+     * @lua NA
+     */
     CC_DEPRECATED_ATTRIBUTE static void purgePoolManager() { destroyInstance(); }
     static void destroyInstance();
     
@@ -167,7 +148,10 @@ public:
 
     bool isObjectInPools(Ref* obj) const;
 
-
+    /**
+     * @js NA
+     * @lua NA
+     */
     friend class AutoreleasePool;
     
 private:
@@ -181,9 +165,9 @@ private:
     
     std::vector<AutoreleasePool*> _releasePoolStack;
 };
-/**
- * @endcond
- */
+
+// end of base_nodes group
+/// @}
 
 NS_CC_END
 

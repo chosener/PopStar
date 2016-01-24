@@ -7,7 +7,8 @@ bool GameScene::init()
     {
 		return false;
 	}
-	Audio::getInstance()->playBGM();
-	this->addChild(GameLayer::create());
+
+	this->addChild(GameLayer::create(),1,999);
+    
 	return true;
 } 
