@@ -61,6 +61,23 @@ extern "C"
 #endif
     }
     //-------------------------------------------------
+    ///[JNI]发送短信
+    void setEnableAD(int enable)
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        
+        JniMethodInfo t;
+        
+        if(JniHelper::getStaticMethodInfo(t, CLASS_ACTIVITY_NAME, "setEnableAD", "(I)V"))
+        {
+            CCLog("JNI:setEnableAD函数存在");
+            
+            t.env->CallStaticVoidMethod(t.classID, t.methodID,enable);
+            
+        }
+#endif
+    }
+    //-------------------------------------------------
     ///[JNI]显示插屏广告
     void showAD()
     {

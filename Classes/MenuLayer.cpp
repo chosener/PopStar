@@ -10,12 +10,12 @@ bool MenuLayer::init()
 	}
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	/*³õÊ¼»¯±³¾°*/
+	/*åˆå§‹åŒ–èƒŒæ™¯*/
 	Sprite* background = Sprite::create("bg/bg_mainmenu.png");
 	background->setPosition(visibleSize.width/2,visibleSize.height/2);
 	this->addChild(background,-1);
     
-    ///±êÌâ
+    ///æ ‡é¢˜
     Sprite* spTitle = Sprite::create("images/title.png");
     spTitle->setPosition(visibleSize.width/2,visibleSize.height/2 + 300.0f);
     this->addChild(spTitle);
@@ -27,13 +27,11 @@ bool MenuLayer::init()
     spFlower0->setScaleY(1.5f);
     this->addChild(spFlower0);
 	
-	/*³õÊ¼»¯²Ëµ¥*/
-	MenuItemImage* startBtn = MenuItemImage::create(
-		"images/menu_start.png","images/menu_start_s.png",CC_CALLBACK_0(MenuLayer::startGame,this)
-		);
+	/*åˆå§‹åŒ–èœå•*/
+	MenuItemImage* startBtn = MenuItemImage::create("images/menu_start.png","images/menu_start_s.png",CC_CALLBACK_0(MenuLayer::startGame,this));
 	Menu* menu = Menu::create(startBtn,NULL);
 	menu->alignItemsVertically();
-	menu->setPosition(visibleSize.width/2,visibleSize.height/2 -150.0f);
+	menu->setPosition(visibleSize.width/2,visibleSize.height/2 -100.0f);
 	this->addChild(menu);
     
     ScaleTo* scaleTo0 = ScaleTo::create(1.0f, 1.2f);
@@ -44,7 +42,7 @@ bool MenuLayer::init()
     
     startBtn->runAction(repeate);
     
-    //ÒôÀÖ
+    //éŸ³ä¹
     auto musicOnMenuItem  =MenuItemImage::create("images/sound-on1.png","images/sound-on1.png");
     auto musicOffMenuItem  =MenuItemImage::create("images/sound-off1.png","images/sound-off1.png");
     
@@ -58,6 +56,37 @@ bool MenuLayer::init()
     
     Audio::getInstance()->playBGM();
     
+    //å…³äºŽæ¸¸æˆ
+    MenuItemImage* imageMenuAbout= MenuItemImage::create("images/about_n.png","images/about_s.png",CC_CALLBACK_0(MenuLayer::startGame,this));
+    imageMenuAbout->setScale(0.7f);
+    Menu* menuAbout = Menu::create(imageMenuAbout,NULL);
+    menuAbout->setPosition(visibleSize.width/2 - 200.0f,visibleSize.height/2 - 450.0f);
+    this->addChild(menuAbout);
+    
+    //æ›´å¤šæ¸¸æˆ
+    MenuItemImage* imageMenuMoreGame = MenuItemImage::create("images/moregame_n.png","images/moregame_s.png",CC_CALLBACK_0(MenuLayer::startGame,this));
+    imageMenuMoreGame->setScale(0.7f);
+    Menu* menuMoreGame = Menu::create(imageMenuMoreGame,NULL);
+    menuMoreGame->setPosition(visibleSize.width/2,visibleSize.height/2 - 450.0f);
+    this->addChild(menuMoreGame);
+    
+    //åˆ†äº«æ¸¸æˆ
+    MenuItemImage* imageMenuShare = MenuItemImage::create("images/share_n.png","images/share_s.png",CC_CALLBACK_0(MenuLayer::startGame,this));
+    imageMenuShare->setScale(0.7f);
+    Menu* menuShare = Menu::create(imageMenuShare,NULL);
+    menuShare->setPosition(visibleSize.width/2 + 200.0f,visibleSize.height/2 - 450.0f);
+    this->addChild(menuShare);
+    
+#if 0
+    ScaleTo* scaleTo00 = ScaleTo::create(1.0f, 1.05f);
+    ScaleTo* scaleTo11 = ScaleTo::create(1.0f, 1.0f);
+    Sequence* seqq = Sequence::create(scaleTo00,scaleTo11, NULL);
+    RepeatForever* repeatee = RepeatForever::create(seqq);
+    
+    imageMenuAbout->runAction(repeatee);
+    imageMenuMoreGame->runAction(repeatee->clone());
+    imageMenuShare->runAction(repeatee->clone());
+#endif
     
 	return true;
 }

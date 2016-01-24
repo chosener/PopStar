@@ -94,6 +94,8 @@ public class AppActivity extends Cocos2dxActivity
 	AdView mAdview;
 
 	static InterstitialAd mInterstitialAd;
+	
+	private static int m_enableAD = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -148,6 +150,7 @@ public class AppActivity extends Cocos2dxActivity
 		mAdview.setUserGender("male");
 		mAdview.setUserBirthdayStr("2000-08-08");
 		mAdview.setUserPostcode("123456");
+		
 
 		mAdview.setAdEventListener(new AdEventListener()
 		{
@@ -198,6 +201,7 @@ public class AppActivity extends Cocos2dxActivity
 		params.gravity = Gravity.BOTTOM;
 
 		mFrameLayout.addView(mAdview, params);
+
 	}
 
 	private void initPluginScreen()
@@ -262,6 +266,11 @@ public class AppActivity extends Cocos2dxActivity
 
 		mInterstitialAd.loadInterstitialAd();
 
+	}
+	
+	public static void setEnableAD(int enable)
+	{
+		m_enableAD = enable;
 	}
 
 	public static void showMyAD()

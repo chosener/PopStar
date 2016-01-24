@@ -25,7 +25,7 @@ extern "C"
     void vibrateWithPatternJNI(long long pattern[], int repeat);
     void cancelVibrateJNI();
     int getMusicEnable();
-    
+    void setEnableAD(int enable);
     void showAD();
 }
 
