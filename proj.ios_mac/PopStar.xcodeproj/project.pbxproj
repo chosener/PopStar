@@ -95,6 +95,8 @@
 		FD8023ED1C5239FC00CF6729 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = FD8023A11C5239FB00CF6729 /* star.png */; };
 		FD8023F71C53554C00CF6729 /* JniSms.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD8023F51C53554C00CF6729 /* JniSms.cpp */; };
 		FD8023FA1C535C4900CF6729 /* GameOver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD8023F81C535C4900CF6729 /* GameOver.cpp */; };
+		FD8024001C55CE5E00CF6729 /* AboutLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD8023FC1C55CE5E00CF6729 /* AboutLayer.cpp */; };
+		FD8024011C55CE5E00CF6729 /* MoreGameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD8023FE1C55CE5E00CF6729 /* MoreGameLayer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -341,6 +343,10 @@
 		FD8023F61C53554C00CF6729 /* JniSms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JniSms.h; path = ../Classes/JniSms.h; sourceTree = "<group>"; };
 		FD8023F81C535C4900CF6729 /* GameOver.cpp */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; name = GameOver.cpp; path = ../Classes/GameOver.cpp; sourceTree = "<group>"; };
 		FD8023F91C535C4900CF6729 /* GameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOver.h; path = ../Classes/GameOver.h; sourceTree = "<group>"; };
+		FD8023FC1C55CE5E00CF6729 /* AboutLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AboutLayer.cpp; path = ../Classes/AboutLayer.cpp; sourceTree = "<group>"; };
+		FD8023FD1C55CE5E00CF6729 /* AboutLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutLayer.h; path = ../Classes/AboutLayer.h; sourceTree = "<group>"; };
+		FD8023FE1C55CE5E00CF6729 /* MoreGameLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MoreGameLayer.cpp; path = ../Classes/MoreGameLayer.cpp; sourceTree = "<group>"; };
+		FD8023FF1C55CE5E00CF6729 /* MoreGameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreGameLayer.h; path = ../Classes/MoreGameLayer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -410,6 +416,10 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FD8023FC1C55CE5E00CF6729 /* AboutLayer.cpp */,
+				FD8023FD1C55CE5E00CF6729 /* AboutLayer.h */,
+				FD8023FE1C55CE5E00CF6729 /* MoreGameLayer.cpp */,
+				FD8023FF1C55CE5E00CF6729 /* MoreGameLayer.h */,
 				FD8023F81C535C4900CF6729 /* GameOver.cpp */,
 				FD8023F91C535C4900CF6729 /* GameOver.h */,
 				FD8023F51C53554C00CF6729 /* JniSms.cpp */,
@@ -796,6 +806,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD8024011C55CE5E00CF6729 /* MoreGameLayer.cpp in Sources */,
 				FD8023F71C53554C00CF6729 /* JniSms.cpp in Sources */,
 				FD8023521C5239E500CF6729 /* XMLParser.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
@@ -808,6 +819,7 @@
 				FD8023451C5239E500CF6729 /* LogoLayer.cpp in Sources */,
 				FD8023491C5239E500CF6729 /* StarMatrix.cpp in Sources */,
 				FD80234E1C5239E500CF6729 /* LevelMsgLayer.cpp in Sources */,
+				FD8024001C55CE5E00CF6729 /* AboutLayer.cpp in Sources */,
 				FD8023471C5239E500CF6729 /* PauseLayer.cpp in Sources */,
 				FD80234F1C5239E500CF6729 /* MenuScene.cpp in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,

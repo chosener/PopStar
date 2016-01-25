@@ -12,5 +12,9 @@ public:
     
 private:
     void menuMusicToggleCallback(Ref* pSender);
+    
+    void aboutGame();
+    void moreGame();
+    void shareGame();
 };
 #endif

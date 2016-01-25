@@ -2,6 +2,10 @@
 #include "GameScene.h"
 #include "GameData.h"
 #include "Audio.h"
+#include "AboutLayer.h"
+#include "MoreGameLayer.h"
+
+
 bool MenuLayer::init()
 {
 	if(!Layer::init())
@@ -57,21 +61,21 @@ bool MenuLayer::init()
     Audio::getInstance()->playBGM();
     
     //关于游戏
-    MenuItemImage* imageMenuAbout= MenuItemImage::create("images/about_n.png","images/about_s.png",CC_CALLBACK_0(MenuLayer::startGame,this));
+    MenuItemImage* imageMenuAbout= MenuItemImage::create("images/about_n.png","images/about_s.png",CC_CALLBACK_0(MenuLayer::aboutGame,this));
     imageMenuAbout->setScale(0.7f);
     Menu* menuAbout = Menu::create(imageMenuAbout,NULL);
     menuAbout->setPosition(visibleSize.width/2 - 200.0f,visibleSize.height/2 - 450.0f);
     this->addChild(menuAbout);
     
     //更多游戏
-    MenuItemImage* imageMenuMoreGame = MenuItemImage::create("images/moregame_n.png","images/moregame_s.png",CC_CALLBACK_0(MenuLayer::startGame,this));
+    MenuItemImage* imageMenuMoreGame = MenuItemImage::create("images/moregame_n.png","images/moregame_s.png",CC_CALLBACK_0(MenuLayer::moreGame,this));
     imageMenuMoreGame->setScale(0.7f);
     Menu* menuMoreGame = Menu::create(imageMenuMoreGame,NULL);
     menuMoreGame->setPosition(visibleSize.width/2,visibleSize.height/2 - 450.0f);
     this->addChild(menuMoreGame);
     
     //分享游戏
-    MenuItemImage* imageMenuShare = MenuItemImage::create("images/share_n.png","images/share_s.png",CC_CALLBACK_0(MenuLayer::startGame,this));
+    MenuItemImage* imageMenuShare = MenuItemImage::create("images/share_n.png","images/share_s.png",CC_CALLBACK_0(MenuLayer::shareGame,this));
     imageMenuShare->setScale(0.7f);
     Menu* menuShare = Menu::create(imageMenuShare,NULL);
     menuShare->setPosition(visibleSize.width/2 + 200.0f,visibleSize.height/2 - 450.0f);
@@ -124,4 +128,21 @@ void MenuLayer::startGame()
 	GAMEDATA::getInstance()->init();
 	Director::getInstance()->replaceScene(GameScene::create());
 
+}
+void MenuLayer::aboutGame()
+{
+
+    Director::getInstance()->replaceScene(AboutLayer::createScene());
+    
+}
+void MenuLayer::moreGame()
+{
+
+    Director::getInstance()->replaceScene(MoreGameLayer::createScene());
+    
+}
+void MenuLayer::shareGame()
+{
+
+    
 }

@@ -82,9 +82,16 @@ public class AppActivity extends Cocos2dxActivity
 	public static String		LOG_NAME	= "PopStar";
 	public static AppActivity	actInstance;
 
+	//56OJyM1ouMGoaSnvCK测试
+	//56OJ2XRYuNwcx2AyJr正式
 	public static final String	PUBLISHER_ID		= "56OJ2XRYuNwcx2AyJr";
 	public static final String	InlinePPID			= "16TLP2daApS2SNUUxhyeI3tk";
 	public static final String	InterstitialPPID	= "16TLP2daApS2SNUUsZByeJVk";
+	
+	//public static final String	PUBLISHER_ID		= "56OJyM1ouMGoaSnvCK";
+	//public static final String	InlinePPID			= "16TLwebvAchksY6iO_8oSb-i";
+	//public static final String	InterstitialPPID	= "16TLwebvAchksY6iOa7F4DXs";
+	
 	// public static final String SplashPPID = "16TLwebvAchksY6iOGe3xcik";
 
 	private static Handler mHandler;
