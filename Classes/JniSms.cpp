@@ -17,7 +17,7 @@
 
 
 #define CLASS_NAME "org/cocos2dx/cpp/JniHelper"
-#define CLASS_ACTIVITY_NAME "org/cocos2dx/cpp/AppActivity"
+#define CLASS_ACTIVITY_NAME "com/ds/popstar/AppActivity"
 
 extern "C"
 {
