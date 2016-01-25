@@ -19,7 +19,7 @@
             android:value="cocos2dcpp" />
 
         <activity
-            android:name="com.ds.popstar.AppActivity"
+            android:name=".AppActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
