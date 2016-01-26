@@ -94,6 +94,23 @@ extern "C"
         }
 #endif
     }
+    //-------------------------------------------------
+    ///[JNI]分享游戏
+    void shareSelfGame()
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        
+        JniMethodInfo t;
+        
+        if(JniHelper::getStaticMethodInfo(t, CLASS_ACTIVITY_NAME, "shareSelfGame", "()V"))
+        {
+            CCLog("JNI:shareSelfGame函数存在");
+            
+            t.env->CallStaticVoidMethod(t.classID, t.methodID);
+            
+        }
+#endif
+    }
     
     //-------------------------------------------------
     ///[JNI]发送短信

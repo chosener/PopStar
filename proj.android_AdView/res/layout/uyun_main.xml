@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" 
+	android:background="#ff00dddd"
+	android:id="@+id/uyun_demo_main">
+	<TextView android:layout_alignParentTop="true"
+		android:textColor="#ffffff"
+		android:textSize="20.0sp" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="广告demo" />
+	<Button android:id="@+id/tuan_button"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="100.0dip"
+		android:text="精彩推荐"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+	/>
+	
+	<com.umengAd.android.AdView
+		android:id="@+id/uyun_ad_view1"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+	/>
+	<com.umengAd.android.AdView
+		android:id="@+id/uyun_ad_view2"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+	/>
+	<com.umengAd.android.AdView
+		android:id="@+id/uyun_ad_view3"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+	/>
+	<com.umengAd.android.AdView
+		android:id="@+id/uyun_ad_view4"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+	/>
+	
+</RelativeLayout>

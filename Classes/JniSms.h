@@ -27,6 +27,7 @@ extern "C"
     int getMusicEnable();
     void setEnableAD(int enable);
     void showAD();
+    void shareSelfGame();
 }
 
 #endif /* defined(__TowerDefense__JniSms__) */

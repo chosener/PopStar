@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ds.popstar"
+    android:installLocation="auto"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="9" />
+
+    <uses-feature android:glEsVersion="0x00020000" />
+    <!-- mob share -->
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    
+    <!-- end -->
+    
+    <!-- AdView SDK mandatory or important permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- 磨盘必须 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- 安沃、InMobi、力美、帷千与多盟所需的权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- 安沃、力美所需的权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- InMobi、易传媒所需的权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- InMobi、力美所需的权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- -易传媒 所需的权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
+    <!-- Ader、smaato可选权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
+    <!-- Ader、智游汇(果合)权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <!-- Ader、力美所需权限 -->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <!-- Ader、万普、指点、力美所需权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- 有米 所需的权限 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+
+    <!-- 百度 所需的权限 -->
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    <!-- smaato 所需的权限 -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <!-- 光音 所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+
+        <!-- Tell Cocos2dxActivity the name of our .so -->
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="cocos2dcpp" />
+
+        <activity
+            android:name=".AppActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- Analytics start -->
+        <activity android:name=".analytics.AnalyticsHome" >
+        </activity>
+        <activity android:name=".analytics.WebviewAnalytic" >
+        </activity>
+        <activity android:name=".analytics.FragmentStack" >
+        </activity>
+        <activity android:name=".analytics.FragmentTabs" >
+        </activity>
+        <activity android:name=".game.GameAnalyticsHome" >
+        </activity>
+
+        <!-- Caution! Do not change this app key. It is only for demo usage. -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="56a329d267e58e4d7200243e" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng" >
+        </meta-data>
+        <!-- mob share -->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="tencent1105143770" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--微信分享回调-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <!-- end -->
+        
+        <!-- Must declare it for Adivew SDK -->
+        <service android:name="com.kyview.DownloadService" />
+
+        <activity android:name="com.kyview.AdviewWebView" />
+
+        <!-- 最新更新内容 -->
+        <!-- AdView SDK for AdPro 光音-->
+
+        <!-- AdView SDK for JD -->
+        <activity
+            android:name="com.jd.jdadsdk.JDAdBrowser"
+            android:screenOrientation="portrait" />
+
+        <!-- AdView SDK for Inmobi (需要api 13 方可编译通过) -->
+
+        <!-- Adview SDK for 360聚效 MVAd -->
+
+        <!-- Adview SDK for adWalker -->
+
+
+        <!-- Adview SDK for zhidian -->
+
+
+        <!--
+        <activity
+            android:name="com.adzhidian.ui.WebViewActivity"
+            android:configChanges="keyboardHidden|orientation" />
+
+        <service android:name="com.adzhidian.manager.service.AdService" >
+        </service>
+
+        <meta-data
+            android:name="com.view.AdView.channel"
+            android:value="zhidian" />
+
+        <provider
+            android:name="com.adzhidian.ui.play.LocalHtmlProvider"
+			android:authorities="com.kyview.screen.interstitial.adapters.localhtmlprovider" />
+        -->
+        <!-- Adview SDK for aduu -->
+
+        <!-- AdView SDK for Momark -->
+
+        <!-- AdView SDK for Domob -->
+        <activity
+            android:name="cn.domob.android.ads.DmActivity"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <!-- AdView SDK for Youmi -->
+        <activity
+            android:name="net.youmi.android.AdBrowser"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+
+        <service
+            android:name="net.youmi.android.AdService"
+            android:exported="false" >
+        </service>
+
+        <!-- 使用有米时需添加以下广播 -->
+        <!---->
+        <receiver android:name="net.youmi.android.AdReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        
+
+
+        <!-- AdView SDK for WQ -->
+
+        <!-- AdView SDK for o2o 使用时需要解开注释 -->
+
+        <activity android:name="com.otomod.ad.AdActivity" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--
+        <service android:name="com.otomod.ad.openudid.OpenUDID_service" >
+            <intent-filter>
+                <action android:name="com.o2omobi.ad.openudid.GETUDID" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="com.otomod.ad.provider.ImageProvider"
+            android:authorities="com.kyview.demo" />
+
+        <receiver android:name="com.otomod.ad.DownloadCompleteReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.otomod.ad.APPReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.o2omobi.ad.alarm" />
+            </intent-filter>
+        </receiver>
+        -->
+        <!-- AdView SDK for Chance(触控) -->
+
+        <!-- AdView SDK for tencent Gdt -->
+
+
+        <!-- AdView SDK for 宜搜 -->
+
+        <!-- AdView SDK for 卓悠 -->
+
+        <!-- AdView SDK for 磨盘 -->
+
+        <!-- AdView SDK for AdChina -->
+
+
+        <!-- AdView SDK for MobiSage -->
+
+
+        <!-- AdView SDK for AdMob -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="8298000" />
+
+        <!-- AdView SDK for Baidu -->
+        <activity
+            android:name="com.baidu.mobads.AppActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation" />
+        
+            <meta-data
+            android:name="BaiduMobAd_APP_ID"
+            android:value="d3c95264" />
+        <meta-data
+            android:name="BaiduMobAd_APP_SEC"
+            android:value="e498eab7" />
+  <!--      <meta-data
+            android:name="BaiduMobAd_DEBUG_TOKEN"
+            android:value="adview" />  
+
+        -->
+        <!-- AdView SDK for AirAd -->
+
+        <!-- AdView SDK for AppMedia -->
+
+        <!-- AdView SDK for imMob -->
+
+        <!-- AdView SDK for millennialmedia -->
+
+        <!-- AdView SDK for Umeng -->
+        <activity
+            android:name="com.umengAd.android.UmengAdDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <!-- AdView SDK for Vpon api 11 以下添加会报错 -->
+
+
+        <!-- AdView SDK for greystripe -->
+        <!--
+		<provider android:name="com.greystripe.android.sdk.AdContentProvider"
+			android:authorities="com.kyview.AdContentProvider"
+			android:multiprocess="true" android:exported="false" />
+		<activity android:name="com.greystripe.android.sdk.AdView"
+			android:configChanges="keyboard|keyboardHidden|orientation">
+			<intent-filter>
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+        -->
+
+
+        <!-- AdView SDK for 自定义测试广告平台amazon -->
+        <activity
+            android:name="com.amazon.device.ads.MraidBrowser"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity
+            android:name="com.amazon.device.ads.VideoActionHandler"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity
+            android:name="com.kuaiyou.AdViewInstlActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <meta-data
+            android:name="ADVIEW_SDK_KEY"
+            android:value="SDK20161725050146nb3xxxufxx8g3sx" />
+        <!-- Channel id for app markets -->
+        <meta-data
+            android:name="AdView_CHANNEL"
+            android:value="GFAN" >
+        </meta-data>
+
+        <!-- 插屏 -->
+        <!-- AdView SDK for 安沃 -->
+        <activity android:name="com.kyview.screen.interstitial.adapters.AdInstlActivity" />
+
+        <!-- AdView SDK for 易积分 -->
+        <activity
+            android:name="com.qiang.escore.sdk.view.DetailActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity
+            android:name="com.qiang.escore.sdk.view.WebActivity"
+            android:configChanges="keyboardHidden|orientation" />
+
+        <meta-data
+            android:name="YJF_APP_CHANNEL"
+            android:value="AdView" />
+
+        <!-- Adview SDK for 智游汇(果合) -->
+        <activity
+            android:name="com.guohead.mix.MIXViewActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <!--
+        supported markets are as follows:
+		EOE(优亿市场)
+		GOOGLEMARKET(谷歌电子市场)
+		APPCHINA(应用汇)
+		HIAPK(安卓市场)
+		GFAN(机锋)
+		GOAPK(安智)
+		NDUOA(N多网)
+		91Store(手机91)
+		LIQUCN(历趣)
+		ANDROIDAI(安卓之家)
+		ANDROIDD(安致)
+		YINGYONGSO(应用搜)
+		IMOBILE(手机之家)
+		MUMAYI(木蚂蚁)
+		PAOJIAO(泡椒网)
+		AIBALA(爱扒拉市场)
+		COOLAPK(酷安网)
+		ANFONE(安丰)
+		APKOK(乐致网) 
+		360MARKET(360市场)
+        -->
+    </application>
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    
+
+</manifest>

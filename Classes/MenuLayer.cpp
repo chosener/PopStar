@@ -4,7 +4,7 @@
 #include "Audio.h"
 #include "AboutLayer.h"
 #include "MoreGameLayer.h"
-
+#include "JniSms.h"
 
 bool MenuLayer::init()
 {
@@ -143,6 +143,5 @@ void MenuLayer::moreGame()
 }
 void MenuLayer::shareGame()
 {
-
-    
+    shareSelfGame();
 }

@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="wrap_content">80dp</dimen>
+	<dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="bottombar_img_height">16dp</dimen>
+    <dimen name="bottombar_img_width">16dp</dimen>
+</resources>

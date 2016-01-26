@@ -40,15 +40,15 @@ int GAMEDATA::getScoreByLevel(int level){
 	}
 	else if (level == 2)
 	{
-		score = 3000;
+		score = 2800;
 	}
 	else if ( (level >=3) && (level <= 10) )
 	{
-		score = 3000 + 3000 * (level - 2);
+		score = 2800 + 2800 * (level - 2);
 	}
 	else
 	{
-		score = 27000 + 4000 * (level - 10);
+		score = 24000 + 3500 * (level - 10);
 	}
 	return score;
 }
