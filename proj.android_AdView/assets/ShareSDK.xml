@@ -63,7 +63,7 @@
         AppKey="238137005"
         AppSecret="fc57c8a1f751fc7a6a8c6b96fe81c8c9"
         RedirectUrl="http://www.isainttech.com"
-        ShareByAppClient="true"
+        ShareByAppClient="false"
         Enable="true" />
 
     <TencentWeibo
