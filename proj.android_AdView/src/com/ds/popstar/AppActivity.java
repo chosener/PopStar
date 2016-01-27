@@ -236,20 +236,20 @@ public class AppActivity extends Cocos2dxActivity implements AdViewInterface, Ad
 		// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
 		oks.setTitle("分享Kylin游戏");
 		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-		oks.setTitleUrl("http://www.isainttech.com/games/apks/CrazyDiamond2016.apk");
+		oks.setTitleUrl("http://www.isainttech.com/m/?post=58");
 		// text是分享文本，所有平台都需要这个字段
-		oks.setText("疯狂钻石2016,一起来疯狂吧!!! http://www.isainttech.com/games/apks/CrazyDiamond2016.apk");
+		oks.setText("疯狂钻石2016,一起来疯狂吧!!! http://www.isainttech.com/m/?post=58");
 		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
 		//oks.setImagePath("/sdcard/test.jpg");// 确保SDcard下面存在此张图片
 		oks.setImageUrl("http://www.isainttech.com/content/uploadfile/201601/e5221453701250.png");
 		// url仅在微信（包括好友和朋友圈）中使用
-		oks.setUrl("http://www.isainttech.com/games/apks/CrazyDiamond2016.apk");
+		oks.setUrl("http://www.isainttech.com/?post=58");
 		// comment是我对这条分享的评论，仅在人人网和QQ空间使用
 		oks.setComment("棒棒哒!");
 		// site是分享此内容的网站名称，仅在QQ空间使用
 		oks.setSite("Kylin's Games");
 		// siteUrl是分享此内容的网站地址，仅在QQ空间使用
-		oks.setSiteUrl("http://www.isainttech.com/games/apks/CrazyDiamond2016.apk");
+		oks.setSiteUrl("http://www.isainttech.com/m/?post=58");
 		// 启动分享GUI
 		oks.show(actInstance);
 		

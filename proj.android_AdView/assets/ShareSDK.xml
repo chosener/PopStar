@@ -82,7 +82,7 @@
         AppId="1105143770"
         AppKey="PdHO3F4QDxDHvJ3p"
         ShareByAppClient="false"
-        Enable="true" />
+        Enable="false" />
     
     <!-- 
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；
@@ -100,24 +100,24 @@
     <Wechat
         Id="4"
         SortId="4"
-        AppId="wxc5b989b71b59e02f"
-        AppSecret="c7127573ec9269a4fa900b445724f144"
-        BypassApproval="true"
+        AppId="wxfae65b8762adca0b"
+        AppSecret="b617af1e0417ef9b97d413bb5714b77f"
+        BypassApproval="false"
         Enable="true" />
     <!-- 完成 -->
     <WechatMoments
         Id="5"
         SortId="5"
-        AppId="wxc5b989b71b59e02f"
-        AppSecret="c7127573ec9269a4fa900b445724f144"
-        BypassApproval="true"
+        AppId="wxfae65b8762adca0b"
+        AppSecret="b617af1e0417ef9b97d413bb5714b77f"
+        BypassApproval="false"
         Enable="true" />
     <!-- 完成 -->  
 	<WechatFavorite
         Id="6"
         SortId="6"
-        AppId="wxc5b989b71b59e02f"
-        AppSecret="c7127573ec9269a4fa900b445724f144"
+        AppId="wxfae65b8762adca0b"
+        AppSecret="b617af1e0417ef9b97d413bb5714b77f"
         Enable="false" />
     
 	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
