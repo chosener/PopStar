@@ -65,10 +65,17 @@
         RedirectUrl="http://www.isainttech.com"
         ShareByAppClient="false"
         Enable="true" />
-
-
+    
+    <TencentWeibo
+        Id="2" 
+        SortId="2"
+        AppKey="1105143770"
+        AppSecret="PdHO3F4QDxDHvJ3p"
+        RedirectUri="http://www.isainttech.com/?post=58"
+        Enable="false" />
 
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
+    <!-- 完成 -->
     <QZone
         Id="3"
         SortId="3"
@@ -80,37 +87,38 @@
     <!-- 
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；
     
-                       注意：开发者不能用我们这两个平台的appid,否则分享不了
+        注意：开发者不能用我们这两个平台的appid,否则分享不了
     
-       	  微信测试的时候，微信测试需要先签名打包出apk,
+       	微信测试的时候，微信测试需要先签名打包出apk,
 		sample测试微信，要先签名打包，keystore在sample项目中，密码123456
 		
 		BypassApproval是绕过审核的标记，设置为true后AppId将被忽略，故不经过
 		审核的应用也可以执行分享，但是仅限于分享文字和图片，不能分享其他类型，
 		默认值为false。此外，微信收藏不支持此字段。
 	-->
+	<!-- 完成 -->
     <Wechat
         Id="4"
         SortId="4"
         AppId="wxc5b989b71b59e02f"
         AppSecret="c7127573ec9269a4fa900b445724f144"
-        BypassApproval="false"
+        BypassApproval="true"
         Enable="true" />
-    
+    <!-- 完成 -->
     <WechatMoments
         Id="5"
         SortId="5"
         AppId="wxc5b989b71b59e02f"
         AppSecret="c7127573ec9269a4fa900b445724f144"
-        BypassApproval="false"
+        BypassApproval="true"
         Enable="true" />
-        
+    <!-- 完成 -->  
 	<WechatFavorite
         Id="6"
         SortId="6"
         AppId="wxc5b989b71b59e02f"
         AppSecret="c7127573ec9269a4fa900b445724f144"
-        Enable="true" />
+        Enable="false" />
     
 	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
 	<!-- 完成 -->
@@ -122,14 +130,10 @@
         ShareByAppClient="true"
         Enable="true" />
 
-    
-    
     <ShortMessage
         Id="13" 
         SortId="13"
-        Enable="true" />
-    
-    
+        Enable="false" />
     <!-- 
     	在中国大陆，印象笔记有两个服务器，一个是沙箱（sandbox），一个是生产服务器（china）。
     	一般你注册应用，它会先让你使用sandbox，当你完成测试以后，可以到
@@ -154,10 +158,5 @@
 		审核的应用也可以执行分享，但是仅限于分享文字或图片，不能分享其他类型，
 		默认值为false。
 	-->
-    
-     <Alipay
-        Id="52"
-        SortId="52"  
-        AppId="2015072400185895"
-        Enable="true"/>
+
 </DevInfor>
