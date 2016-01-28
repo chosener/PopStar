@@ -234,7 +234,7 @@ public class AppActivity extends Cocos2dxActivity implements AdViewInterface, Ad
 		// oks.setNotification(R.drawable.ic_launcher,
 		// getString(R.string.app_name));
 		// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-		oks.setTitle("分享Kylin游戏");
+		oks.setTitle("分享Kylin游戏_疯狂钻石2016");
 		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
 		oks.setTitleUrl("http://www.isainttech.com/games/apks/CrazyDiamond2016.apk");
 		// text是分享文本，所有平台都需要这个字段
@@ -243,7 +243,7 @@ public class AppActivity extends Cocos2dxActivity implements AdViewInterface, Ad
 		//oks.setImagePath("/sdcard/test.jpg");// 确保SDcard下面存在此张图片
 		oks.setImageUrl("http://www.isainttech.com/content/uploadfile/201601/e5221453701250.png");
 		// url仅在微信（包括好友和朋友圈）中使用
-		oks.setUrl("http://www.isainttech.com/games/apks/CrazyDiamond2016.apk");
+		oks.setUrl("http://www.isainttech.com/m/?post=58");
 		// comment是我对这条分享的评论，仅在人人网和QQ空间使用
 		oks.setComment("棒棒哒!");
 		// site是分享此内容的网站名称，仅在QQ空间使用
