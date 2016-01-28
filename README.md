@@ -1,6 +1,6 @@
 # PopStar
 消灭星星
-		官网:www.isainttech.com
+		官网:www.isainttech.com(http://www.isainttech.com "Kylin's Blog")
 ### 开发环境
 xcode cocos2d-x 3.2
 ### 更新
